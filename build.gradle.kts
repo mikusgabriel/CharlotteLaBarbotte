@@ -1,4 +1,4 @@
-val pkg = "ca.qc.bdeb.inf203.intra"
+val pkg = "ca.qc.bdeb.inf203.tp2"
 val mainJavaFX = "Main"
 val application = "application"
 val utf8 = "UTF-8"
