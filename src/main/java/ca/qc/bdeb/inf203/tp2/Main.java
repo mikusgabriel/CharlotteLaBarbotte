@@ -1,9 +1,11 @@
 package ca.qc.bdeb.inf203.tp2;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,26 +20,24 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        PagePrincipale pagePrincipale=new PagePrincipale();
+        PagePrincipale pagePrincipale = new PagePrincipale();
 
-        Scene scene=new Scene(pagePrincipale.PagePrincipale(),900,520);
+        Scene scene = new Scene(pagePrincipale.PagePrincipale(),900,520);
 
         //set la root de la page jeu
         pagePrincipale.getBoutonInfo().setOnAction(event -> {
         });
 
 
-
+        //Appuyer sur ESCAPE quitte l'application
+        scene.setOnKeyPressed((event -> {
+            if(event.getCode() == KeyCode.ESCAPE) Platform.exit();
+        }));
 
         stage.setScene(scene);
         stage.setTitle("Charlotte la Barbotte");
-        Image iconCharlotteLaBarbotte=new Image("charlotte.png");
+        Image iconCharlotteLaBarbotte = new Image("charlotte.png");
         stage.getIcons().add(iconCharlotteLaBarbotte);
-
-
-
-
-
         stage.show();
     }
 }
