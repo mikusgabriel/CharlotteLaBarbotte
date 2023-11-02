@@ -23,9 +23,33 @@ public class Main extends Application {
             if(event.getCode() == KeyCode.ESCAPE) Platform.exit();
         }));
 
-        //Appuyer sur ESCAPE pour retourner à l'écran d'accueil
-        pageInfos.getSceneInfos().setOnKeyPressed((event -> {
-            if(event.getCode() == KeyCode.ESCAPE) stage.setScene(pagePrincipale.getScenePrincipale());
+        pageInfos.getButtonRetour().setOnAction(event -> {
+            scene.setRoot(pagePrincipale.getPagePrincipale());
+        });
+
+        pagePrincipale.getBoutonJouer().setOnAction(event -> {
+            scene.setRoot(pageJeu.getPageJeu());
+        });
+
+        var timer = new AnimationTimer() {
+            long lastTime = System.nanoTime();
+            @Override
+            public void handle(long now) {
+                double deltaTemps = (now - lastTime) * 1e-9;
+                partie.update(deltaTemps);
+                partie.draw(context);
+                lastTime = now;
+            }
+        };
+        timer.start();
+
+
+        //Actions avec ESCAPE
+        scene.setOnKeyPressed((event -> {
+
+            if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageInfos.getPageInfos()) scene.setRoot(pagePrincipale.getPagePrincipale());
+            //else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageJeu.getPageJeu()) scene.setRoot(pagePrincipale.getPagePrincipale());
+            else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pagePrincipale.getPagePrincipale()) Platform.exit();
         }));
 
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil
