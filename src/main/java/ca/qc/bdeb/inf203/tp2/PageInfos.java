@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2;
 
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -28,8 +29,22 @@ public class PageInfos extends Parent {
         dev1.setFont(Font.font(20));
         dev2.setFont(Font.font(20));
 
-        var imageCharlotte = new ImageView(new Image("poisson1.png"));
+        var imgViewPoisson = new ImageView(new Image("poisson1.png"));
 
+        HBox hBox1 = new HBox(), hBox2 = new HBox();
+        hBox1.setSpacing(10);
+        hBox1.getChildren().addAll(par, dev1);
+        hBox2.setSpacing(10);
+        hBox2.getChildren().addAll(et, dev2);
+
+        var buttonRetour = new Button("Retour");
+
+        pageInfos.getChildren().addAll(titreJeu, imgViewPoisson, hBox1, hBox2, informations, buttonRetour);
+        pageInfos.setAlignment(Pos.CENTER);
     }
 
+    //Retourne la vbox
+    public VBox getPageInfos() {
+        return pageInfos;
+    }
 }
