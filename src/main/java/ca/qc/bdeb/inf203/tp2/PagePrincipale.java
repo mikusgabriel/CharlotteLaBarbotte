@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class PagePrincipale {
+public class PagePrincipale extends Parent {
 
     private final Button boutonJouer=new Button("Jouer!");
     private final Button boutonInfo=new Button("Infos");

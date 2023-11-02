@@ -20,12 +20,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        PagePrincipale pagePrincipale = new PagePrincipale();
+        var pagePrincipale = new PagePrincipale();
 
-        Scene scene = new Scene(pagePrincipale.PagePrincipale(),900,520);
+        var pageInfos = new PageInfos();
+
+        var scene = new Scene(pagePrincipale.PagePrincipale(),900,520);
 
         //set la root de la page jeu
         pagePrincipale.getBoutonInfo().setOnAction(event -> {
+            scene.setRoot(pageInfos);
         });
 
 
