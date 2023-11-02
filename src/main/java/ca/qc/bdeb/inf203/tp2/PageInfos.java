@@ -2,6 +2,7 @@ package ca.qc.bdeb.inf203.tp2;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,10 +15,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class PageInfos {
-    private final VBox pageInfos = new VBox();
     private final Button buttonRetour = new Button();
+    private final Scene sceneInfos = new Scene(new VBox(), 900, 520);
 
     PageInfos(){
+        var root = new VBox();
         Text titreJeu = new Text("Charlotte la Barbotte"),
                 par = new Text("Par"),
                 et = new Text("et"),
@@ -42,15 +44,17 @@ public class PageInfos {
 
         buttonRetour.setText("Retour");
 
-        pageInfos.getChildren().addAll(titreJeu, imgViewPoisson, hBox1, hBox2, informations, buttonRetour);
-        pageInfos.setAlignment(Pos.CENTER);
-        pageInfos.setSpacing(10);
-        pageInfos.setBackground(Background.fill(Color.valueOf("#2A7FFF")));
+        root.getChildren().addAll(titreJeu, imgViewPoisson, hBox1, hBox2, informations, buttonRetour);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(10);
+        root.setBackground(Background.fill(Color.valueOf("#2A7FFF")));
+
+        sceneInfos.setRoot(root);
     }
 
     //--------GETTERS--------
-    public VBox getPageInfos() {
-        return pageInfos;
+    public Scene getSceneInfos() {
+        return sceneInfos;
     }
     public Button getButtonRetour() {
         return buttonRetour;

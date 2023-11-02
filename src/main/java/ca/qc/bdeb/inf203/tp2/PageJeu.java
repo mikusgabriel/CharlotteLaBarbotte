@@ -1,6 +1,7 @@
 package ca.qc.bdeb.inf203.tp2;
 
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -8,7 +9,8 @@ import javafx.scene.layout.VBox;
 
 public class PageJeu {
 
-    private final VBox pageJeu =new VBox();
+    private final VBox pageJeu = new VBox();
+    private Scene sceneJeu = new Scene(new VBox(), 900, 520);
 
     PageJeu(){
         pageJeu.setAlignment(Pos.TOP_CENTER);
@@ -30,7 +32,8 @@ public class PageJeu {
 
     }
 
-    public VBox getPageJeu() {
-        return pageJeu;
+    //--------GETTERS--------
+    public Scene getSceneJeu() {
+        return sceneJeu;
     }
 }
