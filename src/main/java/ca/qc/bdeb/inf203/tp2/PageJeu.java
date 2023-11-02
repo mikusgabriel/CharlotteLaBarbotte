@@ -7,9 +7,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class PageJeu {
-    private final Button boutonJouer=new Button("Jouer!");
-
-    private final Button boutonInfo=new Button("Infos");
 
     private final VBox pageJeu =new VBox();
 
@@ -18,9 +15,7 @@ public class PageJeu {
         pageJeu.setSpacing(10);
 
         var boutonsPagePrincipale=new HBox();
-        boutonsPagePrincipale.setAlignment(Pos.CENTER);
-        boutonsPagePrincipale.setSpacing(10);
-        boutonsPagePrincipale.getChildren().addAll(boutonJouer,boutonInfo);
+
 
         var logo=new ImageView("logo.png");
         logo.setFitHeight(450);
@@ -35,4 +30,7 @@ public class PageJeu {
 
     }
 
+    public VBox getPageJeu() {
+        return pageJeu;
+    }
 }

@@ -24,7 +24,7 @@ public class Main extends Application {
 
         var pageInfos = new PageInfos();
 
-        var pageJeu = new PageJeu();
+        var pageJeu=new PageJeu();
 
         var scene = new Scene(pagePrincipale.getPagePrincipale(),900,520);
 
@@ -38,7 +38,7 @@ public class Main extends Application {
         });
 
         pagePrincipale.getBoutonJouer().setOnAction(event -> {
-            //scene.setRoot(pageJeu.getPageJeu);
+            scene.setRoot(pageJeu.getPageJeu());
         });
 
 
