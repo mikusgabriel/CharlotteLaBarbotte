@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 public class PagePrincipale {
 
     private final Button boutonJouer=new Button("Jouer!");
+
     private final Button boutonInfo=new Button("Infos");
 
     private final Background arrierePlan = Background.fill(Color.valueOf("#2A7FFF"));
@@ -41,7 +42,7 @@ public class PagePrincipale {
         return boutonJouer;
     }
 
-    public Button getBoutonInfo() {
+    public Button getBoutonInfos() {
         return boutonInfo;
     }
 

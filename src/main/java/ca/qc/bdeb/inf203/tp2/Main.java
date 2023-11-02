@@ -24,15 +24,21 @@ public class Main extends Application {
 
         var pageInfos = new PageInfos();
 
+        var pageJeu=new PageJeu();
+
         var scene = new Scene(pagePrincipale.getPagePrincipale(),900,520);
 
         //set la root de la page jeu
-        pagePrincipale.getBoutonInfo().setOnAction(event -> {
+        pagePrincipale.getBoutonInfos().setOnAction(event -> {
             scene.setRoot(pageInfos.getPageInfos());
         });
 
         pageInfos.getButtonRetour().setOnAction(event -> {
             scene.setRoot(pagePrincipale.getPagePrincipale());
+        });
+
+        pagePrincipale.getBoutonJouer().setOnAction(event -> {
+            scene.setRoot(pageJeu);
         });
 
 
