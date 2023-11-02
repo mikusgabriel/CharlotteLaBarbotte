@@ -18,13 +18,9 @@ public class PagePrincipale extends Parent {
 
     private final Background arrierePlan = Background.fill(Color.valueOf("#2A7FFF"));
 
-    private VBox pagePrincipale=new VBox();
+    private final VBox pagePrincipale=new VBox();
 
     PagePrincipale(){
-        pagePrincipale=creationPagePrincipale();
-    }
-    private VBox creationPagePrincipale(){
-        var pagePrincipale=new VBox();
         pagePrincipale.setAlignment(Pos.TOP_CENTER);
         pagePrincipale.setSpacing(10);
 
@@ -40,7 +36,6 @@ public class PagePrincipale extends Parent {
         pagePrincipale.getChildren().addAll(logo,boutonsPagePrincipale);
         pagePrincipale.setBackground(arrierePlan);
 
-        return pagePrincipale;
     }
     public Button getBoutonJouer() {
         return boutonJouer;
