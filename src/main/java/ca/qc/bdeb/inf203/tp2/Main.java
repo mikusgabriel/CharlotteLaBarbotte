@@ -24,7 +24,7 @@ public class Main extends Application {
 
         var pageInfos = new PageInfos();
 
-        var pageJeu=new PageJeu();
+        var pageJeu = new PageJeu();
 
         var scene = new Scene(pagePrincipale.getPagePrincipale(),900,520);
 
@@ -38,13 +38,16 @@ public class Main extends Application {
         });
 
         pagePrincipale.getBoutonJouer().setOnAction(event -> {
-            scene.setRoot(pageJeu);
+            //scene.setRoot(pageJeu.getPageJeu);
         });
 
 
-        //Appuyer sur ESCAPE quitte l'application
+        //Actions avec ESCAPE
         scene.setOnKeyPressed((event -> {
-            if(event.getCode() == KeyCode.ESCAPE) Platform.exit();
+
+            if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageInfos.getPageInfos()) scene.setRoot(pagePrincipale.getPagePrincipale());
+            //else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageJeu.getPageJeu()) scene.setRoot(pagePrincipale.getPagePrincipale());
+            else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pagePrincipale.getPagePrincipale()) Platform.exit();
         }));
 
         stage.setScene(scene);

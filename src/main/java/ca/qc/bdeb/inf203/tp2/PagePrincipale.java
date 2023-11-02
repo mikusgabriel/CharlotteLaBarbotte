@@ -17,8 +17,6 @@ public class PagePrincipale {
 
     private final Button boutonInfo=new Button("Infos");
 
-    private final Background arrierePlan = Background.fill(Color.valueOf("#2A7FFF"));
-
     private final VBox pagePrincipale=new VBox();
 
     PagePrincipale(){
@@ -35,6 +33,7 @@ public class PagePrincipale {
         logo.setFitWidth(450);
 
         pagePrincipale.getChildren().addAll(logo,boutonsPagePrincipale);
+        Background arrierePlan = Background.fill(Color.valueOf("#2A7FFF"));
         pagePrincipale.setBackground(arrierePlan);
 
     }
