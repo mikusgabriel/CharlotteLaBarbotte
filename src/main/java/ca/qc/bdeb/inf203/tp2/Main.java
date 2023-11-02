@@ -28,7 +28,11 @@ public class Main extends Application {
 
         //set la root de la page jeu
         pagePrincipale.getBoutonInfo().setOnAction(event -> {
-            scene.setRoot(pageInfos);
+            scene.setRoot(pageInfos.getPageInfos());
+        });
+
+        pageInfos.getButtonRetour().setOnAction(event -> {
+            scene.setRoot(pagePrincipale.getPagePrincipale());
         });
 
 
