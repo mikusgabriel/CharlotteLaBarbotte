@@ -24,7 +24,7 @@ public class Main extends Application {
 
         var pageInfos = new PageInfos();
 
-        var scene = new Scene(pagePrincipale.PagePrincipale(),900,520);
+        var scene = new Scene(pagePrincipale.getPagePrincipale(),900,520);
 
         //set la root de la page jeu
         pagePrincipale.getBoutonInfo().setOnAction(event -> {
