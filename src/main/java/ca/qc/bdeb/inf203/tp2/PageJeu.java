@@ -1,9 +1,13 @@
 package ca.qc.bdeb.inf203.tp2;
 
+
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,22 +17,28 @@ import java.awt.*;
 public class PageJeu {
 
     private final VBox pageJeu = new VBox();
-    Canvas canvas=new Canvas();
-    private Scene sceneJeu = new Scene(new VBox(), 900, 520);
+    Charlotte charlotte=new Charlotte();
+
+
+
+    private Scene sceneJeu = new Scene(pageJeu, 900, 520);
+
+    Canvas canvas=new Canvas(sceneJeu.getWidth(),sceneJeu.getHeight());
 
     PageJeu(){
-        pageJeu.setAlignment(Pos.TOP_CENTER);
-        pageJeu.setSpacing(10);
+        AnimationTimer a=new AnimationTimer() {
+            GraphicsContext context=canvas.getGraphicsContext2D();
 
-        var boutonsPagePrincipale=new HBox();
+            @Override
+            public void handle(long now) {
+                charlotte.draw(context);
 
 
 
-        var logo=new ImageView("logo.png");
-        logo.setFitHeight(450);
-        logo.setFitWidth(450);
-
-        pageJeu.getChildren().addAll(logo,boutonsPagePrincipale);
+            }
+        };
+        a.start();
+        pageJeu.getChildren().add(canvas);
 
     }
 

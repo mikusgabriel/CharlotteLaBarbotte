@@ -26,7 +26,7 @@ public abstract class GameObject {
     private double x;
     private double y;
 
-    private Image image;
+    protected Image image;
     private double vx = 0;
     private double vy = 0;
 
@@ -35,7 +35,11 @@ public abstract class GameObject {
     public abstract boolean isDead();
 
     public void draw(GraphicsContext graphics) {
+        System.out.println("bbb");
+        System.out.println("Image: " + image); // Check the image
+        System.out.println("Position: (" + x + ", " + y + ")"); // Check the position
         if (image != null) {
+            System.out.println("aaaa");
             graphics.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), x, y, largeur, hauteur);
         }
     }

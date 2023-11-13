@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -9,13 +10,14 @@ import java.util.ArrayList;
 public class Charlotte extends GameObject{
     public Charlotte() {
         super(0, 260, 90, 102);
+        image=new Image("charlotte.png");
     }
     private int vie=4;
 
     private final int largeur=102;
     private final int hauteur=90;
 
-    private final ImageView imageCharlotte= new ImageView("charlotte.png");
+
 
 
     private ArrayList<KeyCode> directions = new ArrayList<>();
@@ -41,7 +43,6 @@ public class Charlotte extends GameObject{
 
     }
     public void perdreVie(){
-        imageCharlotte.setImage(new Image("charlotte-ouch.png"));
         vie--;
     }
 
@@ -52,5 +53,10 @@ public class Charlotte extends GameObject{
         }
         return false;
 
+    }
+
+    @Override
+    public void draw(GraphicsContext graphics) {
+        super.draw(graphics);
     }
 }
