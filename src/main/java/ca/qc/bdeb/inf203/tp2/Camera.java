@@ -8,7 +8,7 @@ public class Camera {
             // La caméra bouge vers la droite automatiquement
 
     }
-
+/*
     public void suivre(Charlotte charlotte) {
         if(personnage.getGauche() < ...) {
 // Quand le personnage est trop à gauche dans l'écran,
@@ -23,6 +23,8 @@ public class Camera {
         }
     }
 
+
+ */
 
 
     public double calculerEcranX(double xMonde) {

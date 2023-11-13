@@ -14,9 +14,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+
         var pagePrincipale= new PagePrincipale();
         var pageInfos = new PageInfos();
         var pageJeu = new PageJeu();
+
+
 
         //Appuyer sur ESCAPE pour quitter l'application
         pagePrincipale.getScenePrincipale().setOnKeyPressed((event -> {
@@ -24,32 +28,25 @@ public class Main extends Application {
         }));
 
         pageInfos.getButtonRetour().setOnAction(event -> {
-            scene.setRoot(pagePrincipale.getPagePrincipale());
+            stage.setScene(pagePrincipale.getScenePrincipale());
         });
 
         pagePrincipale.getBoutonJouer().setOnAction(event -> {
-            scene.setRoot(pageJeu.getPageJeu());
+            stage.setScene(pageJeu.getSceneJeu());
         });
 
-        var timer = new AnimationTimer() {
-            long lastTime = System.nanoTime();
-            @Override
-            public void handle(long now) {
-                double deltaTemps = (now - lastTime) * 1e-9;
-                partie.update(deltaTemps);
-                partie.draw(context);
-                lastTime = now;
-            }
-        };
-        timer.start();
+        stage.setScene(pagePrincipale.getScenePrincipale());
+        stage.setTitle("Charlotte la Barbotte");
+        Image iconCharlotteLaBarbotte = new Image("charlotte.png");
+        stage.getIcons().add(iconCharlotteLaBarbotte);
 
 
         //Actions avec ESCAPE
-        scene.setOnKeyPressed((event -> {
+        stage.getScene().setOnKeyPressed((event -> {
 
-            if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageInfos.getPageInfos()) scene.setRoot(pagePrincipale.getPagePrincipale());
+            if(event.getCode() == KeyCode.ESCAPE && stage.getScene() == pageInfos.getSceneInfos()) stage.setScene(pagePrincipale.getScenePrincipale());
             //else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageJeu.getPageJeu()) scene.setRoot(pagePrincipale.getPagePrincipale());
-            else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pagePrincipale.getPagePrincipale()) Platform.exit();
+            else if(event.getCode() == KeyCode.ESCAPE && stage.getScene() == pagePrincipale.getScenePrincipale()) Platform.exit();
         }));
 
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil
@@ -57,10 +54,7 @@ public class Main extends Application {
             if(event.getCode() == KeyCode.ESCAPE) stage.setScene(pagePrincipale.getScenePrincipale());
         }));
 
-        stage.setScene(pagePrincipale.getScenePrincipale());
-        stage.setTitle("Charlotte la Barbotte");
-        Image iconCharlotteLaBarbotte = new Image("charlotte.png");
-        stage.getIcons().add(iconCharlotteLaBarbotte);
+
 
         pagePrincipale.getBoutonInfos().setOnAction(event -> stage.setScene(pageInfos.getSceneInfos())
         );
