@@ -1,20 +1,24 @@
 package ca.qc.bdeb.inf203.tp2;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
-public class Charlotte extends GameObject{
-    private final int a=0;
+import java.util.ArrayList;
 
-    private final int vie=10;
+public class Charlotte extends GameObject{
+    public Charlotte() {
+        super(0, 260, 90, 102);
+    }
+    private int vie=4;
 
     private final int largeur=102;
     private final int hauteur=90;
 
-    private ImageView imageCharlotte= new ImageView("charlotte.png");
+    private final ImageView imageCharlotte= new ImageView("charlotte.png");
 
 
-
+    private ArrayList<KeyCode> directions = new ArrayList<>();
 
     public void update(double deltaTemps){
 
@@ -35,6 +39,10 @@ public class Charlotte extends GameObject{
 
 
 
+    }
+    public void perdreVie(){
+        imageCharlotte.setImage(new Image("charlotte-ouch.png"));
+        vie--;
     }
 
     @Override
