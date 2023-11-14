@@ -20,28 +20,46 @@ public abstract class GameObject {
 
 
 
-    private double hauteur;
-    private double largeur;
+    protected double hauteur;
+    protected double largeur;
 
-    private double x;
-    private double y;
+    protected double x;
+    protected double y;
 
     protected Image image;
-    private double vx = 0;
-    private double vy = 0;
+    protected double vx = 0;
+    protected double vy = 0;
 
     public abstract void update(double deltaTime);
 
     public abstract boolean isDead();
 
     public void draw(GraphicsContext graphics) {
-        System.out.println("bbb");
-        System.out.println("Image: " + image); // Check the image
-        System.out.println("Position: (" + x + ", " + y + ")"); // Check the position
         if (image != null) {
-            System.out.println("aaaa");
-            graphics.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), x, y, largeur, hauteur);
+            graphics.drawImage(getImage(), 0, 0, getImage().getWidth(), getImage().getHeight(), getX(), getY(), getLargeur(), getHauteur());
         }
     }
+
+    protected double getX() {
+        return x;
+    }
+
+    protected double getY() {
+        return y;
+    }
+
+    protected double getHauteur() {
+        return hauteur;
+    }
+
+    protected double getLargeur() {
+        return largeur;
+    }
+
+    protected Image getImage() {
+        return image;
+    }
+
+
 
 }

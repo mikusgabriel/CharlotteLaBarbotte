@@ -26,18 +26,19 @@ public class PageJeu {
     Canvas canvas=new Canvas(sceneJeu.getWidth(),sceneJeu.getHeight());
 
     PageJeu(){
-        AnimationTimer a=new AnimationTimer() {
-            GraphicsContext context=canvas.getGraphicsContext2D();
-
+        GraphicsContext context= canvas.getGraphicsContext2D();
+        Partie partie = new Partie();
+        var timer = new AnimationTimer() {
+            long lastTime = System.nanoTime();
             @Override
             public void handle(long now) {
-                charlotte.draw(context);
-
-
-
+                double deltaTemps = (now - lastTime) * 1e-9;
+                partie.update(deltaTemps);
+                partie.draw(context);
+                lastTime = now;
             }
         };
-        a.start();
+        timer.start();
         pageJeu.getChildren().add(canvas);
 
     }
