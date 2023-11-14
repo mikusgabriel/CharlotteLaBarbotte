@@ -36,18 +36,34 @@ public class Fenetre extends Application {
         stage.getIcons().add(iconCharlotteLaBarbotte);
 
 
+
+
+
+
+
         //Actions avec ESCAPE
         stage.getScene().setOnKeyPressed((event -> {
 
             if(event.getCode() == KeyCode.ESCAPE && stage.getScene() == pageInfos.getSceneInfos()) stage.setScene(pagePrincipale.getScenePrincipale());
                 //else if(event.getCode() == KeyCode.ESCAPE && scene.getRoot() == pageJeu.getPageJeu()) scene.setRoot(pagePrincipale.getPagePrincipale());
             else if(event.getCode() == KeyCode.ESCAPE && stage.getScene() == pagePrincipale.getScenePrincipale()) Platform.exit();
+
         }));
 
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil
         pageJeu.getSceneJeu().setOnKeyPressed((event -> {
             if(event.getCode() == KeyCode.ESCAPE) stage.setScene(pagePrincipale.getScenePrincipale());
+            else{
+                System.out.println("key pressed");
+                Input.setKeyPressed(event.getCode(), true);
+            }
         }));
+
+        ////////Je ne sais pas si cest la bonne place pour le mettre ici (setkeypressed en haut aussi)
+        pageJeu.getSceneJeu().setOnKeyReleased((e) -> {
+            System.out.println("keyreleased");
+            Input.setKeyPressed(e.getCode(), false);
+        });
 
 
 

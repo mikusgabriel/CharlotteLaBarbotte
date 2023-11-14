@@ -3,12 +3,14 @@ package ca.qc.bdeb.inf203.tp2;
 
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -28,12 +30,14 @@ public class PageJeu {
     PageJeu(){
         GraphicsContext context= canvas.getGraphicsContext2D();
         Partie partie = new Partie();
+
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
             @Override
             public void handle(long now) {
                 double deltaTemps = (now - lastTime) * 1e-9;
                 partie.update(deltaTemps);
+                context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 partie.draw(context);
                 lastTime = now;
             }
@@ -51,5 +55,9 @@ public class PageJeu {
     //--------GETTERS--------
     public Scene getSceneJeu() {
         return sceneJeu;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }

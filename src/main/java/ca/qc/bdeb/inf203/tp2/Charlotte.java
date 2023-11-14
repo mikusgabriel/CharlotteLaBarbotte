@@ -20,8 +20,6 @@ public class Charlotte extends GameObject{
     private final int hauteur=90;
 
     public void update(double deltaTemps){
-        System.out.println("entered update");
-
         boolean gauche = Input.isKeyPressed(KeyCode.A);
         boolean droite = Input.isKeyPressed(KeyCode.D);
         boolean haut = Input.isKeyPressed(KeyCode.W);
