@@ -1,11 +1,7 @@
 package ca.qc.bdeb.inf203.tp2;
 
+import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,11 +12,11 @@ public class Main {
 
 //TODO:
 // Fenêtre:
-// - Page d'accueil
-// - Page infos
-// - Page jeu
+// - Page d'accueil ✔
+// - Page infos ✔
+// - Page jeu ✔
 // Gameplay:
-// - Background
+// - Background ✔
 // - GUI
 // - Charlotte
 // - Ennemis

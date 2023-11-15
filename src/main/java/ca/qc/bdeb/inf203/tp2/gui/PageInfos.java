@@ -1,13 +1,11 @@
-package ca.qc.bdeb.inf203.tp2;
+package ca.qc.bdeb.inf203.tp2.gui;
 
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -16,11 +14,12 @@ import javafx.scene.text.Text;
 
 public class PageInfos {
     private final Button buttonRetour = new Button();
-    private final Scene sceneInfos = new Scene(new VBox(), 900, 520);
+    private final VBox root = new VBox();
 
-    //Constructeur du UI de la page infos
+    /**
+     * Constructeur du UI de la page infos
+     */
     PageInfos(){
-        var root = new VBox();
         Text titreJeu = new Text("Charlotte la Barbotte"),
                 par = new Text("Par"),
                 et = new Text("et"),
@@ -50,12 +49,11 @@ public class PageInfos {
         root.setSpacing(10);
         root.setBackground(Background.fill(Color.valueOf("#2A7FFF")));
 
-        sceneInfos.setRoot(root);
     }
 
     //--------GETTERS--------
-    public Scene getSceneInfos() {
-        return sceneInfos;
+    public VBox getRoot() {
+        return root;
     }
     public Button getButtonRetour() {
         return buttonRetour;

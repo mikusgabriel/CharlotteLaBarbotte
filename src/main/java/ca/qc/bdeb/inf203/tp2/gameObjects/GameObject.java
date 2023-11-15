@@ -1,4 +1,4 @@
-package ca.qc.bdeb.inf203.tp2;
+package ca.qc.bdeb.inf203.tp2.gameObjects;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

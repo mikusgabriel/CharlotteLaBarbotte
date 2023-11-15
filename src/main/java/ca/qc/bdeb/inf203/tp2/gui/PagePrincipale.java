@@ -1,9 +1,11 @@
-package ca.qc.bdeb.inf203.tp2;
+package ca.qc.bdeb.inf203.tp2.gui;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,11 +14,12 @@ import javafx.scene.paint.Color;
 public class PagePrincipale {
     private final Button boutonJouer = new Button("Jouer!");
     private final Button boutonInfo = new Button("Infos");
-    private final Scene scenePrincipale = new Scene(new VBox(), 900, 520);
+    private final VBox root = new VBox();
 
-    //Constructeur du UI de la page d'accueil
+    /**
+     * Constructeur du UI de la page d'accueil
+     */
     PagePrincipale(){
-        var root = new VBox();
         root.setAlignment(Pos.TOP_CENTER);
         root.setSpacing(10);
 
@@ -33,7 +36,10 @@ public class PagePrincipale {
         Background arrierePlan = Background.fill(Color.valueOf("#2A7FFF"));
         root.setBackground(arrierePlan);
 
-        scenePrincipale.setRoot(root);
+        //Appuyer sur ESCAPE pour quitter l'application
+        root.setOnKeyPressed((event -> {
+            if(event.getCode() == KeyCode.ESCAPE) Platform.exit();
+        }));
     }
 
     //--------GETTERS--------
@@ -45,7 +51,7 @@ public class PagePrincipale {
         return boutonInfo;
     }
 
-    public Scene getScenePrincipale() {
-        return scenePrincipale;
+    public VBox getRoot() {
+        return root;
     }
 }

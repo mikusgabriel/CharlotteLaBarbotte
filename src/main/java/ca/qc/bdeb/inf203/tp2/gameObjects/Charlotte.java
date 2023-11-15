@@ -1,13 +1,12 @@
-package ca.qc.bdeb.inf203.tp2;
+package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.gameObjects.GameObject;
+import ca.qc.bdeb.inf203.tp2.utils.Input;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
-import java.util.ArrayList;
-
-public class Charlotte extends GameObject{
+public class Charlotte extends GameObject {
     private final int PV_MAX = 4;
     public Charlotte() {
         super(0, 260, 90, 102);
