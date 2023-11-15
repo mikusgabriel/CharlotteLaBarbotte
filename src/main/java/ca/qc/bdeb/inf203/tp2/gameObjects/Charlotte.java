@@ -25,23 +25,25 @@ public class Charlotte extends GameObject {
         boolean haut = Input.isKeyPressed(KeyCode.W);
         boolean bas = Input.isKeyPressed(KeyCode.S);
 
+        image= new Image("charlotte.png");
 
         if(gauche){
             System.out.println("gauche");
-            x--;
+            x-=5;
 
-        }else if(droite){
+        }if(droite){
             System.out.println("droite");
-            x++;
+            image= new Image("charlotte-avant.png");
+            x+=5;
 
 
-        }else if(haut){
+        }if(haut){
             System.out.println("haut");
-            y--;
+            y-=5;
 
-        }else if(bas){
+        }if(bas){
             System.out.println("bas");
-            y++;
+            y+=5;
 
         }
 
@@ -49,6 +51,7 @@ public class Charlotte extends GameObject {
 
     }
     public void perdreVie(){
+        image= new Image("charlotte-ouch.png");
         vie--;
     }
 
