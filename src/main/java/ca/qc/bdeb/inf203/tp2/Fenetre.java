@@ -2,6 +2,7 @@ package ca.qc.bdeb.inf203.tp2;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -11,7 +12,6 @@ public class Fenetre extends Application {
     public void start(Stage stage) {
         var pagePrincipale= new PagePrincipale();
         var pageInfos = new PageInfos();
-        var pageJeu = new PageJeu();
 
         //Appuyer sur ESCAPE pour quitter l'application
         pagePrincipale.getScenePrincipale().setOnKeyPressed((event -> {
@@ -26,6 +26,30 @@ public class Fenetre extends Application {
                 Input.setKeyPressed(event.getCode(), true);
             }
         }));
+
+
+
+        //Bouton retourner sur la page d'accueil
+        pageInfos.getButtonRetour().setOnAction(event ->
+            stage.setScene(pagePrincipale.getScenePrincipale())
+        );
+
+        //Bouton aller a la page infos
+        pagePrincipale.getBoutonInfos().setOnAction(event ->
+                stage.setScene(pageInfos.getSceneInfos()));
+
+        //Bouton aller a la page jeu
+        pagePrincipale.getBoutonJouer().setOnAction(event ->
+                stage.setScene(commencerNouvellePartie(stage, pagePrincipale)));
+
+        stage.setScene(pagePrincipale.getScenePrincipale());
+        stage.setTitle("Charlotte la Barbotte");
+        stage.getIcons().add(new Image("charlotte.png"));
+        stage.show();
+    }
+
+    private Scene commencerNouvellePartie(Stage stage, PagePrincipale pagePrincipale){
+        var pageJeu = new PageJeu();
 
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page jeu
         pageJeu.getSceneJeu().setOnKeyPressed((event -> {
@@ -43,22 +67,6 @@ public class Fenetre extends Application {
             Input.setKeyPressed(e.getCode(), false);
         });
 
-        //Bouton retourner sur la page d'accueil
-        pageInfos.getButtonRetour().setOnAction(event ->
-            stage.setScene(pagePrincipale.getScenePrincipale())
-        );
-
-        //Bouton aller a la page infos
-        pagePrincipale.getBoutonInfos().setOnAction(event ->
-                stage.setScene(pageInfos.getSceneInfos()));
-
-        //Bouton aller a la page jeu
-        pagePrincipale.getBoutonJouer().setOnAction(event ->
-                stage.setScene(pageJeu.getSceneJeu()));
-
-        stage.setScene(pagePrincipale.getScenePrincipale());
-        stage.setTitle("Charlotte la Barbotte");
-        stage.getIcons().add(new Image("charlotte.png"));
-        stage.show();
+        return pageJeu.getSceneJeu();
     }
 }

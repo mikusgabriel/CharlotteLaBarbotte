@@ -6,15 +6,19 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
-import java.awt.*;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class PageJeu {
 
@@ -30,6 +34,7 @@ public class PageJeu {
     PageJeu(){
         GraphicsContext context= canvas.getGraphicsContext2D();
         Partie partie = new Partie();
+        var background = generateRandomBackground();
 
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
@@ -45,11 +50,43 @@ public class PageJeu {
         timer.start();
         pageJeu.getChildren().add(canvas);
 
+        pageJeu.setBackground(background);
     }
 
+    private Background generateRandomBackground() {
+        Image[] images = {new Image("decor1.png"),
+            new Image("decor2.png"),
+            new Image("decor3.png"),
+            new Image("decor4.png"),
+            new Image("decor5.png"),
+            new Image("decor6.png")};
 
-    private void choisirCouleurRandom(){
+        var rand = new Random();
+        double hue = rand.nextDouble(190, 270), saturation = 0.84, brightness = 1.0;
 
+        var backgroundFill = new BackgroundFill(Color.hsb(hue, saturation, brightness), null, null);
+
+        var background = new Background(new BackgroundImage(images[0],
+              BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(
+                      null, rand.nextInt(50, 100), false, Side.BOTTOM,
+                0, false),
+               null), new BackgroundImage(images[1],
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(
+                null, rand.nextInt(100, 150), false, Side.BOTTOM,
+                0, false),
+                null));
+
+
+
+
+
+//        background.getImages().set(0, new BackgroundImage(images[0],
+//                null, null, new BackgroundPosition(
+//                        null, rand.nextInt(50, 100), false, Side.BOTTOM,
+//                        0, false),
+//                null));
+
+        return background;
     }
 
     //--------GETTERS--------

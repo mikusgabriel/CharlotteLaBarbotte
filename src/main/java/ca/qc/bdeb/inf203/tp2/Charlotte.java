@@ -8,13 +8,14 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 
 public class Charlotte extends GameObject{
+    private final int PV_MAX = 4;
     public Charlotte() {
         super(0, 260, 90, 102);
         image=new Image("charlotte.png");
         x=0;
         y=260;
     }
-    private int vie=4;
+    private int vie= PV_MAX;
 
     private final int largeur=102;
     private final int hauteur=90;

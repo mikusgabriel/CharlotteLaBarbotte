@@ -26,4 +26,5 @@ public class Main {
 // - Ennemis
 // - Projectiles + barrel
 // - Passer au prochain niveau
+// - Debug mode
 
