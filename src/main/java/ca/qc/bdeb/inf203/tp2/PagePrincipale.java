@@ -14,6 +14,7 @@ public class PagePrincipale {
     private final Button boutonInfo = new Button("Infos");
     private final Scene scenePrincipale = new Scene(new VBox(), 900, 520);
 
+    //Constructeur du UI de la page d'accueil
     PagePrincipale(){
         var root = new VBox();
         root.setAlignment(Pos.TOP_CENTER);
@@ -34,6 +35,8 @@ public class PagePrincipale {
 
         scenePrincipale.setRoot(root);
     }
+
+    //--------GETTERS--------
     public Button getBoutonJouer() {
         return boutonJouer;
     }

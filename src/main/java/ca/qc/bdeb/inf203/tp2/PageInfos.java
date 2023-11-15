@@ -18,6 +18,7 @@ public class PageInfos {
     private final Button buttonRetour = new Button();
     private final Scene sceneInfos = new Scene(new VBox(), 900, 520);
 
+    //Constructeur du UI de la page infos
     PageInfos(){
         var root = new VBox();
         Text titreJeu = new Text("Charlotte la Barbotte"),

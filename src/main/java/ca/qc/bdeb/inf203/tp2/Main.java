@@ -14,5 +14,16 @@ public class Main {
     }
 }
 
-
+//TODO:
+// Fenêtre:
+// - Page d'accueil
+// - Page infos
+// - Page jeu
+// Gameplay:
+// - Background
+// - GUI
+// - Charlotte
+// - Ennemis
+// - Projectiles + barrel
+// - Passer au prochain niveau
 
