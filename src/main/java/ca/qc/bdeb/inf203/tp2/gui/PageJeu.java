@@ -12,14 +12,15 @@ public class PageJeu {
     private final Canvas canvas = new Canvas();
 
     PageJeu(int hauteurFenetre, int largeurFenetre){
-        var partie = new Partie();
+        canvas.setHeight(hauteurFenetre);
+        canvas.setWidth(largeurFenetre);
+        var partie = new Partie(canvas);
         var decor = new Decor();
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
             @Override
             public void handle(long now) {
-                canvas.setHeight(hauteurFenetre);
-                canvas.setWidth(largeurFenetre);
+
                 var context = canvas.getGraphicsContext2D();
                 double deltaTemps = (now - lastTime) * 1e-9;
 

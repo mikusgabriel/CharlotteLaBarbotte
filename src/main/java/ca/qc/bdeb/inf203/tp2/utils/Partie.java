@@ -1,14 +1,15 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Partie {
     private Charlotte charlotte;
 
     // Constructeur : on crée les objets de la partie
-    public Partie() {
-        charlotte = new Charlotte();
+    public Partie(Canvas canvas) {
+        charlotte = new Charlotte(canvas);
     }
 
     public void update(double deltaTemps) {

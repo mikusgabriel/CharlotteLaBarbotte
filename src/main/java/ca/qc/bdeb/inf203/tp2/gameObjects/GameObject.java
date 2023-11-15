@@ -4,6 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class GameObject {
+    protected double x, y, hauteur, largeur, vx = 0, vy = 0;
+    protected Image image;
+
     private GameObject(){
         x = 0;
         y = 0;
@@ -18,18 +21,6 @@ public abstract class GameObject {
         this.hauteur = hauteur;
     }
 
-
-
-    protected double hauteur;
-    protected double largeur;
-
-    protected double x;
-    protected double y;
-
-    protected Image image;
-    protected double vx = 0;
-    protected double vy = 0;
-
     public abstract void update(double deltaTime);
 
     public abstract boolean isDead();
@@ -40,6 +31,7 @@ public abstract class GameObject {
         }
     }
 
+    //--------GETTERS--------
     protected double getX() {
         return x;
     }
@@ -59,7 +51,4 @@ public abstract class GameObject {
     protected Image getImage() {
         return image;
     }
-
-
-
 }
