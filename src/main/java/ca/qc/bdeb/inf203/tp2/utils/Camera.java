@@ -1,36 +1,25 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
+import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
+
 public class Camera {
-    private double x,y;
+    private double x;
 
-    public void update(double deltaTemps) {
-        double vitesseDefilementX = 50;
-            // La caméra bouge vers la droite automatiquement
-
-    }
-/*
     public void suivre(Charlotte charlotte) {
-        if(personnage.getGauche() < ...) {
+        if(charlotte.getGauche() < 0) {
 // Quand le personnage est trop à gauche dans l'écran,
 // on ajuste la caméra
-            this.x = ...
+            this.x = 100;
         }
-        if(personnage.getDroite() > ...) {
+        if(charlotte.getDroite() > 500) {
 // Même chose si le personnage est trop à droite,
 // on déplace la caméra pour garder le personnage
 // visible dans l'écran
-            this.x = ...
+            this.x = 50;
         }
     }
 
-
- */
-
-
     public double calculerEcranX(double xMonde) {
         return xMonde - x;
-    }
-    public double calculerEcranY(double yMonde) {
-        return yMonde - y;
     }
 }

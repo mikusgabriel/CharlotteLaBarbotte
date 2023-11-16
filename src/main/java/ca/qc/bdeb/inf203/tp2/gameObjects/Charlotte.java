@@ -91,6 +91,8 @@ public class Charlotte extends GameObject {
     public double getY(){
         return y;
     }
+    public double getGauche(){ return x; }
+    public double getDroite(){ return x+ image.getWidth();}
 
     //--------SETTERS--------
     public void setX(double x) {
