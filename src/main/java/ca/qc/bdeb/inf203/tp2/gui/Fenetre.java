@@ -13,24 +13,27 @@ public class Fenetre extends Application {
     public void start(Stage stage) {
         var hauteurFenetre = 520;
         var largeurFenetre = 900;
-        var pagePrincipale= new PagePrincipale();
+
+        var pagePrincipale = new PagePrincipale();
         var pageInfos = new PageInfos();
         var pageJeu = new PageJeu(hauteurFenetre, largeurFenetre);
 
-        var scene = new Scene(pagePrincipale.getRoot(), largeurFenetre, hauteurFenetre);
+        var scenePrincipale = new Scene(pagePrincipale.getRoot(), largeurFenetre, hauteurFenetre);
+        var sceneInfos = new Scene(pageInfos.getRoot(), largeurFenetre, hauteurFenetre);
+        var sceneJeu = new Scene(pageJeu.getRoot(), largeurFenetre, hauteurFenetre);
 
         //--------KEYBOARD EVENTS--------
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page info
-        pageInfos.getRoot().setOnKeyPressed((event -> {
+        sceneInfos.getRoot().setOnKeyPressed((event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                scene.setRoot(pagePrincipale.getRoot());
+                stage.setScene(scenePrincipale);
             }
         }));
 
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page jeu
-        scene.setOnKeyPressed((event -> {
+        sceneJeu.setOnKeyPressed((event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                scene.setRoot(pagePrincipale.getRoot());
+                stage.setScene(scenePrincipale);
             }
             //Detecter lorsqu'une touche est appuyee
             else {
@@ -39,26 +42,26 @@ public class Fenetre extends Application {
         }));
 
         //Detecter lorsqu'une touche est relachee
-        scene.setOnKeyReleased((event ->
+        sceneJeu.setOnKeyReleased((event ->
                 Input.setKeyPressed(event.getCode(), false)));
 
         //--------BUTTON EVENTS--------
         //Bouton retourner sur la page d'accueil a partir de la page infos
         pageInfos.getButtonRetour().setOnAction(event ->
-                scene.setRoot(pagePrincipale.getRoot())
+                stage.setScene(scenePrincipale)
         );
 
         //Bouton aller a la page infos a partir de la page d'accueil
         pagePrincipale.getBoutonInfos().setOnAction(event ->
-                scene.setRoot(pageInfos.getRoot())
+                stage.setScene(sceneInfos)
         );
 
-        //Bouton commencer une partie
+        //Bouton aller a la page jeu a partir de la page d'accueil
         pagePrincipale.getBoutonJouer().setOnAction(event ->
-                scene.setRoot(pageJeu.getRoot())
+                stage.setScene(sceneJeu)
         );
 
-        stage.setScene(scene);
+        stage.setScene(scenePrincipale);
         stage.setTitle("Charlotte la Barbotte");
         stage.getIcons().add(new Image("charlotte.png"));
         stage.show();

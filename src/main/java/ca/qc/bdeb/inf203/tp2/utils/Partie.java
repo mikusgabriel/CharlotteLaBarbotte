@@ -5,11 +5,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Partie {
-    private Charlotte charlotte;
+    private final Charlotte charlotte;
 
     // Constructeur : on crée les objets de la partie
     public Partie(Canvas canvas) {
-        charlotte = new Charlotte(canvas);
+        this.charlotte = new Charlotte(canvas);
     }
 
     public void update(double deltaTemps) {
@@ -23,5 +23,10 @@ public class Partie {
     public void draw(GraphicsContext context) {
         charlotte.draw(context);
 // Dessiner les objets
+    }
+
+    //FIXME implementation temporaire pour finir la partie
+   public void end(){
+
     }
 }

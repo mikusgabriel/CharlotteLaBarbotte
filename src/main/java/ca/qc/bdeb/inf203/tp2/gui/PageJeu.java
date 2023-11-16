@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.gui;
 
+import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
 import ca.qc.bdeb.inf203.tp2.gameObjects.Decor;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
@@ -14,7 +15,9 @@ public class PageJeu {
     PageJeu(int hauteurFenetre, int largeurFenetre){
         canvas.setHeight(hauteurFenetre);
         canvas.setWidth(largeurFenetre);
-        var partie = new Partie(canvas);
+
+        Partie partie = new Partie(canvas);
+
         var decor = new Decor();
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
@@ -30,7 +33,6 @@ public class PageJeu {
                 lastTime = now;
             }
         };
-
         timer.start();
         root.getChildren().add(canvas);
         root.setBackground(decor.getBackground());

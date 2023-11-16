@@ -56,7 +56,7 @@ public class Charlotte extends GameObject {
         //Collision avec le haut
         if(y <= 0) {
             y = 1;
-            System.out.println("colliding with bottom");
+            System.out.println("colliding with top");
         }
         //Collision avec la gauche
         if(x <= 0) {
