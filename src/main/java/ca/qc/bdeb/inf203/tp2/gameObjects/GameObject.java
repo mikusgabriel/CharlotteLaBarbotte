@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class GameObject {
-    protected double x, y, hauteur, largeur, vx = 0, vy = 0;
+    protected double x, y, hauteur, largeur, vx, vy, ax, ay;
     protected Image image;
 
     private GameObject(){
@@ -21,9 +21,23 @@ public abstract class GameObject {
         this.hauteur = hauteur;
     }
 
-    public abstract void update(double deltaTime);
+    public void update(double deltaTemps){
+        updatePhysique(deltaTemps);
+    }
 
     public abstract boolean isDead();
+
+
+    /**
+     * change la vitesse et acceleration de l'object enfant
+     */
+    protected void updatePhysique(double deltaTemps) {
+        vx += deltaTemps * ax;
+        vy += deltaTemps * ay;
+
+        x += deltaTemps * vx;
+        y += deltaTemps * vy;
+    }
 
     public void draw(GraphicsContext graphics) {
         if (image != null) {

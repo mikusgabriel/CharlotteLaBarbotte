@@ -8,7 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends GameObject {
-    private final static int PV_MAX = 4;
+    private final static int PV_MAX = 4, VX_MAX=300,VY_MAX=300;
+
     private int vie = PV_MAX, largeur = 102, hauteur = 90;
     private Canvas canvas;
 
@@ -20,6 +21,8 @@ public class Charlotte extends GameObject {
         this.canvas = canvas;
     }
     public void update(double deltaTemps){
+        //call update du super qui call update physique dans Gameobject
+        super.update(deltaTemps);
         boolean gauche = Input.isKeyPressed(KeyCode.A);
         boolean droite = Input.isKeyPressed(KeyCode.D);
         boolean haut = Input.isKeyPressed(KeyCode.W);
@@ -30,23 +33,24 @@ public class Charlotte extends GameObject {
         //Mouvement de Charlotte
         if(gauche){
             System.out.println("gauche");
-            x-=5;
+            ax=-1000;
 
         }if(droite){
             System.out.println("droite");
             image = new Image("charlotte-avant.png");
-            x+=5;
+            ax=1000;
 
 
         }if(haut){
             System.out.println("haut");
-            y-=5;
+            ay=-1000;
 
         }if(bas) {
             System.out.println("bas");
-            y += 5;
+            ay=1000;
 
         }
+
 
         //Collision avec le bas
         if(image.getHeight() + y >= canvas.getHeight()) {
@@ -65,6 +69,8 @@ public class Charlotte extends GameObject {
         }
 
     }
+
+
     public void perdreVie(){
         image= new Image("charlotte-ouch.png");
         vie--;
