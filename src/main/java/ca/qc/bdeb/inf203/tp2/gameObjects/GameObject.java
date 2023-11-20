@@ -7,7 +7,8 @@ public abstract class GameObject {
     protected double x, y, hauteur, largeur, vx, vy, ax, ay;
     protected Image image;
 
-    private GameObject(){
+    //maybe useless?
+    protected GameObject(){
         x = 0;
         y = 0;
         hauteur = 0;

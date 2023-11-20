@@ -1,6 +1,5 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
-import ca.qc.bdeb.inf203.tp2.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,16 +9,19 @@ import javafx.scene.input.KeyCode;
 public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, VX_MAX=300,VY_MAX=300;
 
-    private int vie = PV_MAX, largeur = 102, hauteur = 90;
-    private Canvas canvas;
+    private int vie = PV_MAX;
+    private final static int LARGEUR = 102, HAUTEUR =90;
+
+    private final Canvas canvas;
 
     public Charlotte(Canvas canvas) {
-        super(0, 260, 90, 102);
+        super(0, 260, HAUTEUR, LARGEUR);
         image=new Image("charlotte.png");
         x=0;
         y=260;
         this.canvas = canvas;
     }
+    @Override
     public void update(double deltaTemps){
         System.out.println(vx);
         System.out.println(vy);
@@ -46,6 +48,7 @@ public class Charlotte extends GameObject {
         }else{
             ax = 0;
             vx=ralentir(deltaTemps,vx);
+
 
         }
 

@@ -2,6 +2,7 @@ package ca.qc.bdeb.inf203.tp2.gui;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
 import ca.qc.bdeb.inf203.tp2.gameObjects.Decor;
+import ca.qc.bdeb.inf203.tp2.gameObjects.Ennemi;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
@@ -45,4 +46,5 @@ public class PageJeu {
     public VBox getRoot() {
         return root;
     }
+
 }

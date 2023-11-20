@@ -14,11 +14,11 @@ public class Fenetre extends Application {
     public void start(Stage stage) {
         var pagePrincipale = new PagePrincipale();
         var pageInfos = new PageInfos();
-        var pageJeu = new PageJeu(HAUTEUR_FENETRE, LARGEUR_FENETRE);
+
 
         var scenePrincipale = new Scene(pagePrincipale.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
         var sceneInfos = new Scene(pageInfos.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
-        var sceneJeu = new Scene(pageJeu.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
+
 
         //--------KEYBOARD EVENTS--------
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page info
@@ -27,6 +27,33 @@ public class Fenetre extends Application {
                 stage.setScene(scenePrincipale);
             }
         }));
+
+
+        //--------BUTTON EVENTS--------
+        //Bouton retourner sur la page d'accueil a partir de la page infos
+        pageInfos.getButtonRetour().setOnAction(event ->
+                stage.setScene(scenePrincipale)
+        );
+
+        //Bouton aller a la page infos a partir de la page d'accueil
+        pagePrincipale.getBoutonInfos().setOnAction(event ->
+                stage.setScene(sceneInfos)
+        );
+
+        //Bouton aller a la page jeu a partir de la page d'accueil
+        pagePrincipale.getBoutonJouer().setOnAction(event ->
+                stage.setScene(creationSceneJeu(stage,scenePrincipale))
+        );
+
+        stage.setScene(scenePrincipale);
+        stage.setTitle("Charlotte la Barbotte");
+        stage.getIcons().add(new Image("charlotte.png"));
+        stage.show();
+    }
+    public Scene creationSceneJeu(Stage stage, Scene scenePrincipale){
+
+        var pageJeu = new PageJeu(HAUTEUR_FENETRE, LARGEUR_FENETRE);
+        var sceneJeu = new Scene(pageJeu.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
 
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page jeu
         sceneJeu.setOnKeyPressed((event -> {
@@ -43,25 +70,6 @@ public class Fenetre extends Application {
         sceneJeu.setOnKeyReleased((event ->
                 Input.setKeyPressed(event.getCode(), false)));
 
-        //--------BUTTON EVENTS--------
-        //Bouton retourner sur la page d'accueil a partir de la page infos
-        pageInfos.getButtonRetour().setOnAction(event ->
-                stage.setScene(scenePrincipale)
-        );
-
-        //Bouton aller a la page infos a partir de la page d'accueil
-        pagePrincipale.getBoutonInfos().setOnAction(event ->
-                stage.setScene(sceneInfos)
-        );
-
-        //Bouton aller a la page jeu a partir de la page d'accueil
-        pagePrincipale.getBoutonJouer().setOnAction(event ->
-                stage.setScene(sceneJeu)
-        );
-
-        stage.setScene(scenePrincipale);
-        stage.setTitle("Charlotte la Barbotte");
-        stage.getIcons().add(new Image("charlotte.png"));
-        stage.show();
+        return sceneJeu;
     }
 }
