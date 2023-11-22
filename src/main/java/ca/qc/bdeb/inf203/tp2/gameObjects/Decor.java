@@ -12,11 +12,14 @@ public class Decor {
     private final Background background = generateBackground();
     private final static int LEVEL_LENGTH = 4160;
 
+    //Je ne sais pas comment get la couleur du background dans barre de vie sans ca donc aide moi
+    static Color backgroundCouleur;
+
     //Generer un background
     private Background generateBackground() {
         var rand = new Random();
         double hue = rand.nextDouble(190, 270), saturation = 0.84, brightness = 1.0;
-
+        backgroundCouleur=Color.hsb(hue, saturation, brightness);
         var backgroundFill = new BackgroundFill(Color.hsb(hue, saturation, brightness), null, null);
         var bgFills = new ArrayList<BackgroundFill>();
 
@@ -57,5 +60,4 @@ public class Decor {
     public Background getBackground() {
         return background;
     }
-
 }

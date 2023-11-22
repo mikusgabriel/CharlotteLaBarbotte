@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends GameObject {
-    private final static int PV_MAX = 4, VX_MAX=300,VY_MAX=300;
+    private final static int PV_MAX = 4, V_MAX=300;
 
     private int vie = PV_MAX;
     private final static int LARGEUR = 102, HAUTEUR =90;
@@ -27,10 +27,10 @@ public class Charlotte extends GameObject {
         System.out.println(vy);
         //call update du super qui call update physique dans Gameobject
         super.update(deltaTemps);
-        boolean gauche = Input.isKeyPressed(KeyCode.A);
-        boolean droite = Input.isKeyPressed(KeyCode.D);
-        boolean haut = Input.isKeyPressed(KeyCode.W);
-        boolean bas = Input.isKeyPressed(KeyCode.S);
+        boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
+        boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
+        boolean haut = Input.isKeyPressed(KeyCode.UP);
+        boolean bas = Input.isKeyPressed(KeyCode.DOWN);
 
         image = new Image("charlotte.png");
 
@@ -109,10 +109,10 @@ public class Charlotte extends GameObject {
 
     //La vitesse ne peut pas depasser 300
     public double vitesseMax(double v){
-        if(v > 300)
-            v = 300;
-        else if(v < -300)
-            v = -300;
+        if(v > V_MAX)
+            v = V_MAX;
+        else if(v < -V_MAX)
+            v = -V_MAX;
 
         return v;
     }
@@ -146,6 +146,7 @@ public class Charlotte extends GameObject {
     }
     public double getGauche(){ return x; }
     public double getDroite(){ return x+ image.getWidth();}
+    public int getVie() { return vie;}
 
     //--------SETTERS--------
     public void setX(double x) {

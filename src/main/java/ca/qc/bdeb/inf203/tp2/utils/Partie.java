@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
+import ca.qc.bdeb.inf203.tp2.gameObjects.BarreVie;
 import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
 import ca.qc.bdeb.inf203.tp2.gameObjects.Ennemi;
 import javafx.scene.canvas.Canvas;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public class Partie {
     private final Charlotte charlotte;
+    private final BarreVie barreVie=new BarreVie();
     private final Canvas canvas;
     private final ArrayList<Ennemi> ennemis = new ArrayList<>();
 
@@ -51,6 +53,7 @@ public class Partie {
             ennemi.draw(context);
         }
         charlotte.draw(context);
+        barreVie.update(context,charlotte.getVie());
         context.setFill(Color.RED);
         context.fillRect(xScreen, height, width, height);
 // Dessiner les objets
