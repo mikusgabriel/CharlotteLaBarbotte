@@ -15,26 +15,30 @@ public class Partie {
     private final Charlotte charlotte;
     private final BarreVie barreVie=new BarreVie();
     private final Canvas canvas;
+
+    private final Camera camera;
     private final ArrayList<Ennemi> ennemis = new ArrayList<>();
 
 
     // Constructeur : on crée les objets de la partie
-    public Partie(Canvas canvas, Charlotte charlotte) {
+    public Partie(Canvas canvas, Charlotte charlotte,Camera camera) {
         this.charlotte = charlotte;
         this.canvas = canvas;
+        this.camera=camera;
         for(int i=0;i<5;i++){
             ennemis.add(new Ennemi(canvas,1));
         }
 
 
+
     }
 
     public void update(double deltaTemps) {
-        charlotte.update(deltaTemps);
+        charlotte.update(deltaTemps,camera);
         charlotte.isDead();
         for (Ennemi ennemi:ennemis
              ) {
-            ennemi.update(deltaTemps);
+            ennemi.update(deltaTemps,camera);
             ennemi.isDead();
         }
 
@@ -43,20 +47,15 @@ public class Partie {
 // Autres : vérifie si on a gagné/perdu, ...
     }
 
-    public void draw(GraphicsContext context, Camera camera) {
-        double height = canvas.getHeight();
-        double width = canvas.getWidth();
-        double xScreen = camera.calculerEcranX(width);
+    public void draw(GraphicsContext context) {
         for (Ennemi ennemi:ennemis
         ) {
             System.out.println("ennemi print");
-            ennemi.draw(context);
+            ennemi.draw(context, camera);
         }
-        charlotte.draw(context);
+        charlotte.draw(context,camera);
         barreVie.update(context,charlotte.getVie());
-        context.setFill(Color.RED);
-        context.fillRect(xScreen, height, width, height);
-// Dessiner les objets
+
     }
 
     //FIXME implementation temporaire pour finir la partie

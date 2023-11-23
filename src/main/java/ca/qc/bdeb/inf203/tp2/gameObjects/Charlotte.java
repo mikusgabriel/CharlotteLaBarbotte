@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,9 +10,10 @@ import javafx.scene.input.KeyCode;
 public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
 
+
     private int vie = PV_MAX;
     private final static int LARGEUR = 102, HAUTEUR =90;
-
+    Shooter shooter;
     private final Canvas canvas;
 
     public Charlotte(Canvas canvas) {
@@ -22,11 +24,11 @@ public class Charlotte extends GameObject {
         this.canvas = canvas;
     }
     @Override
-    public void update(double deltaTemps){
+    public void update(double deltaTemps, Camera camera){
         System.out.println(vx);
         System.out.println(vy);
         //call update du super qui call update physique dans Gameobject
-        super.update(deltaTemps);
+        super.update(deltaTemps,camera);
         boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
         boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
         boolean haut = Input.isKeyPressed(KeyCode.UP);
@@ -90,6 +92,8 @@ public class Charlotte extends GameObject {
             System.out.println("colliding with left");
         }
 
+        bougerCamera(camera,deltaTemps);
+
     }
 
     //methode utilisee du prof pour faire diminuer la vitesse d'un object
@@ -126,15 +130,23 @@ public class Charlotte extends GameObject {
     @Override
     public boolean isDead() {
         if(vie==0){
+            image=new Image("charlotte-ouch.png");
             return true;
         }
         return false;
 
     }
 
+    private void bougerCamera(Camera camera, double deltaTemps){
+        if((x-camera.getX())>=camera.getWidth()/5){
+            camera.setX(camera.getX()+vx*deltaTemps);
+        }
+
+    }
+
     @Override
-    public void draw(GraphicsContext graphics) {
-        super.draw(graphics);
+    public void draw(GraphicsContext graphics, Camera camera) {
+        super.draw(graphics,camera);
     }
 
     //--------GETTERS--------

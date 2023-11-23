@@ -2,25 +2,24 @@ package ca.qc.bdeb.inf203.tp2.gui;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
 import ca.qc.bdeb.inf203.tp2.gameObjects.Decor;
-import ca.qc.bdeb.inf203.tp2.gameObjects.Ennemi;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.*;
 
 public class PageJeu {
     private final VBox root = new VBox();
     private final Canvas canvas = new Canvas();
 
+    private final Camera camera= new Camera(0,0,900,520);
+
     PageJeu(int hauteurFenetre, int largeurFenetre){
         canvas.setHeight(hauteurFenetre);
         canvas.setWidth(largeurFenetre);
 
         var charlotte = new Charlotte(canvas);
-        var partie = new Partie(canvas, charlotte);
-        var camera = new Camera();
+        var partie = new Partie(canvas, charlotte,camera);
         var decor = new Decor();
 
         var timer = new AnimationTimer() {
@@ -31,9 +30,10 @@ public class PageJeu {
                 double deltaTemps = (now - lastTime) * 1e-9;
 
                 partie.update(deltaTemps);
-                camera.suivre(charlotte);
                 context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                partie.draw(context, camera);
+                
+
+                partie.draw(context);
                 lastTime = now;
             }
         };

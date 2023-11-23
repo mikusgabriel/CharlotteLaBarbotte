@@ -1,5 +1,7 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+
+import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -37,7 +39,7 @@ public class Ennemi extends GameObject{
         return false;
     }
     @Override
-    public void draw(GraphicsContext graphics) {
-        super.draw(graphics);
+    public void draw(GraphicsContext graphics, Camera camera) {
+        super.draw(graphics, camera);
     }
 }
