@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Decor {
     private final Background background = generateBackground();
-    private final static int LEVEL_LENGTH = 4160;
+    private final static int MAP_WIDTH = 4160;
 
     //Generer un background
     private Background generateBackground() {
@@ -25,7 +25,7 @@ public class Decor {
         var bgImages = new ArrayList<BackgroundImage>();
 
         var currentFill = 0;
-        while (LEVEL_LENGTH > currentFill) {
+        while (MAP_WIDTH > currentFill) {
             Image[] images = {
                     new Image("decor1.png"),
                     new Image("decor2.png"),

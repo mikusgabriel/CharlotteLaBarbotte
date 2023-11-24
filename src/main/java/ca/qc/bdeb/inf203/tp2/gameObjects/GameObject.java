@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -40,7 +41,7 @@ public abstract class GameObject {
         y += deltaTemps * vy;
     }
 
-    public void draw(GraphicsContext graphics) {
+    public void draw(GraphicsContext graphics, Camera camera) {
         if (image != null) {
             graphics.drawImage(getImage(), 0, 0, getImage().getWidth(), getImage().getHeight(), getX(), getY(), getLargeur(), getHauteur());
         }

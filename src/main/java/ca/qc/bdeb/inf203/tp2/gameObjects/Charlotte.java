@@ -1,5 +1,7 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.gameObjects.GameObject;
+import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,19 +11,16 @@ import javafx.scene.input.KeyCode;
 public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, VX_MAX=300,VY_MAX=300;
 
-    private int vie = PV_MAX;
-    private final static int LARGEUR = 102, HAUTEUR =90;
-
-    private final Canvas canvas;
+    private int vie = PV_MAX, largeur = 102, hauteur = 90;
+    private Canvas canvas;
 
     public Charlotte(Canvas canvas) {
-        super(0, 260, HAUTEUR, LARGEUR);
+        super(0, 260, 90, 102);
         image=new Image("charlotte.png");
         x=0;
         y=260;
         this.canvas = canvas;
     }
-    @Override
     public void update(double deltaTemps){
         System.out.println(vx);
         System.out.println(vy);
@@ -48,7 +47,6 @@ public class Charlotte extends GameObject {
         }else{
             ax = 0;
             vx=ralentir(deltaTemps,vx);
-
 
         }
 
@@ -109,10 +107,10 @@ public class Charlotte extends GameObject {
 
     //La vitesse ne peut pas depasser 300
     public double vitesseMax(double v){
-        if(v > 300)
-            v = 300;
-        else if(v < -300)
-            v = -300;
+        if(v > VX_MAX)
+            v = VX_MAX;
+        else if(v < -VX_MAX)
+            v = -VX_MAX;
 
         return v;
     }
@@ -133,8 +131,8 @@ public class Charlotte extends GameObject {
     }
 
     @Override
-    public void draw(GraphicsContext graphics) {
-        super.draw(graphics);
+    public void draw(GraphicsContext graphics, Camera camera) {
+        super.draw(graphics, camera);
     }
 
     //--------GETTERS--------
@@ -145,7 +143,7 @@ public class Charlotte extends GameObject {
         return y;
     }
     public double getGauche(){ return x; }
-    public double getDroite(){ return x+ image.getWidth();}
+    public double getDroite(){ return x + image.getWidth();}
 
     //--------SETTERS--------
     public void setX(double x) {
