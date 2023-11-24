@@ -23,7 +23,7 @@ public abstract class GameObject {
         this.hauteur = hauteur;
     }
 
-    public void update(double deltaTemps){
+    public void update(double deltaTemps, Camera camera){
         updatePhysique(deltaTemps);
     }
 
@@ -43,7 +43,7 @@ public abstract class GameObject {
 
     public void draw(GraphicsContext graphics, Camera camera) {
         if (image != null) {
-            graphics.drawImage(getImage(), 0, 0, getImage().getWidth(), getImage().getHeight(), getX(), getY(), getLargeur(), getHauteur());
+            graphics.drawImage(getImage(), 0, 0, getImage().getWidth(), getImage().getHeight(), getX()- camera.getX(), getY(), getLargeur(), getHauteur());
         }
     }
 

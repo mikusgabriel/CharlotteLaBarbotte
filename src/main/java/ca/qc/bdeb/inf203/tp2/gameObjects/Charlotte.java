@@ -1,6 +1,5 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
-import ca.qc.bdeb.inf203.tp2.gameObjects.GameObject;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import javafx.scene.canvas.Canvas;
@@ -9,27 +8,31 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends GameObject {
-    private final static int PV_MAX = 4, VX_MAX=300,VY_MAX=300;
+    private final static int PV_MAX = 4, V_MAX=300;
 
-    private int vie = PV_MAX, largeur = 102, hauteur = 90;
-    private Canvas canvas;
+
+    private int vie = PV_MAX;
+    private final static int LARGEUR = 102, HAUTEUR =90;
+    Shooter shooter;
+    private final Canvas canvas;
 
     public Charlotte(Canvas canvas) {
-        super(0, 260, 90, 102);
+        super(0, 260, HAUTEUR, LARGEUR);
         image=new Image("charlotte.png");
         x=0;
         y=260;
         this.canvas = canvas;
     }
-    public void update(double deltaTemps){
+    @Override
+    public void update(double deltaTemps, Camera camera){
         System.out.println(vx);
         System.out.println(vy);
         //call update du super qui call update physique dans Gameobject
-        super.update(deltaTemps);
-        boolean gauche = Input.isKeyPressed(KeyCode.A);
-        boolean droite = Input.isKeyPressed(KeyCode.D);
-        boolean haut = Input.isKeyPressed(KeyCode.W);
-        boolean bas = Input.isKeyPressed(KeyCode.S);
+        super.update(deltaTemps,camera);
+        boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
+        boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
+        boolean haut = Input.isKeyPressed(KeyCode.UP);
+        boolean bas = Input.isKeyPressed(KeyCode.DOWN);
 
         image = new Image("charlotte.png");
 
@@ -47,6 +50,7 @@ public class Charlotte extends GameObject {
         }else{
             ax = 0;
             vx=ralentir(deltaTemps,vx);
+
 
         }
 
@@ -88,6 +92,8 @@ public class Charlotte extends GameObject {
             System.out.println("colliding with left");
         }
 
+        bougerCamera(camera,deltaTemps);
+
     }
 
     //methode utilisee du prof pour faire diminuer la vitesse d'un object
@@ -107,10 +113,10 @@ public class Charlotte extends GameObject {
 
     //La vitesse ne peut pas depasser 300
     public double vitesseMax(double v){
-        if(v > VX_MAX)
-            v = VX_MAX;
-        else if(v < -VX_MAX)
-            v = -VX_MAX;
+        if(v > V_MAX)
+            v = V_MAX;
+        else if(v < -V_MAX)
+            v = -V_MAX;
 
         return v;
     }
@@ -124,15 +130,23 @@ public class Charlotte extends GameObject {
     @Override
     public boolean isDead() {
         if(vie==0){
+            image=new Image("charlotte-ouch.png");
             return true;
         }
         return false;
 
     }
 
+    private void bougerCamera(Camera camera, double deltaTemps){
+        if((x-camera.getX())>=camera.getWidth()/5){
+            camera.setX(camera.getX()+vx*deltaTemps);
+        }
+
+    }
+
     @Override
     public void draw(GraphicsContext graphics, Camera camera) {
-        super.draw(graphics, camera);
+        super.draw(graphics,camera);
     }
 
     //--------GETTERS--------
@@ -143,7 +157,8 @@ public class Charlotte extends GameObject {
         return y;
     }
     public double getGauche(){ return x; }
-    public double getDroite(){ return x + image.getWidth();}
+    public double getDroite(){ return x+ image.getWidth();}
+    public int getVie() { return vie;}
 
     //--------SETTERS--------
     public void setX(double x) {

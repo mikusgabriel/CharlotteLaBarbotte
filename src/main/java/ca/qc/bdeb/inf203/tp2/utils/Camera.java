@@ -1,22 +1,37 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
-import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
-
 public class Camera {
+
     private double x;
+    private double y;
+    private double height;
+    private double width;
 
-    public double calculerEcranX(double xObjet) {
-        System.out.println("xObjet = " + xObjet);
-        return xObjet - x - 300;
+    public void setX(double x) {
+        this.x = x;
     }
 
-    public void suivre(Charlotte charlotte) {
-        if(charlotte.getDroite() > x) {
-            this.x --;
-        }
-        if(charlotte.getGauche() < 0) {
-            this.x ++;
-        }
-        if(x < 0) this.x = 0;
+    public Camera(double x, double y, double width, double height) {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
     }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
 }
