@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class Ennemi extends GameObject{
     private static final int LARGEUR_OG=120, HAUTEUR_OG=104;
+    private boolean hasAttacked = false;
 
     private static Random r=new Random();
 
@@ -41,6 +42,11 @@ public class Ennemi extends GameObject{
     @Override
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics, camera);
+    }
+    public void attack(Charlotte charlotte) {
+        if(!hasAttacked)
+            charlotte.perdreVie();
+        hasAttacked = true;
     }
 
     //--------GETTERS--------

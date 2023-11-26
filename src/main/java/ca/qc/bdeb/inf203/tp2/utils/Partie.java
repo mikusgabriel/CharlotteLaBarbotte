@@ -58,7 +58,7 @@ public class Partie {
             //Teste si les coords de charlotte et de l'ennemie se touchent
             //Si oui, alors charlotte perd une vie
             if(charlotte.getDroite() > ennemi.getX() && charlotte.getY() - ennemi.getY() < 100) {
-                charlotte.perdreVie();
+                ennemi.attack(charlotte);
                 barreVie.update(canvas.getGraphicsContext2D(), charlotte.getVie());
             }
         }

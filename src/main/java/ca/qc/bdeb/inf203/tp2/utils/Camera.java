@@ -1,7 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
 public class Camera {
-
     private double x;
     private double y;
     private double height;
