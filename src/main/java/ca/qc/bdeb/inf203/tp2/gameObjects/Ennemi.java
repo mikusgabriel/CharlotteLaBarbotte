@@ -42,4 +42,15 @@ public class Ennemi extends GameObject{
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics, camera);
     }
+
+    //--------GETTERS--------
+
+    @Override
+    public double getX() {
+        return super.getX();
+    }
+    @Override
+    public double getY() {
+        return super.getY();
+    }
 }

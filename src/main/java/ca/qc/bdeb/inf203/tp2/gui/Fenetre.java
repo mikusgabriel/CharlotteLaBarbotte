@@ -14,7 +14,7 @@ public class Fenetre extends Application {
     public void start(Stage stage) {
         var pagePrincipale = new PagePrincipale();
         var pageInfos = new PageInfos();
-        var pageJeu = new PageJeu();
+        var pageJeu = new PageJeu(HAUTEUR_FENETRE, LARGEUR_FENETRE);
 
         var scenePrincipale = new Scene(pagePrincipale.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
         var sceneInfos = new Scene(pageInfos.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);

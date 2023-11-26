@@ -25,8 +25,8 @@ public class Charlotte extends GameObject {
     }
     @Override
     public void update(double deltaTemps, Camera camera){
-        System.out.println(vx);
-        System.out.println(vy);
+        //System.out.println(vx);
+        //System.out.println(vy);
         //call update du super qui call update physique dans Gameobject
         super.update(deltaTemps,camera);
         boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
@@ -123,14 +123,14 @@ public class Charlotte extends GameObject {
 
 
     public void perdreVie(){
-        image= new Image("charlotte-ouch.png");
+        image = new Image("charlotte-outch.png");
         vie--;
     }
 
     @Override
     public boolean isDead() {
         if(vie==0){
-            image=new Image("charlotte-ouch.png");
+            image=new Image("charlotte-outch.png");
             return true;
         }
         return false;

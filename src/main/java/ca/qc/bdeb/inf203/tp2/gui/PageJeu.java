@@ -7,6 +7,9 @@ import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+
+import java.util.Random;
 
 public class PageJeu {
     private final VBox root = new VBox();
@@ -19,8 +22,8 @@ public class PageJeu {
         canvas.setWidth(largeurFenetre);
 
         var charlotte = new Charlotte(canvas);
-        var partie = new Partie(canvas, charlotte,camera);
-        var decor = new Decor();
+        var backgroundColor = randomBackgroundColor();
+        var partie = new Partie(canvas, charlotte,camera, backgroundColor);
 
         var timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
@@ -39,7 +42,18 @@ public class PageJeu {
         };
         timer.start();
         root.getChildren().add(canvas);
-        root.setBackground(decor.getBackground());
+        root.setBackground(new Background(new BackgroundFill(backgroundColor, null, null)));
+    }
+
+    /**
+     * Créer une couleur random pour le background du monde
+     * @return une classe Color
+     */
+    private Color randomBackgroundColor() {
+        var rand = new Random();
+        double hue = rand.nextDouble(190, 270), saturation = 0.84, brightness = 1.0;
+
+        return Color.hsb(hue, saturation, brightness);
     }
 
     //--------GETTERS--------
