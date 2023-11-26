@@ -22,7 +22,7 @@ public class ObjetDecor {
         //Choisi une image random du fichier "resources"
         this.imgDecor = new Image("./decor" + randImgNumber + ".png");
         this.x = x;
-        this.y = y + 10; //inset de 10px dans le sol
+        this.y = y;
     }
 
     /**

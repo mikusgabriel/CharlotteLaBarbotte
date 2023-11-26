@@ -14,7 +14,7 @@ public class Fenetre extends Application {
     public void start(Stage stage) {
         var pagePrincipale = new PagePrincipale();
         var pageInfos = new PageInfos();
-        var pageJeu = new PageJeu(HAUTEUR_FENETRE, LARGEUR_FENETRE);
+        var pageJeu = new PageJeu();
 
         var scenePrincipale = new Scene(pagePrincipale.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
         var sceneInfos = new Scene(pageInfos.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
@@ -32,6 +32,7 @@ public class Fenetre extends Application {
         sceneJeu.setOnKeyPressed((event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(scenePrincipale);
+                pageJeu.getTimer().stop();
             }
             //Detecter lorsqu'une touche est appuyee
             else {
@@ -56,7 +57,10 @@ public class Fenetre extends Application {
 
         //Bouton aller a la page jeu a partir de la page d'accueil
         pagePrincipale.getBoutonJouer().setOnAction(event ->
-                stage.setScene(sceneJeu)
+        {
+            stage.setScene(sceneJeu);
+            pageJeu.getTimer().start();
+        }
         );
 
         stage.setScene(scenePrincipale);

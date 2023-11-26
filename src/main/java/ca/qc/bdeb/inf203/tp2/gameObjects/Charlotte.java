@@ -9,12 +9,11 @@ import javafx.scene.input.KeyCode;
 
 public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
-
-
     private int vie = PV_MAX;
     private final static int LARGEUR = 102, HAUTEUR =90;
     Shooter shooter;
     private final Canvas canvas;
+    private boolean moved = false;
 
     public Charlotte(Canvas canvas) {
         super(0, 260, HAUTEUR, LARGEUR);
@@ -93,7 +92,7 @@ public class Charlotte extends GameObject {
         }
 
         bougerCamera(camera,deltaTemps);
-
+        moved = x > 1;
     }
 
     //methode utilisee du prof pour faire diminuer la vitesse d'un object
@@ -159,6 +158,9 @@ public class Charlotte extends GameObject {
     public double getGauche(){ return x; }
     public double getDroite(){ return x+ image.getWidth();}
     public int getVie() { return vie;}
+    public boolean isMoved() {
+        return moved;
+    }
 
     //--------SETTERS--------
     public void setX(double x) {

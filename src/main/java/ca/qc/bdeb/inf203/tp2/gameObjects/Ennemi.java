@@ -21,7 +21,7 @@ public class Ennemi extends GameObject{
         hauteur=r.nextInt(50,121);
         largeur=(int)(((double) LARGEUR_OG /HAUTEUR_OG)*hauteur);
         //A CHANGER IMPORTANT IMPORTANT IMPORTANT
-        x=850;
+        x=950;
         y=r.nextDouble(0.2*520,0.8*520);
         ax=-500;
         vx= -100* Math.pow(niveau,0.33)+200;
