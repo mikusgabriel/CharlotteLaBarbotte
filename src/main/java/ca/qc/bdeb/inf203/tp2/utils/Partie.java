@@ -32,7 +32,7 @@ public class Partie {
         this.backgroundColor = generateRandomColor();
         this.barreVie = new BarreVie(backgroundColor);
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<1;i++){
             ennemis.add(new Ennemi(canvas,niveau));
             System.out.println("ennemi print");
         }
@@ -55,9 +55,10 @@ public class Partie {
 
             ennemi.isDead();
 
-            //Teste si les coords de charlotte et de l'ennemie se touchent
-            //Si oui, alors charlotte perd une vie
-            if(charlotte.getDroite() > ennemi.getX() && charlotte.getY() - ennemi.getY() < 100) {
+            // --Detection des collisions--
+            // Teste si les coords de charlotte et de l'ennemie se touchent
+            // Si oui, alors charlotte perd une vie
+            if(charlotte.isTouching(ennemi)) {
                 ennemi.attack(charlotte);
                 barreVie.update(canvas.getGraphicsContext2D(), charlotte.getVie());
             }
@@ -110,5 +111,8 @@ public class Partie {
     }
     public Canvas getCanvas() {
         return canvas;
+    }
+    public Charlotte getCharlotte() {
+        return charlotte;
     }
 }

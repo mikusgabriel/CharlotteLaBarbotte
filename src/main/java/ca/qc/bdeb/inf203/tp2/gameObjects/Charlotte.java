@@ -11,10 +11,13 @@ public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
     private int vie = PV_MAX;
     private final static int LARGEUR = 102, HAUTEUR =90;
-    Shooter shooter;
     private final Canvas canvas;
     private boolean moved = false;
 
+    /**
+     * Constructeur de Charlotte
+     * @param canvas On passe le canvas en parametre pour les collisions
+     */
     public Charlotte(Canvas canvas) {
         super(0, 260, HAUTEUR, LARGEUR);
         image=new Image("charlotte.png");
@@ -33,15 +36,11 @@ public class Charlotte extends GameObject {
         boolean haut = Input.isKeyPressed(KeyCode.UP);
         boolean bas = Input.isKeyPressed(KeyCode.DOWN);
 
-        image = new Image("charlotte.png");
-
         //Mouvement de Charlotte translation axe des X
         if(gauche){
-            System.out.println("gauche");
             ax=-1000;
 
         }else if(droite){
-            System.out.println("droite");
             image = new Image("charlotte-avant.png");
             ax=1000;
 
@@ -50,16 +49,14 @@ public class Charlotte extends GameObject {
             ax = 0;
             vx=ralentir(deltaTemps,vx);
 
-
+            image = new Image("charlotte.png");
         }
 
         //Mouvement de Charlotte translation axe des Y
         if(haut){
-            System.out.println("haut");
             ay=-1000;
 
         }else if(bas) {
-            System.out.println("bas");
             ay=1000;
 
         }else{

@@ -51,8 +51,10 @@ public class Ennemi extends GameObject{
      * @param charlotte Appel de la methode perdreVie()
      */
     public void attack(Charlotte charlotte) {
-        if(!hasAttacked)
+        if(!hasAttacked) {
             charlotte.perdreVie();
+            System.out.println("hit!");
+        }
         hasAttacked = true;
     }
 

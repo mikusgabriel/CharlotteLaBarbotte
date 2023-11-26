@@ -28,6 +28,12 @@ public abstract class GameObject {
     }
 
     public abstract boolean isDead();
+    public boolean isTouching(GameObject otherObject) {
+        double absValOfDistanceX = Math.abs(otherObject.getX() - this.x),
+                absValOfDistanceY = Math.abs(otherObject.getY() - this.y);
+
+        return absValOfDistanceX <= this.hauteur && absValOfDistanceY <= this.largeur;
+    }
 
 
     /**

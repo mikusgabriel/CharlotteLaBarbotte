@@ -23,7 +23,6 @@ public class BarreVie {
         graphics.fillRect(30, 30, LARGEUR_INITIALE, HAUTEUR_INITIALE);
         graphics.setFill(backgroundColor);
         graphics.fillRect(30+BORDURE_LARGEUR + LARGEUR_INITIALE * viePourcentage, 30 + BORDURE_LARGEUR, (LARGEUR_INITIALE - LARGEUR_INITIALE * viePourcentage)-(2*BORDURE_LARGEUR), HAUTEUR_INITIALE-BORDURE_LARGEUR*2);
-        // graphics.fillRect(30+BORDURE_LARGEUR + LARGEUR_INITIALE * viePourcentage, 30 + BORDURE_LARGEUR, (LARGEUR_INITIALE - LARGEUR_INITIALE*viePourcentage)-(2*BORDURE_LARGEUR), HAUTEUR_INITIALE-BORDURE_LARGEUR*2);
     }
 
     //--------SETTERS--------

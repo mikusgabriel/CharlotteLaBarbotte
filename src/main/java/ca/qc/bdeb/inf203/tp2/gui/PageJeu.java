@@ -3,11 +3,17 @@ package ca.qc.bdeb.inf203.tp2.gui;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class PageJeu {
     private final Pane root = new Pane();
     private final AnimationTimer timer;
+    private boolean debugMode = false;
 
     /**
      * Constructeur : Creer une nouvelle partie et commence un AnimationTimer
@@ -41,5 +47,11 @@ public class PageJeu {
 
     public AnimationTimer getTimer() {
         return timer;
+    }
+
+    //--------SETTERS--------
+
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
     }
 }
