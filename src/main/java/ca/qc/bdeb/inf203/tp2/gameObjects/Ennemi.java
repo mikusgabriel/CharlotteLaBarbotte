@@ -43,6 +43,13 @@ public class Ennemi extends GameObject{
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics, camera);
     }
+
+    /**
+     * Un ennemi peut attacker Charlotte 1 seule fois.
+     * Lorsque la methode est appelé, hasAttaqued est mis à true,
+     * et l'ennemi ne peut plus attaquer Charlotte.
+     * @param charlotte Appel de la methode perdreVie()
+     */
     public void attack(Charlotte charlotte) {
         if(!hasAttacked)
             charlotte.perdreVie();
