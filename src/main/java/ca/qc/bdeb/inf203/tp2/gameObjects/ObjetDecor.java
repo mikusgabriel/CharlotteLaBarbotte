@@ -20,7 +20,7 @@ public class ObjetDecor extends GameObject {
         var randImgNumber = rand.nextInt(1, 7);
 
         //Choisi une image random du fichier "resources"
-        this.imgDecor = new Image("./decor" + randImgNumber + ".png");
+        this.imgDecor = new Image("decor" + randImgNumber + ".png");
         this.x = x;
         this.y = y;
     }

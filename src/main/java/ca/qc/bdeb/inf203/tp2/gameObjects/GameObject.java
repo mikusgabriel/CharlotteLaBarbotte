@@ -10,10 +10,10 @@ public abstract class GameObject {
 
     //maybe useless?
     protected GameObject(){
-        x = 0;
-        y = 0;
-        hauteur = 0;
-        largeur = 0;
+        this.x = 0;
+        this.y = 0;
+        this.hauteur = 0;
+        this.largeur = 0;
     }
 
     protected GameObject(double x, double y, double hauteur, double largeur) {
@@ -29,9 +29,10 @@ public abstract class GameObject {
 
     public abstract boolean isDead();
     public boolean isTouching(GameObject otherObject) {
-        double horizontalDistance = Math.abs(otherObject.getX() - this.x), verticalDistance = Math.abs(otherObject.getY() - this.y);
+        double horizontalDistance = Math.abs(otherObject.getX() - this.x),
+                verticalDistance = Math.abs(otherObject.getY() - this.y);
 
-        return horizontalDistance <= this.hauteur && verticalDistance <= this.largeur;
+        return horizontalDistance <= hauteur && verticalDistance <= largeur;
     }
 
 
