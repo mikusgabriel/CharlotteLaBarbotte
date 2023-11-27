@@ -1,33 +1,38 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends GameObject {
-    private final static int PV_MAX = 4, V_MAX = 300, HAUTEUR_CHARLOTTE = 90, LARGEUR_CHARLOTTE = 102;
-    private int vie;
-    private double x, y;
+    private final static int PV_MAX = 4, V_MAX=300;
+    private int vie = PV_MAX;
+    private final static int LARGEUR = 102, HAUTEUR =90;
+    private final Canvas canvas;
     private boolean moved = false;
 
     /**
      * Constructeur de Charlotte
+     * @param canvas On passe le canvas en parametre pour les collisions
      */
-    public Charlotte() {
-        super(0, 260, HAUTEUR_CHARLOTTE, LARGEUR_CHARLOTTE);
+    public Charlotte(Canvas canvas) {
+        super(0, 260, HAUTEUR, LARGEUR);
         image = new Image("charlotte.png");
         x = 0;
         y = 260;
-        this.vie = PV_MAX;
+        this.canvas = canvas;
     }
     @Override
     public void update(double deltaTemps, Camera camera){
-        //call update du super qui call update physique dans GameObject
+        //System.out.println(vx);
+        //System.out.println(vy);
+        //call update du super qui call update physique dans Gameobject
         super.update(deltaTemps,camera);
-
         boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
         boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
         boolean haut = Input.isKeyPressed(KeyCode.UP);
@@ -50,7 +55,7 @@ public class Charlotte extends GameObject {
         else if(droite) {
             image = new Image("charlotte-avant.png");
             ax = 1000;
-            avancerCamera(camera, deltaTemps);
+            bougerCamera(camera, deltaTemps);
         }
         else {
             ax = 0;
@@ -70,12 +75,12 @@ public class Charlotte extends GameObject {
         }
 
         // Collisions avec rebords
-        // Bas du monde
-        if(image.getHeight() + y >= Partie.HAUTEUR_MONDE) {
-            y = Partie.HAUTEUR_MONDE - image.getHeight() - 1;
+        // Bas
+        if(image.getHeight() + y >= canvas.getHeight()) {
+            y = canvas.getHeight() - image.getHeight() - 1;
             vy = 0;
         }
-        // Top du monde
+        // Haut
         if(y <= 0) {
             y = 1;
             vy = 0;
@@ -85,7 +90,7 @@ public class Charlotte extends GameObject {
             x = camera.getX() + 1;
             vx = 0;
         }
-        // Fin du monde
+        // Fin du niveau
         if(x >= Partie.LONGUEUR_MONDE) {
             x = Partie.LONGUEUR_MONDE - 1;
             vx = 0;
@@ -121,6 +126,7 @@ public class Charlotte extends GameObject {
         return v;
     }
 
+
     public void perdreVie() {
         image = new Image("charlotte-outch.png");
         if (vie > 0)
@@ -134,15 +140,8 @@ public class Charlotte extends GameObject {
         return vie == 0;
     }
 
-    /**
-     * Fait avancer la caméra lorsque Charlotte atteint le 1/5 de celui.
-     * @param camera La classe Camera permet de voir Charlotte sur l'écran à tout moment
-     */
-    private void avancerCamera(Camera camera, double deltaTemps) {
-        if(x - camera.getX() >= camera.getWidth() / 5
-                // Caméra avance jusqu'au moment où on atteint la fin du monde
-                && camera.getX() + camera.getWidth() <= Partie.LONGUEUR_MONDE) {
-
+    private void bougerCamera(Camera camera, double deltaTemps) {
+        if(x - camera.getX() >= camera.getWidth() / 5 && camera.getX() + camera.getWidth() <= Partie.LONGUEUR_MONDE) {
             camera.setX(camera.getX() + vx * deltaTemps);
         }
     }
@@ -159,9 +158,18 @@ public class Charlotte extends GameObject {
     public double getY(){
         return y;
     }
-    public int getVie() {
-        return vie; }
+    public double getGauche(){ return x; }
+    public double getDroite(){ return x+ image.getWidth();}
+    public int getVie() { return vie;}
     public boolean isMoved() {
         return moved;
+    }
+
+    //--------SETTERS--------
+    public void setX(double x) {
+        this.x = x;
+    }
+    public void setY(double y) {
+        this.y = y;
     }
 }

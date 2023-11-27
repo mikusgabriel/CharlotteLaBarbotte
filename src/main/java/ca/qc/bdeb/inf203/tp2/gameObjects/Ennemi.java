@@ -10,39 +10,31 @@ import java.util.Random;
 
 
 public class Ennemi extends GameObject{
-    private static final int LARGEUR_OG = 120, HAUTEUR_OG = 104;
+    private static final int LARGEUR_OG=120, HAUTEUR_OG=104;
     private boolean isAbleToAttack = true;
-    private final Image[] images = {
-            new Image("poisson1.png"),
-            new Image("poisson2.png"),
-            new Image("poisson3.png"),
-            new Image("poisson4.png"),
-            new Image("poisson5.png")};
 
-    /**
-     * Constructeur d'un poisson ennemi
-     * @param niveau L'ennemi se comporte différemment selon le niveau
-     */
-    public Ennemi(int niveau) {
-        var rand = new Random();
+    private static Random r=new Random();
 
-        image = choisirImage();
-        hauteur = rand.nextInt(50,121);
-        largeur = (int)(LARGEUR_OG / HAUTEUR_OG * hauteur); // Échelle 1:1 selon hauteur
-        x = 950;
-        ax = -500;
+    private final Image[] imagesEnnemi= {new Image("poisson1.png"),new Image("poisson2.png"),new Image("poisson3.png"),new Image("poisson4.png"),new Image("poisson5.png")};
 
-        // Formule pour vx : -100 * niveau^0.33 + 200
-        vx = -100 * Math.pow(niveau, 0.33) + 200;
-        y = rand.nextDouble(0.2 * 520,0.8 * 520);
-
-        //choisit une vy random entre 0 et 100 et soit - ou +
-        vy= rand.nextDouble(0,100) * (rand.nextBoolean() ? 1:-1);
+    public Ennemi(Canvas canvas,int niveau) {
+        image= choisirImage();
+        hauteur=r.nextInt(50,121);
+        largeur=(int)(((double) LARGEUR_OG /HAUTEUR_OG)*hauteur);
+        //A CHANGER IMPORTANT IMPORTANT IMPORTANT
+        x=950;
+        y=r.nextDouble(0.2*520,0.8*520);
+        ax=-500;
+        vx= -100* Math.pow(niveau,0.33)+200;
+        //choisit une vitesse random entre 0 et 100 et soit - ou +
+        vy= r.nextDouble(0,100)* (r.nextBoolean() ? 1:-1);
     }
 
     private Image choisirImage(){
-        return images[(new Random()).nextInt(0, images.length)];
+        var r=new Random();
+        return imagesEnnemi[r.nextInt(0,imagesEnnemi.length)];
     }
+
     @Override
     public boolean isDead() {
         return false;
@@ -51,6 +43,13 @@ public class Ennemi extends GameObject{
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics, camera);
     }
+
+    /**
+     * Un ennemi peut attacker Charlotte 1 seule fois.
+     * Lorsque la methode est appelé, hasAttaqued est mis à true,
+     * et l'ennemi ne peut plus attaquer Charlotte.
+     */
+
 
     //--------GETTERS--------
 
