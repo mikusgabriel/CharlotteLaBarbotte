@@ -31,7 +31,7 @@ public class Partie {
         this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
         this.barreVie = new BarreVie(backgroundColor);
 
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 1; i++) {
             ennemis.add(new Ennemi(canvas, niveau));
             System.out.println("ennemi print");
         }
@@ -45,7 +45,7 @@ public class Partie {
      * À chaque interval de temps, on remet à jour tous les objets de la partie
      * @param deltaTemps interval de temps compté en nanoseconde
      */
-    public void update(double deltaTemps) {
+    public void update(double deltaTemps)  {
         // Update Charlotte
         charlotte.update(deltaTemps, camera);
         charlotte.isDead();
@@ -55,14 +55,17 @@ public class Partie {
 
         // Update ennemis
         for (Ennemi ennemi : ennemis) {
-            ennemi.update(deltaTemps,camera);
+            if(charlotte.isMoved())
+                ennemi.update(deltaTemps,camera);
             ennemi.isDead();
 
             // --Detection des collisions--
             // Teste si les coordonnées de Charlotte et de l'ennemi se touchent
             // Si oui, alors ennemi attaque Charlotte
-            if(charlotte.isTouching(ennemi) && !ennemi.isDead())
-                ennemi.attack(charlotte);
+            if(charlotte.isTouching(ennemi) && !ennemi.isDead() && ennemi.isAbleToAttack()) {
+                charlotte.perdreVie();
+                ennemi.setIsAbleToAttack(false);
+            }
         }
 
         // Update condition fin de partie

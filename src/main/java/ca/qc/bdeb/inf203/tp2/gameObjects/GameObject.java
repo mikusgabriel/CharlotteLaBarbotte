@@ -29,15 +29,15 @@ public abstract class GameObject {
 
     public abstract boolean isDead();
     public boolean isTouching(GameObject otherObject) {
-        double absValOfDistanceX = Math.abs(otherObject.getX() - this.x),
-                absValOfDistanceY = Math.abs(otherObject.getY() - this.y);
+        double horizontalDistance = Math.abs(otherObject.getX() - this.x), verticalDistance = Math.abs(otherObject.getY() - this.y);
 
-        return absValOfDistanceX <= this.hauteur && absValOfDistanceY <= this.largeur;
+        return horizontalDistance <= this.hauteur && verticalDistance <= this.largeur;
     }
 
 
+
     /**
-     * change la vitesse et acceleration de l'object enfant
+     * Change la vitesse et acceleration de l'objet enfant
      */
     protected void updatePhysique(double deltaTemps) {
         vx += deltaTemps * ax;

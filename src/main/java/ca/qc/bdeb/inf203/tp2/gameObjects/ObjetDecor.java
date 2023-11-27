@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 import java.util.Random;
 
-public class ObjetDecor {
+public class ObjetDecor extends GameObject {
     private final double x;
     private final double y;
     private final Image imgDecor;
@@ -25,6 +25,19 @@ public class ObjetDecor {
         this.y = y;
     }
 
+    @Override
+    public boolean isDead() {
+        return false;
+    }
+
+    /**
+     * Verifie si le GameObject est visible par le joueur (dans l'écran)
+     * @return True or False
+     */
+    public boolean isInView(Camera camera) {
+        return (camera.getX() - imgDecor.getWidth() < x);
+    }
+
     /**
      * Dessine un objet decor
      * @param context le context ou on dessine l'image
@@ -33,14 +46,6 @@ public class ObjetDecor {
     public void draw(GraphicsContext context, Camera camera) {
         var xEcran = x - camera.getX();
         context.drawImage(imgDecor, xEcran, y);
-    }
-
-    /**
-     * Verifie si l'ObjetDecor est visible par le joueur
-     * @return True or False
-     */
-    public boolean isInView(Camera camera) {
-        return (camera.getX() - imgDecor.getWidth() < x);
     }
 
     //--------GETTERS--------

@@ -28,10 +28,11 @@ public class PageJeu {
                     var context = partie.getCanvas().getGraphicsContext2D();
                     double deltaTemps = (now - lastTime) * 1e-9;
 
-                    partie.update(deltaTemps);
                     context.clearRect(0, 0, partie.getCanvas().getWidth(), partie.getCanvas().getHeight());
 
+                    partie.update(deltaTemps);
                     partie.draw(context);
+
                     lastTime = now;
                 }
             };

@@ -1,7 +1,9 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
+import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -20,9 +22,9 @@ public class Charlotte extends GameObject {
      */
     public Charlotte(Canvas canvas) {
         super(0, 260, HAUTEUR, LARGEUR);
-        image=new Image("charlotte.png");
-        x=0;
-        y=260;
+        image = new Image("charlotte.png");
+        x = 0;
+        y = 260;
         this.canvas = canvas;
     }
     @Override
@@ -45,64 +47,62 @@ public class Charlotte extends GameObject {
             return;
         }
 
-        //Mouvement de Charlotte translation axe des X
-        if(gauche){
-            ax=-1000;
-
-        }else if(droite){
+        // Translation
+        // Horizontale
+        if(gauche) {
+            ax = -1000;
+        }
+        else if(droite) {
             image = new Image("charlotte-avant.png");
-            ax=1000;
-
-
-        }else{
+            ax = 1000;
+            bougerCamera(camera, deltaTemps);
+        }
+        else {
             ax = 0;
-            vx=ralentir(deltaTemps,vx);
-
+            vx = ralentir(deltaTemps,vx);
             image = new Image("charlotte.png");
         }
-
-        //Mouvement de Charlotte translation axe des Y
-        if(haut){
-            ay=-1000;
-
-        }else if(bas) {
-            ay=1000;
-
-        }else{
-            ay=0;
-            vy=ralentir(deltaTemps,vy);
-
+        // Verticale
+        if(haut) {
+            ay = -1000;
+        }
+        else if(bas) {
+            ay = 1000;
+        }
+        else {
+            ay = 0;
+            vy = ralentir(deltaTemps,vy);
         }
 
-        vx=vitesseMax(vx);
-        vy=vitesseMax(vy);
-
-
-        //Collision avec le bas
+        // Collisions avec rebords
+        // Bas
         if(image.getHeight() + y >= canvas.getHeight()) {
             y = canvas.getHeight() - image.getHeight() - 1;
-            System.out.println("colliding with bottom");
-            vy=0;
+            vy = 0;
         }
-        //Collision avec le haut
+        // Haut
         if(y <= 0) {
             y = 1;
-            vy=0;
-            System.out.println("colliding with top");
+            vy = 0;
         }
-        //Collision avec la gauche
-        if(x <= 0) {
-            x = 1;
-            vx=0;
-            System.out.println("colliding with left");
+        // Arrière
+        if(x <= camera.getX()) {
+            x = camera.getX() + 1;
+            vx = 0;
+        }
+        // Fin du niveau
+        if(x >= Partie.LONGUEUR_MONDE) {
+            x = Partie.LONGUEUR_MONDE - 1;
+            vx = 0;
         }
 
-        bougerCamera(camera,deltaTemps);
+        vx = vitesseMax(vx);
+        vy = vitesseMax(vy);
         moved = x > 1;
     }
 
-    //methode utilisee du prof pour faire diminuer la vitesse d'un object
-    public double ralentir(double deltaTemps,double v){
+    // Méthode du prof pour faire diminuer la vitesse d'un object
+    private double ralentir(double deltaTemps,double v){
     // Quand on relâche : on RALENTI au lieu de stopper
         int signeVitesse = v > 0 ? 1 : -1;
         double vitesseAmortissementX = -signeVitesse * 500;
@@ -116,8 +116,8 @@ public class Charlotte extends GameObject {
         return v;
     }
 
-    //La vitesse ne peut pas depasser 300
-    public double vitesseMax(double v){
+    // La vitesse ne peut pas dépasser 300
+    private double vitesseMax(double v){
         if(v > V_MAX)
             v = V_MAX;
         else if(v < -V_MAX)
@@ -127,12 +127,12 @@ public class Charlotte extends GameObject {
     }
 
 
-    public void perdreVie(){
+    public void perdreVie() {
         image = new Image("charlotte-outch.png");
-        if (vie < 0)
+        if (vie > 0)
             vie--;
         else
-            vie =0 ;
+            vie = 0;
     }
 
     @Override
@@ -140,11 +140,10 @@ public class Charlotte extends GameObject {
         return vie == 0;
     }
 
-    private void bougerCamera(Camera camera, double deltaTemps){
-        if((x-camera.getX())>=camera.getWidth()/5){
-            camera.setX(camera.getX()+vx*deltaTemps);
+    private void bougerCamera(Camera camera, double deltaTemps) {
+        if(x - camera.getX() >= camera.getWidth() / 5 && camera.getX() + camera.getWidth() <= Partie.LONGUEUR_MONDE) {
+            camera.setX(camera.getX() + vx * deltaTemps);
         }
-
     }
 
     @Override

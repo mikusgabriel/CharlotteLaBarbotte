@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Ennemi extends GameObject{
     private static final int LARGEUR_OG=120, HAUTEUR_OG=104;
-    private boolean hasAttacked = false;
+    private boolean isAbleToAttack = true;
 
     private static Random r=new Random();
 
@@ -48,15 +48,8 @@ public class Ennemi extends GameObject{
      * Un ennemi peut attacker Charlotte 1 seule fois.
      * Lorsque la methode est appelé, hasAttaqued est mis à true,
      * et l'ennemi ne peut plus attaquer Charlotte.
-     * @param charlotte Appel de la methode perdreVie()
      */
-    public void attack(Charlotte charlotte) {
-        if(!hasAttacked) {
-            charlotte.perdreVie();
-            System.out.println("hit!");
-        }
-        hasAttacked = true;
-    }
+
 
     //--------GETTERS--------
 
@@ -67,5 +60,13 @@ public class Ennemi extends GameObject{
     @Override
     public double getY() {
         return super.getY();
+    }
+    public boolean isAbleToAttack() {
+        return isAbleToAttack;
+    }
+
+    //--------SETTERS--------
+    public void setIsAbleToAttack(boolean isAbleToAttack){
+        this.isAbleToAttack = isAbleToAttack;
     }
 }
