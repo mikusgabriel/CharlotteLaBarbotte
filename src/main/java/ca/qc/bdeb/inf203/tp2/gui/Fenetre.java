@@ -8,16 +8,16 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class Fenetre extends Application {
-    public static final int HAUTEUR_FENETRE = 520, LARGEUR_FENETRE = 900;
+    public static final int HAUTEUR = 520, LARGEUR = 900;
     @Override
     public void start(Stage stage) {
         var pagePrincipale = new PagePrincipale();
         var pageInfos = new PageInfos();
         var pageJeu = new PageJeu();
 
-        var scenePrincipale = new Scene(pagePrincipale.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
-        var sceneInfos = new Scene(pageInfos.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
-        var sceneJeu = new Scene(pageJeu.getRoot(), LARGEUR_FENETRE, HAUTEUR_FENETRE);
+        var scenePrincipale = new Scene(pagePrincipale.getRoot(), LARGEUR, HAUTEUR);
+        var sceneInfos = new Scene(pageInfos.getRoot(), LARGEUR, HAUTEUR);
+        var sceneJeu = new Scene(pageJeu.getRoot(), LARGEUR, HAUTEUR);
 
         //--------KEYBOARD EVENTS--------
         //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page info

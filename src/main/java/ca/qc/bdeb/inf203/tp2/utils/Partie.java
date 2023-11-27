@@ -21,18 +21,18 @@ public class Partie {
     private final ArrayList<Baril> barilList = new ArrayList<>();
     private final Color backgroundColor;
     public final static int LONGUEUR_MONDE = 4160;
-    public final static int HAUTEUR_MONDE = 900;
+    public final static int HAUTEUR_MONDE = Fenetre.HAUTEUR;
 
     // Constructeur : on crée les objets de la partie
     public Partie(int niveau) {
-        this.canvas = new Canvas(Fenetre.LARGEUR_FENETRE, Fenetre.HAUTEUR_FENETRE);
-        this.charlotte = new Charlotte(canvas);
-        this.camera = new Camera(0, Fenetre.LARGEUR_FENETRE);
+        this.canvas = new Canvas(Fenetre.LARGEUR, Fenetre.HAUTEUR);
+        this.charlotte = new Charlotte();
+        this.camera = new Camera(0, canvas.getWidth());
         this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
         this.barreVie = new BarreVie(backgroundColor);
 
         for(int i = 0; i < 1; i++) {
-            ennemis.add(new Ennemi(canvas, niveau));
+            ennemis.add(new Ennemi(niveau));
             System.out.println("ennemi print");
         }
 
@@ -99,7 +99,7 @@ public class Partie {
      */
     public int genenerDecors(ArrayList<ObjetDecor> objetDecorList, int filledArea) {
         var distanceFromNext = (new Random()).nextInt(50, 100); // Distance entre decors est toujours contenue entre 50 et 100
-        var decor = new ObjetDecor(distanceFromNext + filledArea, HAUTEUR_MONDE - 490); // Decor est placé en bas du monde
+        var decor = new ObjetDecor(distanceFromNext + filledArea, HAUTEUR_MONDE); // Decor est placé en bas du monde
         filledArea += distanceFromNext + (int) decor.getImgDecor().getWidth();
 
         objetDecorList.add(decor);
@@ -120,8 +120,5 @@ public class Partie {
     }
     public Canvas getCanvas() {
         return canvas;
-    }
-    public Charlotte getCharlotte() {
-        return charlotte;
     }
 }

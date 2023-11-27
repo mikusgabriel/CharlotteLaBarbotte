@@ -29,7 +29,8 @@ public abstract class GameObject {
 
     public abstract boolean isDead();
     public boolean isTouching(GameObject otherObject) {
-        double horizontalDistance = Math.abs(otherObject.getX() - this.x), verticalDistance = Math.abs(otherObject.getY() - this.y);
+        double horizontalDistance = Math.abs(otherObject.getX() - this.x),
+                verticalDistance = Math.abs(otherObject.getY() - this.y);
 
         return horizontalDistance <= this.hauteur && verticalDistance <= this.largeur;
     }

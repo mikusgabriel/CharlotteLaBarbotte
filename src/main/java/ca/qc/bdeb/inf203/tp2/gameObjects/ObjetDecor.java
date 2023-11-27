@@ -19,10 +19,10 @@ public class ObjetDecor extends GameObject {
         var rand = new Random();
         var randImgNumber = rand.nextInt(1, 7);
 
-        //Choisi une image random du fichier "resources"
-        this.imgDecor = new Image("./decor" + randImgNumber + ".png");
+        //Choisi une url random entre decor1.png et decor6.png
+        this.imgDecor = new Image("decor" + randImgNumber + ".png");
         this.x = x;
-        this.y = y;
+        this.y = y - imgDecor.getHeight() + 10; // Inset de 10px
     }
 
     @Override

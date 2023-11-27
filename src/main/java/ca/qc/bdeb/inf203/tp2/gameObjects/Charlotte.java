@@ -1,6 +1,5 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
-import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
@@ -13,24 +12,17 @@ public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
     private int vie = PV_MAX;
     private final static int LARGEUR = 102, HAUTEUR =90;
-    private final Canvas canvas;
     private boolean moved = false;
 
     /**
      * Constructeur de Charlotte
-     * @param canvas On passe le canvas en parametre pour les collisions
      */
-    public Charlotte(Canvas canvas) {
+    public Charlotte() {
         super(0, 260, HAUTEUR, LARGEUR);
         image = new Image("charlotte.png");
-        x = 0;
-        y = 260;
-        this.canvas = canvas;
     }
     @Override
     public void update(double deltaTemps, Camera camera){
-        //System.out.println(vx);
-        //System.out.println(vy);
         //call update du super qui call update physique dans Gameobject
         super.update(deltaTemps,camera);
         boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
@@ -55,7 +47,7 @@ public class Charlotte extends GameObject {
         else if(droite) {
             image = new Image("charlotte-avant.png");
             ax = 1000;
-            bougerCamera(camera, deltaTemps);
+            avancerCamera(camera, deltaTemps);
         }
         else {
             ax = 0;
@@ -76,8 +68,9 @@ public class Charlotte extends GameObject {
 
         // Collisions avec rebords
         // Bas
-        if(image.getHeight() + y >= canvas.getHeight()) {
-            y = canvas.getHeight() - image.getHeight() - 1;
+        if(image.getHeight() + y >= Partie.HAUTEUR_MONDE) {
+            y = Partie.HAUTEUR_MONDE - image.getHeight() - 1;
+
             vy = 0;
         }
         // Haut
@@ -90,7 +83,7 @@ public class Charlotte extends GameObject {
             x = camera.getX() + 1;
             vx = 0;
         }
-        // Fin du niveau
+        // Fin du monde
         if(x >= Partie.LONGUEUR_MONDE) {
             x = Partie.LONGUEUR_MONDE - 1;
             vx = 0;
@@ -140,8 +133,10 @@ public class Charlotte extends GameObject {
         return vie == 0;
     }
 
-    private void bougerCamera(Camera camera, double deltaTemps) {
-        if(x - camera.getX() >= camera.getWidth() / 5 && camera.getX() + camera.getWidth() <= Partie.LONGUEUR_MONDE) {
+    private void avancerCamera(Camera camera, double deltaTemps) {
+        if(x - camera.getX() >= camera.getWidth() / 5
+                // Caméra avance seulement si la fin du monde n'a pas ete atteinte
+                && camera.getX() + camera.getWidth() <= Partie.LONGUEUR_MONDE) {
             camera.setX(camera.getX() + vx * deltaTemps);
         }
     }
@@ -158,18 +153,8 @@ public class Charlotte extends GameObject {
     public double getY(){
         return y;
     }
-    public double getGauche(){ return x; }
-    public double getDroite(){ return x+ image.getWidth();}
     public int getVie() { return vie;}
     public boolean isMoved() {
         return moved;
-    }
-
-    //--------SETTERS--------
-    public void setX(double x) {
-        this.x = x;
-    }
-    public void setY(double y) {
-        this.y = y;
     }
 }
