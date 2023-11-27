@@ -8,9 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends GameObject {
-
     private final static int PV_MAX = 4, V_MAX = 300, HAUTEUR_CHARLOTTE = 90, LARGEUR_CHARLOTTE = 102;
-
     private int vie;
     private double x, y;
     private boolean moved = false;
@@ -23,10 +21,6 @@ public class Charlotte extends GameObject {
         image = new Image("charlotte.png");
         x = 0;
         y = 260;
-
-        this.x = 0;
-        this.y = 260;
-        this.image = new Image("charlotte.png");
         this.vie = PV_MAX;
     }
     @Override
