@@ -27,7 +27,10 @@ public class Partie {
     public Partie(int niveau) {
         this.canvas = new Canvas(Fenetre.LARGEUR_FENETRE, Fenetre.HAUTEUR_FENETRE);
         this.charlotte = new Charlotte();
+
         this.camera = new Camera(0, Fenetre.LARGEUR_FENETRE);
+
+
         this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
         this.barreVie = new BarreVie(backgroundColor);
 
