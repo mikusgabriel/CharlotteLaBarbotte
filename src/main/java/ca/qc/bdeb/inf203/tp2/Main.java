@@ -17,9 +17,9 @@ public class Main {
 // - Page jeu ✔
 // Gameplay:
 // - Background ✔
-// - GUI
-// - Charlotte X
-// - Ennemis
+// - GUI ✔
+// - Charlotte ✔
+// - Ennemis ✔
 // - Projectiles + barrel
 // - Passer au prochain niveau
 // - Debug mode

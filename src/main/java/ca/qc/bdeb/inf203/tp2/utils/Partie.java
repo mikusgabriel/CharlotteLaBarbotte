@@ -1,9 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
-import ca.qc.bdeb.inf203.tp2.gameObjects.BarreVie;
-import ca.qc.bdeb.inf203.tp2.gameObjects.Charlotte;
-import ca.qc.bdeb.inf203.tp2.gameObjects.Ennemi;
-import ca.qc.bdeb.inf203.tp2.gameObjects.ObjetDecor;
+import ca.qc.bdeb.inf203.tp2.gameObjects.*;
 import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,85 +17,94 @@ public class Partie {
     private final Camera camera;
     private final ArrayList<Ennemi> ennemis = new ArrayList<>();
     private final ArrayList<ObjetDecor> objetDecorList = new ArrayList<>();
+    private final ArrayList<Projectile> projectileList = new ArrayList<>();
+    private final ArrayList<Baril> barilList = new ArrayList<>();
     private final Color backgroundColor;
     public final static int LONGUEUR_MONDE = 4160;
-
+    public final static int HAUTEUR_MONDE = 900;
 
     // Constructeur : on crée les objets de la partie
     public Partie(int niveau) {
         this.canvas = new Canvas(Fenetre.LARGEUR_FENETRE, Fenetre.HAUTEUR_FENETRE);
         this.charlotte = new Charlotte(canvas);
-        this.camera = new Camera(0,0, Fenetre.LARGEUR_FENETRE, Fenetre.HAUTEUR_FENETRE);
-        this.backgroundColor = generateRandomColor();
+        this.camera = new Camera(0, Fenetre.LARGEUR_FENETRE);
+        this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
         this.barreVie = new BarreVie(backgroundColor);
 
-        for(int i=0;i<1;i++){
-            ennemis.add(new Ennemi(canvas,niveau));
+        for(int i = 0; i < 5; i++) {
+            ennemis.add(new Ennemi(canvas, niveau));
             System.out.println("ennemi print");
         }
 
         //generation decor au debut
-        for (int filledArea = 0; filledArea < LONGUEUR_MONDE;) {
+        for (int filledArea = 0; filledArea < LONGUEUR_MONDE;)
             filledArea = genenerDecors(objetDecorList, filledArea);
-        }
     }
 
+    /**
+     * À chaque interval de temps, on remet à jour tous les objets de la partie
+     * @param deltaTemps interval de temps compté en nanoseconde
+     */
     public void update(double deltaTemps) {
+        // Update Charlotte
         charlotte.update(deltaTemps, camera);
         charlotte.isDead();
 
-        for (Ennemi ennemi:ennemis
-             ) {
-            // Les ennemies commencent a bouger seulement lorsque charlotte commence a bouger
-            if(charlotte.isMoved())
-                ennemi.update(deltaTemps,camera);
+        // Update barre de vie
+        barreVie.update(charlotte.getVie());
 
+        // Update ennemis
+        for (Ennemi ennemi : ennemis) {
+            ennemi.update(deltaTemps,camera);
             ennemi.isDead();
 
             // --Detection des collisions--
-            // Teste si les coords de charlotte et de l'ennemie se touchent
-            // Si oui, alors charlotte perd une vie
-            if(charlotte.isTouching(ennemi)) {
+            // Teste si les coordonnées de Charlotte et de l'ennemi se touchent
+            // Si oui, alors ennemi attaque Charlotte
+            if(charlotte.isTouching(ennemi) && !ennemi.isDead())
                 ennemi.attack(charlotte);
-                barreVie.update(canvas.getGraphicsContext2D(), charlotte.getVie());
-            }
         }
+
+        // Update condition fin de partie
         end();
     }
 
     public void draw(GraphicsContext context) {
+        // Dessiner le decor
         for (ObjetDecor objetDecor : objetDecorList) {
             if (objetDecor.isInView(camera))
                 objetDecor.draw(context, camera);
         }
 
+        // Dessiner Charlotte
         charlotte.draw(context, camera);
 
+        // Dessiner les ennemis
         for (Ennemi ennemi : ennemis) {
             ennemi.draw(context, camera);
         }
 
-        barreVie.update(context, charlotte.getVie());
-    }
-
-    public int genenerDecors(ArrayList<ObjetDecor> objetDecorList, int filledArea) {
-        var x = (new Random()).nextInt(50, 100);
-        objetDecorList.add(new ObjetDecor(x + filledArea, 410));
-        return filledArea + x + 80;
+        // Dessiner barre de vie
+        barreVie.draw(context);
     }
 
     /**
-     * Créer une couleur random pour le background du monde
-     * @return une classe Color
+     * Methode qui genere les objets decors jusqu'à la fin du monde
+     * @param objetDecorList ObjetDecor est placé dans un arrayList pour les appeler dans la methode draw()
+     * @param filledArea Longueur totale de chaque objet et de la distance entre chaque
+     * @return La nouvelle somme
      */
-    private Color generateRandomColor() {
-        var rand = new Random();
-        double hue = rand.nextDouble(190, 270), saturation = 0.84, brightness = 1.0;
+    public int genenerDecors(ArrayList<ObjetDecor> objetDecorList, int filledArea) {
+        var distanceFromNext = (new Random()).nextInt(50, 100); // Distance entre decors est toujours contenue entre 50 et 100
+        var decor = new ObjetDecor(distanceFromNext + filledArea, HAUTEUR_MONDE - 490); // Decor est placé en bas du monde
+        filledArea += distanceFromNext + (int) decor.getImgDecor().getWidth();
 
-        return Color.hsb(hue, saturation, brightness);
+        objetDecorList.add(decor);
+
+        return filledArea;
     }
 
-    /** Test si le joueur a gagne
+    /** Test si le joueur a gagné
      * @return - Return un boolean selon si charlotte a atteint la fin du monde pour determiner si le joueur a complete le niveau
      */
     public boolean end() {

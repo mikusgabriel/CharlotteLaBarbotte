@@ -8,8 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class Fenetre extends Application {
-    public static final int HAUTEUR_FENETRE = 520;
-    public static final int LARGEUR_FENETRE = 900;
+    public static final int HAUTEUR_FENETRE = 520, LARGEUR_FENETRE = 900;
     @Override
     public void start(Stage stage) {
         var pagePrincipale = new PagePrincipale();

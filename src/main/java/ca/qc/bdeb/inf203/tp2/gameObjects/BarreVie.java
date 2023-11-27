@@ -4,29 +4,29 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class BarreVie {
-    private Color backgroundColor;
-    private static final int LARGEUR_INITIALE=150, HAUTEUR_INITIALE=30, BORDURE_LARGEUR=2;
+    public static final int LARGEUR_BARRE_DE_VIE = 150, HAUTEUR_BARRE_DE_VIE = 30, BORDURE_BARRE_DE_VIE = 2;
+    private final Color backgroundColor;
+    private double viePourcentage;
 
     public BarreVie(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
-    public void update(GraphicsContext graphics,int nbVie) {
-        double viePourcentage = (double) (nbVie) / 4;
-        drawBarreVie(graphics,viePourcentage);
-
+    public void update(int nbVie) {
+        viePourcentage = (double) (nbVie) / 4;
     }
 
-    //Dessine la barre de vie blanche au complet ensuite dessine un rectangle couleur du background a l'interieur
-    private void drawBarreVie(GraphicsContext graphics, double viePourcentage) {
+    //Dessine la barre de vie blanche au complet ensuite dessine un rectangle couleur du background à l'intérieur
+    public void draw(GraphicsContext graphics) {
+        double posX = 30 + BORDURE_BARRE_DE_VIE + LARGEUR_BARRE_DE_VIE * viePourcentage,
+            posY = 30 + BORDURE_BARRE_DE_VIE,
+            width = (LARGEUR_BARRE_DE_VIE - LARGEUR_BARRE_DE_VIE * viePourcentage)-(2* BORDURE_BARRE_DE_VIE),
+            height = HAUTEUR_BARRE_DE_VIE - BORDURE_BARRE_DE_VIE * 2;
+
         graphics.setFill(Color.WHITE);
-        graphics.fillRect(30, 30, LARGEUR_INITIALE, HAUTEUR_INITIALE);
-        graphics.setFill(backgroundColor);
-        graphics.fillRect(30+BORDURE_LARGEUR + LARGEUR_INITIALE * viePourcentage, 30 + BORDURE_LARGEUR, (LARGEUR_INITIALE - LARGEUR_INITIALE * viePourcentage)-(2*BORDURE_LARGEUR), HAUTEUR_INITIALE-BORDURE_LARGEUR*2);
-    }
+        graphics.fillRect(30, 30, LARGEUR_BARRE_DE_VIE, HAUTEUR_BARRE_DE_VIE);
 
-    //--------SETTERS--------
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
+        graphics.setFill(backgroundColor);
+        graphics.fillRect(posX, posY, width, height);
     }
 }

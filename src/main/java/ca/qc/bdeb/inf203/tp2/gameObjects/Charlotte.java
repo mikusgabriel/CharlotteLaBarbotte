@@ -36,6 +36,15 @@ public class Charlotte extends GameObject {
         boolean haut = Input.isKeyPressed(KeyCode.UP);
         boolean bas = Input.isKeyPressed(KeyCode.DOWN);
 
+        if(isDead()) {
+            ax = 0;
+            ay = 0;
+            vx = 0;
+            vy = 0;
+            image = new Image("charlotte-outch.png");
+            return;
+        }
+
         //Mouvement de Charlotte translation axe des X
         if(gauche){
             ax=-1000;
@@ -120,17 +129,15 @@ public class Charlotte extends GameObject {
 
     public void perdreVie(){
         image = new Image("charlotte-outch.png");
-        vie--;
+        if (vie < 0)
+            vie--;
+        else
+            vie =0 ;
     }
 
     @Override
     public boolean isDead() {
-        if(vie==0){
-            image=new Image("charlotte-outch.png");
-            return true;
-        }
-        return false;
-
+        return vie == 0;
     }
 
     private void bougerCamera(Camera camera, double deltaTemps){

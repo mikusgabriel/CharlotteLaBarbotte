@@ -42,4 +42,10 @@ public class ObjetDecor {
     public boolean isInView(Camera camera) {
         return (camera.getX() - imgDecor.getWidth() < x);
     }
+
+    //--------GETTERS--------
+
+    public Image getImgDecor() {
+        return imgDecor;
+    }
 }
