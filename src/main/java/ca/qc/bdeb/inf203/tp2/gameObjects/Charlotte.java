@@ -14,6 +14,8 @@ public class Charlotte extends GameObject {
     private final static int LARGEUR = 102, HAUTEUR =90;
     private boolean moved = false;
 
+    private final Shooter shooter=new Shooter(getX()+getLargeur()/2,getY()+getHauteur()/2);
+
     /**
      * Constructeur de Charlotte
      */
@@ -128,7 +130,7 @@ public class Charlotte extends GameObject {
             vie = 0;
     }
 
-    @Override
+
     public boolean isDead() {
         return vie == 0;
     }
@@ -157,4 +159,5 @@ public class Charlotte extends GameObject {
     public boolean isMoved() {
         return moved;
     }
+    public Shooter getShooter(){ return shooter;}
 }

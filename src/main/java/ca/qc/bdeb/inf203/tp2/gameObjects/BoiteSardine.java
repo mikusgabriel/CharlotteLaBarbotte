@@ -6,8 +6,15 @@ public class BoiteSardine extends Projectile{
         this.x=x;
         this.y=y;
     }
+
+
     @Override
-    public boolean isDead() {
-        return false;
+    public void move() {
+
+    }
+
+    @Override
+    public void updateIconeProjectile() {
+
     }
 }

@@ -42,7 +42,7 @@ public class Partie {
     }
 
     /**
-     * À chaque interval de temps, on remet à jour tous les objets de la partie
+     * À chaque intervalle de temps, on remet à jour tous les objets de la partie
      * @param deltaTemps interval de temps compté en nanoseconde
      */
     public void update(double deltaTemps)  {
@@ -65,6 +65,12 @@ public class Partie {
             if(charlotte.isTouching(ennemi) && !ennemi.isDead() && ennemi.isAbleToAttack()) {
                 charlotte.perdreVie();
                 ennemi.setIsAbleToAttack(false);
+            }
+            for(Projectile projectile:projectileList){
+                if (projectile.isTouching(ennemi)){
+                    ennemis.remove(ennemi);
+                }
+
             }
         }
 

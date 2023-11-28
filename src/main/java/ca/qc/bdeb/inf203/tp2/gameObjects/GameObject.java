@@ -27,7 +27,7 @@ public abstract class GameObject {
         updatePhysique(deltaTemps);
     }
 
-    public abstract boolean isDead();
+
     public boolean isTouching(GameObject otherObject) {
         double horizontalDistance = Math.abs(otherObject.getX() - this.x),
                 verticalDistance = Math.abs(otherObject.getY() - this.y);

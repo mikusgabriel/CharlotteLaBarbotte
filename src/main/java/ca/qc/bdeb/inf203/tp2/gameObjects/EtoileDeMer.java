@@ -21,4 +21,14 @@ public class EtoileDeMer extends Projectile{
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics,camera);
     }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public void updateIconeProjectile() {
+
+    }
 }
