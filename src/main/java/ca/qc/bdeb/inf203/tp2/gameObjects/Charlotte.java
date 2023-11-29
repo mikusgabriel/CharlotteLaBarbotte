@@ -35,6 +35,7 @@ public class Charlotte extends GameObject {
         boolean haut = Input.isKeyPressed(KeyCode.UP);
         boolean bas = Input.isKeyPressed(KeyCode.DOWN);
         boolean tirer = Input.isKeyPressed(KeyCode.SPACE);
+        avancerCamera(camera, deltaTemps);
 
 
         if(isDead()) {
@@ -65,7 +66,7 @@ public class Charlotte extends GameObject {
         else if(droite) {
             image = new Image("charlotte-avant.png");
             ax = 1000;
-            avancerCamera(camera, deltaTemps);
+
         }
         else {
             ax = 0;

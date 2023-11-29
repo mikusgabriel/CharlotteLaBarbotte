@@ -9,6 +9,8 @@ public class BoiteSardine extends Projectile{
 
     private final int LARGEUR=36, HAUTEUR=35, Q_SARDINES=-200;
 
+    private double forceCoulomb=0;
+
     public BoiteSardine(double x, double y){
         image=new Image("sardines.png");
         this.x=x;
@@ -22,19 +24,18 @@ public class BoiteSardine extends Projectile{
     @Override
     public void update(double deltaTemps, Camera camera){
         super.update(deltaTemps,camera);
-
-
-
     }
 
-    public void updateMouvement(double deltaTemps, Ennemi ennemi){
-
+    public void updateMouvement(double deltaTemps, Ennemi ennemi, Camera camera){
         //je ne sais pas si je dois le mettre en attribut pense pas
         int qEnnemi=-100;
         int K=1000;
         //choisir le
-        double ForceCoulomb=(K*qEnnemi*Q_SARDINES)/getDistance(ennemi);
+        forceCoulomb+=(K*qEnnemi*Q_SARDINES)/getDistance(ennemi);
 
+
+
+        update(deltaTemps,camera);
     }
     public double getDistance(Ennemi ennemi){
         return Math.sqrt(Math.pow((ennemi.getX() - x),2) + Math.pow((ennemi.getY() - y),2));
