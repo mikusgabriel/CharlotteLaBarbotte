@@ -17,7 +17,7 @@ public class Shooter{
     public Shooter(double x,double y) {
         this.x=x;
         this.y=y;
-        projectile=new EtoileDeMer(x,y);
+        projectile = new EtoileDeMer(x,y);
     }
     public void suivreCharlotte(double x, double y){
         this.x=x;

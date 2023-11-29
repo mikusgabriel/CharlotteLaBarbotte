@@ -7,6 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+/**
+ * Dans la classe Fenetre, on crée les différentes scènes et
+ * on attribue les fonctionnalités nécessaires aux boutons
+ * et touches du clavier
+ */
 public class Fenetre extends Application {
     public static final int HAUTEUR = 520, LARGEUR = 900;
     @Override
@@ -20,25 +25,29 @@ public class Fenetre extends Application {
         var sceneJeu = new Scene(pageJeu.getRoot(), LARGEUR, HAUTEUR);
 
         //--------KEYBOARD EVENTS--------
-        //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page info
+        // Appuyer sur ESCAPE pour
+        // retourner à l'écran d'accueil
+        // a partir de la page info
         sceneInfos.getRoot().setOnKeyPressed((event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(scenePrincipale);
             }
         }));
 
-        //Appuyer sur ESCAPE pour retourner à l'écran d'accueil a partir de la page jeu
+        // Appuyer sur ESCAPE pour
+        // retourner à l'écran d'accueil
+        // a partir de la page jeu
         sceneJeu.setOnKeyPressed((event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(scenePrincipale);
                 pageJeu.getTimer().stop();
             }
-            //debug mode
+            // debug mode
             else if (event.getCode() == KeyCode.D) {
                 pageJeu.setDebugMode(true);
                 System.out.println("debug mode");
             }
-            //Detecter lorsqu'une touche est appuyee
+            // Detecter lorsqu'une touche est appuyee
             else {
                 Input.setKeyPressed(event.getCode(), true);
             }
@@ -49,23 +58,26 @@ public class Fenetre extends Application {
                 Input.setKeyPressed(event.getCode(), false)));
 
         //--------BUTTON EVENTS--------
-        //Bouton retourner sur la page d'accueil a partir de la page infos
+        // Bouton retourner sur la page
+        // d'accueil à partir de la page
+        // infos
         pageInfos.getButtonRetour().setOnAction(event ->
                 stage.setScene(scenePrincipale)
         );
 
-        //Bouton aller a la page infos a partir de la page d'accueil
+        // Bouton aller a la page infos
+        // à partir de la page d'accueil
         pagePrincipale.getBoutonInfos().setOnAction(event ->
                 stage.setScene(sceneInfos)
         );
 
-        //Bouton aller a la page jeu a partir de la page d'accueil
+        // Bouton aller a la page jeu
+        // à partir de la page d'accueil
         pagePrincipale.getBoutonJouer().setOnAction(event ->
         {
+            sceneJeu.setRoot(new PageJeu().getRoot());
             stage.setScene(sceneJeu);
-            pageJeu.getTimer().start();
-        }
-        );
+        });
 
         stage.setScene(scenePrincipale);
         stage.setResizable(false);

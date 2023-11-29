@@ -4,6 +4,9 @@ import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * Tout les objets dessinés dans le jeu hé
+ */
 public abstract class GameObject {
     protected double x, y, hauteur, largeur, vx, vy, ax, ay;
     protected Image image;

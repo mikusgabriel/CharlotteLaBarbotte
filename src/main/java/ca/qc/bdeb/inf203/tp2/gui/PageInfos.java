@@ -12,14 +12,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * Page d'informations supplémentaires (crédits)
+ */
 public class PageInfos {
     private final Button buttonRetour = new Button();
     private final VBox root = new VBox();
 
     /**
-     * Constructeur du UI de la page infos
+     * Constructeur de la page infos
      */
-    PageInfos(){
+    public PageInfos(){
         Text titreJeu = new Text("Charlotte la Barbotte"),
                 par = new Text("Par"),
                 et = new Text("et"),

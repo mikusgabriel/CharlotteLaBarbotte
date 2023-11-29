@@ -7,8 +7,7 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 public class ObjetDecor extends GameObject {
-    private final double x;
-    private final double y;
+    private final double x, y;
     private final Image imgDecor;
 
     /**
@@ -16,20 +15,17 @@ public class ObjetDecor extends GameObject {
      * @param x position dans le monde ou le decor doit apparaitre
      */
     public ObjetDecor(double x, double y) {
-        var rand = new Random();
-        var randImgNumber = rand.nextInt(1, 7);
-
         //Choisi une url random entre decor1.png et decor6.png
-        this.imgDecor = new Image("decor" + randImgNumber + ".png");
+        this.imgDecor = new Image("decor" + (new Random().nextInt(1, 7)) + ".png");
         this.x = x;
         this.y = y - imgDecor.getHeight() + 10; // Inset de 10px
     }
 
-
     /**
-     * Dessine un objet decor
-     * @param context le context ou on dessine l'image
-     * @param camera on deplace l'image selon la camera pour qu'il reste immobile dans le monde
+     * Dessine l'objet. On déplace l'image selon la
+     * caméra pour qu'il reste immobile dans le monde
+     * @param context le GraphicsContext ou on dessine l'image
+     * @param camera la Camera
      */
     public void draw(GraphicsContext context, Camera camera) {
         var xEcran = x - camera.getX();
@@ -37,7 +33,6 @@ public class ObjetDecor extends GameObject {
     }
 
     //--------GETTERS--------
-
     public Image getImgDecor() {
         return imgDecor;
     }

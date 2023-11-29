@@ -26,9 +26,15 @@ public class Charlotte extends GameObject {
         shooter = new Shooter(getX()+ LARGEUR / 2,getY()+ HAUTEUR / 2);
         invulnerable = false;
     }
+
+    /**
+     * Mis à jour de tous les paramètres et attributs de Charlotte à chaque fois qu'on met à jour la partie.
+     * @param deltaTemps interval de temps pour update en nanoseconde
+     * @param camera la Camera
+     */
     @Override
     public void update(double deltaTemps, Camera camera){
-        //call update du super qui call update physique dans Gameobject
+        //call update du super qui call update physique dans GameObject
         super.update(deltaTemps,camera);
         shooter.suivreCharlotte(getX()+ LARGEUR / 2,getY()+ HAUTEUR / 2);
         boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
@@ -37,6 +43,14 @@ public class Charlotte extends GameObject {
         boolean bas = Input.isKeyPressed(KeyCode.DOWN);
         boolean tirer = Input.isKeyPressed(KeyCode.SPACE);
 
+        // Avancer la camera avec Charlotte
+        avancerCamera(camera, deltaTemps);
+
+        // Condition pour perdre des vies
+        if(invulnerable)
+            isHit();
+
+        // Condition pour mourir
         if(isDead()) {
             ax = 0;
             ay = 0;
@@ -52,7 +66,6 @@ public class Charlotte extends GameObject {
             shooter.setEtoileDeMer();
             shooter.setShooting(true);
             timeSinceLastShot = 0;
-            System.out.println("shoot");
         }
         else shooter.setShooting(false);
 
@@ -65,7 +78,6 @@ public class Charlotte extends GameObject {
             if(!invulnerable)
                 image = new Image("charlotte-avant.png");
             ax = 1000;
-            avancerCamera(camera, deltaTemps);
         }
         else {
             ax = 0;
@@ -140,7 +152,7 @@ public class Charlotte extends GameObject {
 
     public void perdreVie() {
         invulnerable = true;
-        image = new Image("charlotte-outch.png");
+
         if (vie > 0)
             vie--;
         else
@@ -153,9 +165,9 @@ public class Charlotte extends GameObject {
     }
 
     private void avancerCamera(Camera camera, double deltaTemps) {
-        if(x - camera.getX() >= camera.getWidth() / 5
+        if(x - camera.getX() >= camera.getLargeur() / 5
                 // Caméra avance seulement si la fin du monde n'a pas ete atteinte
-                && camera.getX() + camera.getWidth() <= Partie.LONGUEUR_MONDE) {
+                && camera.getX() + camera.getLargeur() <= Partie.LONGUEUR_MONDE) {
             camera.setX(camera.getX() + vx * deltaTemps);
         }
     }
@@ -163,25 +175,34 @@ public class Charlotte extends GameObject {
     @Override
     public void draw(GraphicsContext graphics, Camera camera) {
         if(invulnerable && vie > 0) {
-           isHit(graphics, camera);
+            // Lorsque showImageBool est VRAI,
+            // On dessine Charlotte
+           if(showImageBool)
+               super.draw(graphics, camera);
         }
         else super.draw(graphics,camera);
     }
 
-    private void isHit(GraphicsContext graphics, Camera camera) {
-        System.out.println(counter);
+    /**
+     * Cette méthode est appelée lorsque Charlotte a été touché par un ennemi.
+     * Elle fait "clignoter" Charlotte pendant quelques secondes pour montrer que charlotte
+     * a perdu de la vie. Elle enlève aussi l'invincibilité.
+     */
+    private void isHit() {
         image = new Image("charlotte-outch.png");
-        if( counter % FLASH_FRAMES == 0) {
-            System.out.println(showImageBool);
+
+        // À chaque 0.25 seconde, on alterne un booléen showImageBool
+        if(counter % FLASH_FRAMES == 0) {
             showImageBool = !showImageBool;
         }
-        if(showImageBool)
-            super.draw(graphics,camera);
-        counter++;
+
+        // Lorsque le compteur est égal au temps d'invincibilité,
+        // On réinitialise
         if(counter == INVULNERABILITY_TIMER) {
             invulnerable = false;
             counter = 0;
         }
+        counter++;
     }
 
     //--------GETTERS--------
