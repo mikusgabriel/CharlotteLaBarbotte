@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 
 public abstract class Projectile extends GameObject{
 
-    public abstract void move();
     public double getX(){
         return x;
     }

@@ -19,13 +19,7 @@ public class EtoileDeMer extends Projectile{
         largeur= LARGEUR;
         ax = 0;
     }
-    @Override
-    public void draw(GraphicsContext graphics, Camera camera) {
-        super.draw(graphics,camera);
-    }
 
-    @Override
-    public void move() {
 
-    }
+
 }
