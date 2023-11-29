@@ -29,6 +29,7 @@ public class Charlotte extends GameObject {
     public void update(double deltaTemps, Camera camera){
         //call update du super qui call update physique dans Gameobject
         super.update(deltaTemps,camera);
+        shooter.suivreCharlotte(getX()+ LARGEUR / 2,getY()+ HAUTEUR / 2);
         boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
         boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
         boolean haut = Input.isKeyPressed(KeyCode.UP);
@@ -44,6 +45,7 @@ public class Charlotte extends GameObject {
             image = new Image("charlotte-outch.png");
             return;
         }
+
 
         // Tirer un projectile
         timeSinceLastShot++;

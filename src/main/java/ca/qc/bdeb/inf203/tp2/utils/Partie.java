@@ -30,6 +30,7 @@ public class Partie {
         this.camera = new Camera(0, canvas.getWidth());
         this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
         this.barreVie = new BarreVie(backgroundColor);
+        projectileList.add(new EtoileDeMer(charlotte.getShooter().getX(),charlotte.getShooter().getY()));
 
         for(int i = 0; i < 1; i++) {
             ennemis.add(new Ennemi(niveau));
@@ -57,15 +58,24 @@ public class Partie {
         for (Ennemi ennemi : ennemis) {
             if(charlotte.isMoved())
                 ennemi.update(deltaTemps,camera);
-            ennemi.isDead();
+
 
             // --Detection des collisions--
             // Teste si les coordonnées de Charlotte et de l'ennemi se touchent
             // Si oui, alors ennemi attaque Charlotte
-            if(charlotte.isTouching(ennemi) && !ennemi.isDead() && ennemi.isAbleToAttack()) {
+            if(charlotte.isTouching(ennemi) && ennemi.isAbleToAttack()) {
                 charlotte.perdreVie();
                 ennemi.setIsAbleToAttack(false);
             }
+            /*
+            for(Projectile projectile : projectileList){
+                if(projectile.isTouching(ennemi)){
+                    ennemis.remove(ennemi);
+                }
+            }
+             */
+            //ajouter un array qui copie et enleve le truc du array
+
 
         }
 
@@ -77,7 +87,21 @@ public class Partie {
         for(Projectile projectile : projectileList){
             projectile.update(deltaTemps, camera);
 
+
+        /*
+        if(projectile.isInView(camera,charlotte.getShooter().getProjectile().getImageProjectile())){
+                projectileList.remove(projectile);
+            }
+         */
+
+
+
+
+
         }
+
+
+
 
         // Update condition fin de partie
         end();
@@ -86,8 +110,8 @@ public class Partie {
     public void draw(GraphicsContext context) {
         // Dessiner le decor
         for (ObjetDecor objetDecor : objetDecorList) {
-            if (objetDecor.isInView(camera))
                 objetDecor.draw(context, camera);
+
         }
 
         // Dessiner Charlotte
@@ -98,13 +122,15 @@ public class Partie {
             ennemi.draw(context, camera);
         }
 
+
         // Dessiner les projectiles
         for(Projectile projectile : projectileList) {
+            System.out.println(projectile.getY());
             projectile.draw(context, camera);
         }
 
         // Dessiner la barre de vie
-        barreVie.draw(context);
+        barreVie.draw(context,charlotte.getShooter().getProjectile());
     }
 
     /**

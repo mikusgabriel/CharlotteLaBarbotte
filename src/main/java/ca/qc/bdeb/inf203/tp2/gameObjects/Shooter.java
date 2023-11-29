@@ -17,7 +17,10 @@ public class Shooter{
         this.x=x;
         this.y=y;
         projectile=new EtoileDeMer(x,y);
-
+    }
+    public void suivreCharlotte(double x, double y){
+        this.x=x;
+        this.y=y- projectile.getHauteur()/2;
     }
 
     public Projectile tirer(){
@@ -43,5 +46,17 @@ public class Shooter{
         projectile=new Hippocampe(x,y);
     }
 
+    //getters
 
+    public Projectile getProjectile(){
+        return projectile;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
 }

@@ -25,18 +25,6 @@ public class ObjetDecor extends GameObject {
         this.y = y - imgDecor.getHeight() + 10; // Inset de 10px
     }
 
-    @Override
-    public boolean isDead() {
-        return false;
-    }
-
-    /**
-     * Verifie si le GameObject est visible par le joueur (dans l'écran)
-     * @return True or False
-     */
-    public boolean isInView(Camera camera) {
-        return (camera.getX() - imgDecor.getWidth() < x);
-    }
 
     /**
      * Dessine un objet decor

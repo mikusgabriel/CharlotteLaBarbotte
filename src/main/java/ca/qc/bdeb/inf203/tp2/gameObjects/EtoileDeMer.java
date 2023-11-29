@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 
 public class EtoileDeMer extends Projectile{
 
+
     private final int LARGEUR=36, HAUTEUR=35;
 
     public EtoileDeMer(double x,double y){
@@ -13,22 +14,18 @@ public class EtoileDeMer extends Projectile{
         this.x=x;
         this.y=y;
         vx=800;
+        vy= 0;
+        hauteur = HAUTEUR;
+        largeur= LARGEUR;
+        ax = 0;
     }
     @Override
-    public boolean isDead() {
-        return false;
-    }
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics,camera);
     }
 
     @Override
     public void move() {
-
-    }
-
-    @Override
-    public void updateIconeProjectile() {
 
     }
 }

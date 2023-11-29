@@ -26,11 +26,6 @@ public class Ennemi extends GameObject{
         //choisit une vitesse random entre 0 et 100 et soit - ou +
         vy= r.nextDouble(0,100)* (r.nextBoolean() ? 1:-1);
     }
-
-    @Override
-    public boolean isDead() {
-        return false;
-    }
     @Override
     public void draw(GraphicsContext graphics, Camera camera) {
         super.draw(graphics, camera);

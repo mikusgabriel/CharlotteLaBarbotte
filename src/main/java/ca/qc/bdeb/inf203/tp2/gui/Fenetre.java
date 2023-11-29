@@ -68,6 +68,7 @@ public class Fenetre extends Application {
         );
 
         stage.setScene(scenePrincipale);
+        stage.setResizable(false);
         stage.setTitle("Charlotte la Barbotte");
         stage.getIcons().add(new Image("charlotte.png"));
         stage.show();

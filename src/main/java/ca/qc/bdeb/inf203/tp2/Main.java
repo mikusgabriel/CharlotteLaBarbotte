@@ -11,7 +11,7 @@ public class Main {
 }
 
 //TODO:
-// Fenêtre:
+//Fenêtre:
 // - Page d'accueil ✔
 // - Page infos ✔
 // - Page jeu ✔
@@ -19,7 +19,7 @@ public class Main {
 // - Background ✔
 // - GUI ✔
 // - Charlotte ✔
-// - Ennemis ✔
+// - Ennemis
 // - Projectiles + barrel
 // - Passer au prochain niveau
 // - Debug mode
