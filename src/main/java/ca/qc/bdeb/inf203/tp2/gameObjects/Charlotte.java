@@ -1,5 +1,6 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.utils.Shooter;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
@@ -11,10 +12,9 @@ public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
     private int vie = PV_MAX;
     private final static double LARGEUR = 102, HAUTEUR =90, SHOOTER_COOLDOWN = 100;
-    private boolean moved = false;
-    private boolean projectileFired = false;
-    private double timeSinceLastShot = 100;
-
+    private boolean invulnerable, showImageBool = true;
+    private double timeSinceLastShot = 100, counter = 0;
+    private static final int INVULNERABILITY_TIMER = 200, FLASH_FRAMES = 25;
     private final Shooter shooter;
 
     /**
@@ -24,6 +24,7 @@ public class Charlotte extends GameObject {
         super(0, 260, HAUTEUR, LARGEUR);
         image = new Image("charlotte.png");
         shooter = new Shooter(getX()+ LARGEUR / 2,getY()+ HAUTEUR / 2);
+        invulnerable = false;
     }
     @Override
     public void update(double deltaTemps, Camera camera){
@@ -36,7 +37,6 @@ public class Charlotte extends GameObject {
         boolean bas = Input.isKeyPressed(KeyCode.DOWN);
         boolean tirer = Input.isKeyPressed(KeyCode.SPACE);
 
-
         if(isDead()) {
             ax = 0;
             ay = 0;
@@ -45,7 +45,6 @@ public class Charlotte extends GameObject {
             image = new Image("charlotte-outch.png");
             return;
         }
-
 
         // Tirer un projectile
         timeSinceLastShot++;
@@ -63,14 +62,16 @@ public class Charlotte extends GameObject {
             ax = -1000;
         }
         else if(droite) {
-            image = new Image("charlotte-avant.png");
+            if(!invulnerable)
+                image = new Image("charlotte-avant.png");
             ax = 1000;
             avancerCamera(camera, deltaTemps);
         }
         else {
             ax = 0;
             vx = ralentir(deltaTemps,vx);
-            image = new Image("charlotte.png");
+            if(!invulnerable)
+                image = new Image("charlotte.png");
         }
         // Verticale
         if(haut) {
@@ -109,7 +110,6 @@ public class Charlotte extends GameObject {
 
         vx = vitesseMax(vx);
         vy = vitesseMax(vy);
-        moved = x > 1;
     }
 
     // Méthode du prof pour faire diminuer la vitesse d'un object
@@ -139,6 +139,7 @@ public class Charlotte extends GameObject {
 
 
     public void perdreVie() {
+        invulnerable = true;
         image = new Image("charlotte-outch.png");
         if (vie > 0)
             vie--;
@@ -161,7 +162,26 @@ public class Charlotte extends GameObject {
 
     @Override
     public void draw(GraphicsContext graphics, Camera camera) {
-        super.draw(graphics,camera);
+        if(invulnerable && vie > 0) {
+           isHit(graphics, camera);
+        }
+        else super.draw(graphics,camera);
+    }
+
+    private void isHit(GraphicsContext graphics, Camera camera) {
+        System.out.println(counter);
+        image = new Image("charlotte-outch.png");
+        if( counter % FLASH_FRAMES == 0) {
+            System.out.println(showImageBool);
+            showImageBool = !showImageBool;
+        }
+        if(showImageBool)
+            super.draw(graphics,camera);
+        counter++;
+        if(counter == INVULNERABILITY_TIMER) {
+            invulnerable = false;
+            counter = 0;
+        }
     }
 
     //--------GETTERS--------
@@ -172,8 +192,13 @@ public class Charlotte extends GameObject {
         return y;
     }
     public int getVie() { return vie;}
-    public boolean isMoved() {
-        return moved;
-    }
     public Shooter getShooter(){ return shooter;}
+    public boolean isInvulnerable() {
+        return invulnerable;
+    }
+
+    //--------SETTERS--------
+    public void setX(int x) {
+        this.x = x;
+    }
 }

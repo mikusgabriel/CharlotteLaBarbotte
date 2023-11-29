@@ -34,14 +34,6 @@ public abstract class GameObject {
 
         return horizontalDistance <= this.hauteur && verticalDistance <= this.largeur;
     }
-    /**
-     * Verifie si le GameObject est visible par le joueur (dans l'écran)
-     * @return True or False
-     */
-    public boolean isInView(Camera camera, Image image) {
-        return (camera.getX() - image.getWidth() < x);
-    }
-
 
     /**
      * Change la vitesse et acceleration de l'objet enfant
@@ -71,11 +63,11 @@ public abstract class GameObject {
         return y;
     }
 
-    protected double getHauteur() {
+    public double getHauteur() {
         return hauteur;
     }
 
-    protected double getLargeur() {
+    public double getLargeur() {
         return largeur;
     }
 

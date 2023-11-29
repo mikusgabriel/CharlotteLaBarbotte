@@ -1,8 +1,9 @@
-package ca.qc.bdeb.inf203.tp2.gameObjects;
+package ca.qc.bdeb.inf203.tp2.utils;
 
-import javafx.scene.canvas.Canvas;
-
-import java.util.ArrayList;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.BoiteSardine;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.EtoileDeMer;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Hippocampe;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Projectile;
 
 public class Shooter{
     private boolean isShooting;

@@ -1,10 +1,8 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Projectile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
-import javax.swing.text.Element;
-import javax.swing.text.html.ImageView;
 
 public class BarreVie {
     public static final int LARGEUR_BARRE_DE_VIE = 150, HAUTEUR_BARRE_DE_VIE = 30, BORDURE_BARRE_DE_VIE = 2, DISTANCE_BORD=30;
@@ -35,7 +33,6 @@ public class BarreVie {
 
         //update l'icone du projectile
         double posXicone=DISTANCE_BORD+BORDURE_BARRE_DE_VIE+LARGEUR_BARRE_DE_VIE+10;
-        double posYicone=DISTANCE_BORD+BORDURE_BARRE_DE_VIE+HAUTEUR_BARRE_DE_VIE;
-        graphics.drawImage(projectile.getImage(),posXicone,posYicone);
+        graphics.drawImage(projectile.getImage(),posXicone, DISTANCE_BORD);
     }
 }

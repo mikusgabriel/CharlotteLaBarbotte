@@ -19,7 +19,7 @@ public class PageJeu {
      * Constructeur : Creer une nouvelle partie et commence un AnimationTimer
      */
     PageJeu(){
-        var partie = new Partie(1);
+        var partie = new Partie();
 
         timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
