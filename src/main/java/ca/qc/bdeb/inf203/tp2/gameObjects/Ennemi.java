@@ -12,14 +12,15 @@ import java.util.Random;
 public class Ennemi extends GameObject{
     private static final int LARGEUR_OG=120, HAUTEUR_OG=104;
     private boolean isAbleToAttack = true;
+    private boolean isDead;
 
-    public Ennemi(int niveau) {
+    public Ennemi(int niveau, double x) {
         var r = new Random();
         image = new Image("poisson" + r.nextInt(1,6) + ".png");
         hauteur = r.nextInt(50,121);
         largeur=(int)(((double) LARGEUR_OG /HAUTEUR_OG)*hauteur);
-
-        x=950;
+        isDead = false;
+        this.x = x;
         y=r.nextDouble(0.2*520,0.8*520);
         ax=-500;
         vx= -100* Math.pow(niveau,0.33)+200;
@@ -52,8 +53,16 @@ public class Ennemi extends GameObject{
         return isAbleToAttack;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
     //--------SETTERS--------
     public void setIsAbleToAttack(boolean isAbleToAttack){
         this.isAbleToAttack = isAbleToAttack;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

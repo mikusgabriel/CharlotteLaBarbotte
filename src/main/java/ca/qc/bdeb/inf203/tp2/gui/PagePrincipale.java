@@ -11,15 +11,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+/**
+ * Page d'accueil
+ */
 public class PagePrincipale {
     private final Button boutonJouer = new Button("Jouer!");
     private final Button boutonInfo = new Button("Infos");
     private final VBox root = new VBox();
 
     /**
-     * Constructeur du UI de la page d'accueil
+     * Constructeur de la page d'accueil
      */
-    PagePrincipale(){
+    public PagePrincipale(){
         root.setAlignment(Pos.TOP_CENTER);
         root.setSpacing(10);
 
@@ -46,11 +49,9 @@ public class PagePrincipale {
     public Button getBoutonJouer() {
         return boutonJouer;
     }
-
     public Button getBoutonInfos() {
         return boutonInfo;
     }
-
     public VBox getRoot() {
         return root;
     }

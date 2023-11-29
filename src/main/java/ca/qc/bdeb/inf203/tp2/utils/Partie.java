@@ -1,6 +1,7 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.*;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Projectile;
 import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,37 +10,59 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * Cette classe s'occupe de la logique du jeu
+ * et ce qui doit être dessiné sur la fenêtre dans la page jeu
+ */
 public class Partie {
+    public final static int LONGUEUR_MONDE = 4160, HAUTEUR_MONDE = Fenetre.HAUTEUR ;
     private final Charlotte charlotte;
     private final BarreVie barreVie;
     private final Canvas canvas;
-    private final Camera camera;
-    private final ArrayList<Ennemi> ennemis = new ArrayList<>();
-    private final ArrayList<ObjetDecor> objetDecorList = new ArrayList<>();
-    private final ArrayList<Projectile> projectileList = new ArrayList<>();
-    private final ArrayList<Baril> barilList = new ArrayList<>();
-    private final Color backgroundColor;
-    public final static int LONGUEUR_MONDE = 4160;
-    public final static int HAUTEUR_MONDE = Fenetre.HAUTEUR;
+    private final ArrayList<Ennemi> poissons;
+    private final ArrayList<ObjetDecor> decors;
+    private final ArrayList<Projectile> projectiles;
+    private final ArrayList<Baril> barils;
+    private Camera camera;
+    private Color backgroundColor;
+    private int niveau;
+    private double currentTime;
 
-    // Constructeur : on crée les objets de la partie
-    public Partie(int niveau) {
+    /**
+     * Dans le constructeur, on crée les objects final qui ne change pas d'un niveau à l'autre : le canvas, Charlotte
+     * et la barre de vie. On appelle newGame() pour créer le niveau 1.
+     */
+    public Partie() {
         this.canvas = new Canvas(Fenetre.LARGEUR, Fenetre.HAUTEUR);
         this.charlotte = new Charlotte();
+        this.barreVie = new BarreVie(backgroundColor);
+        this.poissons = new ArrayList<>();
+        this.decors = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
+        this.barils = new ArrayList<>();
+
+        newGame(1);
+    }
+
+    /**
+     * Méthode appelée lorsqu'on veut générer un nouveau niveau.
+     * Elle est appelée dans le constructeur pour créer le niveau 1 et après,
+     * à chaque fois que Charlotte complète un niveau.
+     * @param niveau le niveau actuel qui va changer le comportement des ennemis.
+     */
+    private void newGame(int niveau) {
         this.camera = new Camera(0, canvas.getWidth());
         this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
-        this.barreVie = new BarreVie(backgroundColor);
-        projectileList.add(new EtoileDeMer(charlotte.getShooter().getX(),charlotte.getShooter().getY()));
 
-        for(int i = 0; i < 1; i++) {
-            ennemis.add(new Ennemi(niveau));
-            System.out.println("ennemi print");
-        }
+        decors.clear();
+        charlotte.setX(0);
+        canvas.getGraphicsContext2D().setFill(backgroundColor);
+        barreVie.setBackgroundColor(backgroundColor);
+        this.niveau = niveau;
 
         //generation decor au debut
         for (int filledArea = 0; filledArea < LONGUEUR_MONDE;)
-            filledArea = genenerDecors(objetDecorList, filledArea);
+            filledArea = generateDecor(decors, filledArea);
     }
 
     /**
@@ -47,6 +70,10 @@ public class Partie {
      * @param deltaTemps interval de temps compté en nanoseconde
      */
     public void update(double deltaTemps)  {
+        // Faire apparaitre les groupes d'ennemis
+        if(!end() && !charlotte.isDead())
+            spawnEnnemiWave(niveau);
+
         // Update Charlotte
         charlotte.update(deltaTemps, camera);
         charlotte.isDead();
@@ -55,77 +82,72 @@ public class Partie {
         barreVie.update(charlotte.getVie());
 
         // Update ennemis
-        for (Ennemi ennemi : ennemis) {
-            if(charlotte.isMoved())
-                ennemi.update(deltaTemps,camera);
+        for (Ennemi ennemi : poissons) {
+            ennemi.update(deltaTemps,camera);
 
-
-            // --Detection des collisions--
-            // Teste si les coordonnées de Charlotte et de l'ennemi se touchent
+            // Teste Collision entre Charlotte et poisson
             // Si oui, alors ennemi attaque Charlotte
-            if(charlotte.isTouching(ennemi) && ennemi.isAbleToAttack()) {
+            if(charlotte.isTouching(ennemi) && !charlotte.isInvulnerable() && ennemi.isAbleToAttack()) {
                 charlotte.perdreVie();
                 ennemi.setIsAbleToAttack(false);
             }
-            /*
-            for(Projectile projectile : projectileList){
-                if(projectile.isTouching(ennemi)){
-                    ennemis.remove(ennemi);
-                }
-            }
-             */
-            //ajouter un array qui copie et enleve le truc du array
-
-
         }
 
+        // L'ennemi est enlevé de la liste lorsqu'il est derrière la caméra ou lorsqu'il est mort
+        poissons.removeIf(ennemi -> ennemi.getX() + ennemi.getLargeur() < camera.getX());
+        poissons.removeIf(Ennemi::isDead);
+
+        // Update projectiles
         if(charlotte.getShooter().isShooting()) {
-            projectileList.add(charlotte.getShooter().tirer());
-            System.out.println(projectileList.size());
+            projectiles.add(charlotte.getShooter().tirer());
         }
 
-        for(Projectile projectile : projectileList){
+        for(Projectile projectile : projectiles){
             projectile.update(deltaTemps, camera);
-
-
-        /*
-        if(projectile.isInView(camera,charlotte.getShooter().getProjectile().getImageProjectile())){
-                projectileList.remove(projectile);
-            }
-         */
-
-
-
-
-
         }
 
+        // Le projectile est enlevé de la liste lorsqu'il disparait de l'écran
+        projectiles.removeIf(projectile -> projectile.getX() >= charlotte.getX() + Fenetre.LARGEUR);
 
-
+        // Teste les collisions entre projectiles et poissons
+        for(Ennemi ennemi : poissons)
+            for(Projectile projectile : projectiles)
+                if(projectile.isTouching(ennemi))
+                    ennemi.setDead(true);
 
         // Update condition fin de partie
-        end();
+        if(end()) {
+            niveau ++;
+            projectiles.clear();
+            poissons.clear();
+            newGame(niveau);
+        }
     }
 
-    public void draw(GraphicsContext context) {
-        // Dessiner le decor
-        for (ObjetDecor objetDecor : objetDecorList) {
-                objetDecor.draw(context, camera);
+    /**
+     * Vue de l'utilisateur
+     * @param context le root est un GraphicsContext
+     */
 
+    public void draw(GraphicsContext context) {
+        context.setFill(backgroundColor);
+        context.fillRect(0 , 0, Fenetre.LARGEUR, Fenetre.HAUTEUR);
+
+        // Dessiner le decor
+        for (ObjetDecor objetDecor : decors) {
+                objetDecor.draw(context, camera);
         }
 
         // Dessiner Charlotte
         charlotte.draw(context, camera);
 
         // Dessiner les ennemis
-        for (Ennemi ennemi : ennemis) {
+        for (Ennemi ennemi : poissons) {
             ennemi.draw(context, camera);
         }
 
-
         // Dessiner les projectiles
-        for(Projectile projectile : projectileList) {
-            System.out.println(projectile.getY());
+        for(Projectile projectile : projectiles) {
             projectile.draw(context, camera);
         }
 
@@ -137,9 +159,9 @@ public class Partie {
      * Methode qui genere les objets decors jusqu'à la fin du monde
      * @param objetDecorList ObjetDecor est placé dans un arrayList pour les appeler dans la methode draw()
      * @param filledArea Longueur totale de chaque objet et de la distance entre chaque
-     * @return La nouvelle somme
+     * @return La nouvelle somme de filledArea
      */
-    public int genenerDecors(ArrayList<ObjetDecor> objetDecorList, int filledArea) {
+    private int generateDecor(ArrayList<ObjetDecor> objetDecorList, int filledArea) {
         var distanceFromNext = (new Random()).nextInt(50, 100); // Distance entre decors est toujours contenue entre 50 et 100
         var decor = new ObjetDecor(distanceFromNext + filledArea, HAUTEUR_MONDE); // Decor est placé en bas du monde
         filledArea += distanceFromNext + (int) decor.getImgDecor().getWidth();
@@ -150,16 +172,33 @@ public class Partie {
     }
 
     /** Test si le joueur a gagné
-     * @return - Return un boolean selon si charlotte a atteint la fin du monde pour determiner si le joueur a complete le niveau
+     * selon si Charlotte a atteint la fin du monde pour
+     * determiner si le joueur a complété le niveau
+     * @return Vrai ou faux
      */
     public boolean end() {
-        return charlotte.getX() >= LONGUEUR_MONDE;
+        return charlotte.getX() >= LONGUEUR_MONDE - 1;
+    }
+
+    /**
+     * Fait apparaître un à cinq poissons ennemis à droite de l'écran à interval régulier.
+     * @param niveau la difficulté des groupes de poisson augmente avec le niveau
+     */
+    private void spawnEnnemiWave(int niveau) {
+        // Formule pour temps entre groupe d'ennemis : Nseconde = 0.75 + 1 / (niveau)^1/2
+        var spawnTimer = 0.75 + 1 / Math.sqrt(niveau);
+
+        if(currentTime / 1000 > spawnTimer) {
+            for(int i = 0; i < (new Random()).nextInt(1,6); i++) {
+                poissons.add(new Ennemi(niveau, charlotte.getX() + Fenetre.LARGEUR));
+                System.out.println("ennemi print");
+            }
+            currentTime = 0;
+        }
+        currentTime ++;
     }
 
     //--------GETTERS--------
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
     public Canvas getCanvas() {
         return canvas;
     }

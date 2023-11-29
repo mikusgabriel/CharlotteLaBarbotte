@@ -5,13 +5,12 @@ import javafx.application.Application;
 
 public class Main {
     public static void main(String[] args) {
-
         Application.launch(Fenetre.class);
     }
 }
 
 //TODO:
-//Fenêtre:
+// Fenêtre:
 // - Page d'accueil ✔
 // - Page infos ✔
 // - Page jeu ✔
@@ -19,8 +18,8 @@ public class Main {
 // - Background ✔
 // - GUI ✔
 // - Charlotte ✔
-// - Ennemis
+// - Ennemis ✔
 // - Projectiles + barrel
-// - Passer au prochain niveau
+// - Passer au prochain niveau ✔
 // - Debug mode
 
