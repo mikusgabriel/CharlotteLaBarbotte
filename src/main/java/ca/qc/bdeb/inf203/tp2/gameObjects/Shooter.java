@@ -5,6 +5,8 @@ import javafx.scene.canvas.Canvas;
 import java.util.ArrayList;
 
 public class Shooter{
+    private boolean isShooting;
+
     Projectile projectile;
     BoiteSardine boiteSardine;
     Hippocampe hippocampe;
@@ -22,10 +24,13 @@ public class Shooter{
         return projectile;
     }
 
+    public boolean isShooting() {
+        return isShooting;
+    }
 
-
-
-
+    public void setShooting(boolean shooting) {
+        isShooting = shooting;
+    }
 
     //setters de projectiles
     public void setBoiteSardine(){

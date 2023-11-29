@@ -3,7 +3,6 @@ package ca.qc.bdeb.inf203.tp2.gameObjects;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -11,10 +10,12 @@ import javafx.scene.input.KeyCode;
 public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
     private int vie = PV_MAX;
-    private final static int LARGEUR = 102, HAUTEUR =90;
+    private final static double LARGEUR = 102, HAUTEUR =90, SHOOTER_COOLDOWN = 100;
     private boolean moved = false;
+    private boolean projectileFired = false;
+    private double timeSinceLastShot = 100;
 
-    private final Shooter shooter=new Shooter(getX()+getLargeur()/2,getY()+getHauteur()/2);
+    private final Shooter shooter;
 
     /**
      * Constructeur de Charlotte
@@ -22,6 +23,7 @@ public class Charlotte extends GameObject {
     public Charlotte() {
         super(0, 260, HAUTEUR, LARGEUR);
         image = new Image("charlotte.png");
+        shooter = new Shooter(getX()+ LARGEUR / 2,getY()+ HAUTEUR / 2);
     }
     @Override
     public void update(double deltaTemps, Camera camera){
@@ -31,6 +33,8 @@ public class Charlotte extends GameObject {
         boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
         boolean haut = Input.isKeyPressed(KeyCode.UP);
         boolean bas = Input.isKeyPressed(KeyCode.DOWN);
+        boolean tirer = Input.isKeyPressed(KeyCode.SPACE);
+
 
         if(isDead()) {
             ax = 0;
@@ -40,6 +44,16 @@ public class Charlotte extends GameObject {
             image = new Image("charlotte-outch.png");
             return;
         }
+
+        // Tirer un projectile
+        timeSinceLastShot++;
+        if(tirer && timeSinceLastShot >= SHOOTER_COOLDOWN) {
+            shooter.setEtoileDeMer();
+            shooter.setShooting(true);
+            timeSinceLastShot = 0;
+            System.out.println("shoot");
+        }
+        else shooter.setShooting(false);
 
         // Translation
         // Horizontale

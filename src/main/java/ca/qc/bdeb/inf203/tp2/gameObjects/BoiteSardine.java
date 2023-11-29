@@ -14,6 +14,11 @@ public class BoiteSardine extends Projectile{
     }
 
     @Override
+    boolean isDead() {
+        return false;
+    }
+
+    @Override
     public void updateIconeProjectile() {
 
     }

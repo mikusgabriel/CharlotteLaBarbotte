@@ -13,6 +13,11 @@ public class Hippocampe extends Projectile{
     }
 
     @Override
+    boolean isDead() {
+        return false;
+    }
+
+    @Override
     public void updateIconeProjectile() {
 
     }

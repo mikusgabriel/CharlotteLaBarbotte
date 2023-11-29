@@ -35,8 +35,6 @@ public abstract class GameObject {
         return horizontalDistance <= this.hauteur && verticalDistance <= this.largeur;
     }
 
-
-
     /**
      * Change la vitesse et acceleration de l'objet enfant
      */
@@ -53,6 +51,8 @@ public abstract class GameObject {
             graphics.drawImage(getImage(), 0, 0, getImage().getWidth(), getImage().getHeight(), getX()- camera.getX(), getY(), getLargeur(), getHauteur());
         }
     }
+
+    abstract  boolean isDead();
 
     //--------GETTERS--------
     protected double getX() {

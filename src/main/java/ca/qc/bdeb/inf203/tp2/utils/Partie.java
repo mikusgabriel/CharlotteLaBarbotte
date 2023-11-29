@@ -66,12 +66,17 @@ public class Partie {
                 charlotte.perdreVie();
                 ennemi.setIsAbleToAttack(false);
             }
-            for(Projectile projectile:projectileList){
-                if (projectile.isTouching(ennemi)){
-                    ennemis.remove(ennemi);
-                }
 
-            }
+        }
+
+        if(charlotte.getShooter().isShooting()) {
+            projectileList.add(charlotte.getShooter().tirer());
+            System.out.println(projectileList.size());
+        }
+
+        for(Projectile projectile : projectileList){
+            projectile.update(deltaTemps, camera);
+
         }
 
         // Update condition fin de partie
@@ -93,7 +98,12 @@ public class Partie {
             ennemi.draw(context, camera);
         }
 
-        // Dessiner barre de vie
+        // Dessiner les projectiles
+        for(Projectile projectile : projectileList) {
+            projectile.draw(context, camera);
+        }
+
+        // Dessiner la barre de vie
         barreVie.draw(context);
     }
 
