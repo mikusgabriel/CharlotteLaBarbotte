@@ -281,18 +281,6 @@ public class Partie {
     }
     public Text getAffichageNiveau() {return affichageNiveau;}
 
-    public int getPoissons() {
-        return poissons.size();
-    }
-
-    public int getProjectiles() {
-        return projectiles.size();
-    }
-
-    public double getPositionCharlotte() {
-        return charlotte.getX();
-    }
-
     public VBox getMenuDebug() {
         return menuDebug;
     }
