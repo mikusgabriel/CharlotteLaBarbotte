@@ -91,7 +91,7 @@ public class Partie {
         this.niveau = niveau;
         showText();
         textTimer = 0;
-        deathTimer = 0;
+        System.out.println("NEW LEVEL***********************************************************************************");
 
         //generation decor au debut
         for (int filledArea = 0; filledArea < LONGUEUR_MONDE;)
@@ -103,14 +103,14 @@ public class Partie {
      * À chaque intervalle de temps, on remet à jour tous les objets de la partie
      * @param deltaTemps interval de temps compté en nanoseconde
      */
-    public void update(double deltaTemps)  {
+    public void update(double deltaTemps) {
 
         textTimer += deltaTemps;
-        if(textTimer > 4)
+        if (textTimer > 4)
             affichageNiveau.setY(-1);
 
         // Faire apparaitre les groupes d'ennemis
-        if(!end() && !charlotte.isDead())
+        if (!end() && !charlotte.isDead())
             spawnEnnemiWave(niveau, deltaTemps);
 
         // Update Charlotte
@@ -118,7 +118,7 @@ public class Partie {
 
         // Update Baril
         baril.update(deltaTemps, camera);
-        if(baril.isTouching(charlotte)) {
+        if (baril.isTouching(charlotte)) {
             baril.isTouch(charlotte.getShooter());
         }
 
@@ -127,11 +127,11 @@ public class Partie {
 
         // Update ennemis
         for (Ennemi ennemi : poissons) {
-            ennemi.update(deltaTemps,camera);
+            ennemi.update(deltaTemps, camera);
 
             // Teste Collision entre Charlotte et poisson
             // Si oui, alors ennemi attaque Charlotte
-            if(charlotte.isTouching(ennemi) && !charlotte.isInvulnerable() && ennemi.isAbleToAttack()) {
+            if (charlotte.isTouching(ennemi) && !charlotte.isInvulnerable() && ennemi.isAbleToAttack()) {
                 charlotte.perdreVie();
                 ennemi.setIsAbleToAttack(false);
             }
@@ -142,54 +142,43 @@ public class Partie {
         poissons.removeIf(Ennemi::isDead);
 
         // Update projectiles
-        if(charlotte.getShooter().isShooting()) {
+        if (charlotte.getShooter().isShooting()) {
             // Si c'est un hippocampe, ajouter 3 projectiles à la liste
-            if(charlotte.getShooter().getProjectile().getClass() == Hippocampe.class) {
+            if (charlotte.getShooter().getProjectile().getClass() == Hippocampe.class) {
                 projectiles.add(charlotte.getShooter().tirer());
                 projectiles.add(charlotte.getShooter().tirer());
                 projectiles.add(charlotte.getShooter().tirer());
-            }
-            else  {
+            } else {
                 projectiles.add(charlotte.getShooter().tirer());
             }
         }
 
-        for(Projectile projectile : projectiles){
-            projectile.update(deltaTemps,poissons, camera);
+        for (Projectile projectile : projectiles) {
+            projectile.update(deltaTemps, poissons, camera);
         }
 
         // Le projectile est enlevé de la liste lorsqu'il disparait de l'écran
         projectiles.removeIf(projectile -> projectile.getX() >= charlotte.getX() + Fenetre.LARGEUR);
 
         // Teste les collisions entre projectiles et poissons
-        for(Ennemi ennemi : poissons)
-            for(Projectile projectile : projectiles)
-                if(projectile.isTouching(ennemi))
+        for (Ennemi ennemi : poissons)
+            for (Projectile projectile : projectiles)
+                if (projectile.isTouching(ennemi))
                     ennemi.setDead(true);
 
         // Update condition victoire
-        if(end()) {
-            niveau ++;
+        if (end()) {
+            niveau++;
             projectiles.clear();
             poissons.clear();
             newGame(niveau);
         }
-
-        if(charlotte.isDead()) {
-            deathTimer += deltaTemps;
-            if(deathTimer > 3) {
-                Platform.exit();
-            }
-        }
-
-        System.out.println(deathTimer);
     }
 
     /**
      * Vue de l'utilisateur
      * @param context le root est un GraphicsContext
      */
-
     public void draw(GraphicsContext context) {
 
         if(textTimer > 4)
@@ -234,7 +223,6 @@ public class Partie {
             affichageNiveau.setText("FIN DE PARTIE");
             affichageNiveau.setFill(Color.DARKRED);
         }
-
     }
 
     /**
@@ -307,5 +295,9 @@ public class Partie {
 
     public VBox getMenuDebug() {
         return menuDebug;
+    }
+
+    public Charlotte getCharlotte() {
+        return charlotte;
     }
 }

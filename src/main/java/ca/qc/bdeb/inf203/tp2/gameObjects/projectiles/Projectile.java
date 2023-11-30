@@ -28,6 +28,4 @@ public abstract class Projectile extends GameObject {
     public double getY(){
         return y;
     }
-
-
 }

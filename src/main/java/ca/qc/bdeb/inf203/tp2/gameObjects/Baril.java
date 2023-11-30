@@ -26,7 +26,7 @@ public class Baril extends GameObject {
         hauteur=HAUTEUR;
         largeur=LARGEUR;
         //x choisit au hasard entre 1/5 et 4/5
-        x=(((double) ran.nextInt(2, 8) /10)* Partie.LONGUEUR_MONDE);
+        x=(((double) ran.nextInt(2, 8) /10) * Partie.LONGUEUR_MONDE);
         periode=3;
     }
     @Override
@@ -48,7 +48,6 @@ public class Baril extends GameObject {
 
 
             do{
-
                 Projectile projectileChoisit=projectilesList.get(ran.nextInt(0, projectilesList.size()));
                 if(projectileChoisit.getClass()!=shooter.getProjectile().getClass()){
                     shooter.setProjectile(projectileChoisit);

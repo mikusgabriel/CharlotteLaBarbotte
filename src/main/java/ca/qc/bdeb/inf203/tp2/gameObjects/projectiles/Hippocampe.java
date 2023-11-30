@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Hippocampe extends Projectile {
-
-    private final double HAUTEUR=36 ,LARGEUR=20, yInitiale = 260;
+    private final double HAUTEUR = 36;
+    private final double LARGEUR = 20;
+    private final double yInitiale;
     double timeSinceAlive;
     double amplitude;
     int periode;
@@ -18,6 +19,7 @@ public class Hippocampe extends Projectile {
         image=new Image("hippocampe.png");
         this.x = x;
         this.y = y;
+        yInitiale = y;
         this.hauteur=HAUTEUR;
         this.largeur=LARGEUR;
         vy = 0;

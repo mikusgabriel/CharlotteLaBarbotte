@@ -3,10 +3,7 @@ package ca.qc.bdeb.inf203.tp2.gui;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 
 /**
  * Page de jeu
@@ -35,6 +32,10 @@ public class PageJeu {
                     partie.update(deltaTemps);
 
                     partie.draw(context);
+
+                    if(partie.getCharlotte().isDead()) {
+                        timer.stop();
+                    }
 
                     lastTime = now;
                 }
