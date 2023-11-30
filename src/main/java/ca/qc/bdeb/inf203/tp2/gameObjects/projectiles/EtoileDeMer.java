@@ -15,8 +15,4 @@ public class EtoileDeMer extends Projectile {
         largeur= image.getWidth();
         ax = 0;
     }
-    @Override
-    public void draw(GraphicsContext graphics, Camera camera) {
-        super.draw(graphics,camera);
-    }
 }

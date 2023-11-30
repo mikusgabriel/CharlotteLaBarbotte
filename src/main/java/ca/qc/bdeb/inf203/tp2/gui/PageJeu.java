@@ -4,6 +4,9 @@ import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
 
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  * Page de jeu
@@ -18,6 +21,7 @@ public class PageJeu {
      */
     public PageJeu(){
         var partie = new Partie();
+
         this.timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
                 @Override
@@ -27,15 +31,18 @@ public class PageJeu {
 
                     context.clearRect(0, 0, partie.getCanvas().getWidth(), partie.getCanvas().getHeight());
 
+
                     partie.update(deltaTemps);
+
                     partie.draw(context);
 
                     lastTime = now;
                 }
             };
-
-        timer.start();
         root.getChildren().add(partie.getCanvas());
+        root.getChildren().add(partie.getAffichageNiveau());
+        timer.start();
+
     }
 
     //--------GETTERS--------

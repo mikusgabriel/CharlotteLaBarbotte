@@ -6,6 +6,8 @@ import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,9 +26,10 @@ public class Partie {
     private final ArrayList<Projectile> projectiles;
     private final ArrayList<Baril> barils;
     private Camera camera;
+    private Text affichageNiveau;
     private Color backgroundColor;
     private int niveau;
-    private double currentTime;
+    private double currentTime, textTimer;
 
     /**
      * Dans le constructeur, on crée les objects final qui ne change pas d'un niveau à l'autre : le canvas, Charlotte
@@ -35,11 +38,12 @@ public class Partie {
     public Partie() {
         this.canvas = new Canvas(Fenetre.LARGEUR, Fenetre.HAUTEUR);
         this.charlotte = new Charlotte();
-        this.barreVie = new BarreVie(backgroundColor);
+        this.barreVie = new BarreVie();
         this.poissons = new ArrayList<>();
         this.decors = new ArrayList<>();
         this.projectiles = new ArrayList<>();
         this.barils = new ArrayList<>();
+        affichageNiveau = new Text();
 
         newGame(1);
     }
@@ -53,16 +57,17 @@ public class Partie {
     private void newGame(int niveau) {
         this.camera = new Camera(0, canvas.getWidth());
         this.backgroundColor = Color.hsb((new Random()).nextInt(190, 270), 0.84, 1.0);
-
         decors.clear();
         charlotte.setX(0);
         canvas.getGraphicsContext2D().setFill(backgroundColor);
         barreVie.setBackgroundColor(backgroundColor);
         this.niveau = niveau;
+        showText();
 
         //generation decor au debut
         for (int filledArea = 0; filledArea < LONGUEUR_MONDE;)
             filledArea = generateDecor(decors, filledArea);
+
     }
 
     /**
@@ -70,9 +75,14 @@ public class Partie {
      * @param deltaTemps interval de temps compté en nanoseconde
      */
     public void update(double deltaTemps)  {
+        System.out.println(textTimer);
+        textTimer += deltaTemps;
+        if(textTimer > 4)
+            affichageNiveau.setY(-1);
+
         // Faire apparaitre les groupes d'ennemis
         if(!end() && !charlotte.isDead())
-            spawnEnnemiWave(niveau);
+            spawnEnnemiWave(niveau, deltaTemps);
 
         // Update Charlotte
         charlotte.update(deltaTemps, camera);
@@ -115,12 +125,19 @@ public class Partie {
                 if(projectile.isTouching(ennemi))
                     ennemi.setDead(true);
 
-        // Update condition fin de partie
+        // Update condition victoire
         if(end()) {
             niveau ++;
             projectiles.clear();
             poissons.clear();
             newGame(niveau);
+            textTimer = 0;
+        }
+
+        if(charlotte.isDead()) {
+            affichageNiveau.setY(300);
+            affichageNiveau.setX(50);
+            affichageNiveau.setText("GAME OVER");
         }
     }
 
@@ -184,22 +201,30 @@ public class Partie {
      * Fait apparaître un à cinq poissons ennemis à droite de l'écran à interval régulier.
      * @param niveau la difficulté des groupes de poisson augmente avec le niveau
      */
-    private void spawnEnnemiWave(int niveau) {
+    private void spawnEnnemiWave(int niveau, double deltaTime) {
         // Formule pour temps entre groupe d'ennemis : Nseconde = 0.75 + 1 / (niveau)^1/2
         var spawnTimer = 0.75 + 1 / Math.sqrt(niveau);
 
-        if(currentTime / 1000 > spawnTimer) {
+        if(currentTime > spawnTimer) {
             for(int i = 0; i < (new Random()).nextInt(1,6); i++) {
                 poissons.add(new Ennemi(niveau, charlotte.getX() + Fenetre.LARGEUR));
                 System.out.println("ennemi print");
             }
             currentTime = 0;
         }
-        currentTime ++;
+        currentTime += deltaTime;
+    }
+    private void showText() {
+        affichageNiveau.setText("NIVEAU " + niveau);
+        affichageNiveau.setY(300);
+        affichageNiveau.setX(150);
+        affichageNiveau.setFill(Color.WHITE);
+        affichageNiveau.setFont(Font.font(150));
     }
 
     //--------GETTERS--------
     public Canvas getCanvas() {
         return canvas;
     }
+    public Text getAffichageNiveau() {return affichageNiveau;}
 }

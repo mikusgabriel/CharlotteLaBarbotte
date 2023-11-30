@@ -1,6 +1,5 @@
 package ca.qc.bdeb.inf203.tp2.gameObjects;
 
-import ca.qc.bdeb.inf203.tp2.utils.Shooter;
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import ca.qc.bdeb.inf203.tp2.utils.Input;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
@@ -14,7 +13,7 @@ public class Charlotte extends GameObject {
     private final static double LARGEUR = 102, HAUTEUR =90, SHOOTER_COOLDOWN = 100;
     private boolean invulnerable, showImageBool = true;
     private double timeSinceLastShot = 100, counter = 0;
-    private static final int INVULNERABILITY_TIMER = 200, FLASH_FRAMES = 25;
+    private static final int INVULNERABILITY_TIMER = 125, FLASH_FRAMES = 15;
     private final Shooter shooter;
 
     /**

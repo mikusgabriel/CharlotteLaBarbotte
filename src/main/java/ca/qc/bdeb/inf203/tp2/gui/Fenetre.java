@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -25,36 +26,34 @@ public class Fenetre extends Application {
         var sceneJeu = new Scene(pageJeu.getRoot(), LARGEUR, HAUTEUR);
 
         //--------KEYBOARD EVENTS--------
-        // Appuyer sur ESCAPE pour
-        // retourner à l'écran d'accueil
-        // a partir de la page info
         sceneInfos.getRoot().setOnKeyPressed((event -> {
+            // Appuyer sur ESCAPE pour
+            // retourner à l'écran d'accueil
+            // à partir de la page info
             if (event.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(scenePrincipale);
             }
         }));
-
-        // Appuyer sur ESCAPE pour
-        // retourner à l'écran d'accueil
-        // a partir de la page jeu
-        sceneJeu.setOnKeyPressed((event -> {
+        sceneJeu.setOnKeyPressed(event -> {
+            // Appuyer sur ESCAPE pour
+            // retourner à l'écran d'accueil
+            // à partir de la page jeu
             if (event.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(scenePrincipale);
                 pageJeu.getTimer().stop();
             }
-            // debug mode
             else if (event.getCode() == KeyCode.D) {
+                // debug mode
                 pageJeu.setDebugMode(true);
-                System.out.println("debug mode");
+                System.out.println("debug mode activated");
             }
-            // Detecter lorsqu'une touche est appuyee
             else {
+                // Détecter lorsqu'une touche est appuyée
                 Input.setKeyPressed(event.getCode(), true);
             }
-        }));
-
-        //Detecter lorsqu'une touche est relachee
+        });
         sceneJeu.setOnKeyReleased((event ->
+                //Détecter lorsqu'une touche est relâchée
                 Input.setKeyPressed(event.getCode(), false)));
 
         //--------BUTTON EVENTS--------
