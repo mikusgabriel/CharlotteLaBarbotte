@@ -4,13 +4,10 @@ import ca.qc.bdeb.inf203.tp2.gameObjects.*;
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Hippocampe;
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Projectile;
 import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -203,15 +200,18 @@ public class Partie {
 
         // Dessiner Charlotte
         charlotte.draw(context, camera);
+        drawYellowBorder(charlotte, context, camera);
 
         // Dessiner les ennemis
         for (Ennemi ennemi : poissons) {
             ennemi.draw(context, camera);
+            drawYellowBorder(ennemi, context, camera);
         }
 
         // Dessiner les projectiles
         for(Projectile projectile : projectiles) {
             projectile.draw(context, camera);
+            drawYellowBorder(projectile, context, camera);
         }
 
         // Dessiner la barre de vie
@@ -248,6 +248,17 @@ public class Partie {
      */
     public boolean end() {
         return charlotte.getX() >= LONGUEUR_MONDE - 1;
+    }
+
+    private void drawYellowBorder(GameObject gameObject, GraphicsContext context, Camera camera) {
+        double x = gameObject.getX() - camera.getX();
+        double y = gameObject.getY();
+        double width = gameObject.getWidth();
+        double height = gameObject.getHeight();
+
+        context.setStroke(Color.YELLOW);
+        context.setLineWidth(2);
+        context.strokeRect(x, y, width, height);
     }
 
     /**

@@ -58,11 +58,11 @@ public abstract class GameObject {
 
 
     //--------GETTERS--------
-    protected double getX() {
+    public double getX() {
         return x;
     }
 
-    protected double getY() {
+    public double getY() {
         return y;
     }
 
@@ -76,5 +76,12 @@ public abstract class GameObject {
 
     protected Image getImage() {
         return image;
+    }
+
+    public double getWidth() {
+        return image.getWidth();
+    }
+    public double getHeight() {
+        return image.getHeight();
     }
 }
