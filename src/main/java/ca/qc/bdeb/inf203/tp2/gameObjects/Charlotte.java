@@ -221,4 +221,8 @@ public class Charlotte extends GameObject {
     public void setX(int x) {
         this.x = x;
     }
+
+    public void setVie(int vie) {
+        this.vie = vie;
+    }
 }

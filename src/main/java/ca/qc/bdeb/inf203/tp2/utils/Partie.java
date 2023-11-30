@@ -1,6 +1,8 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.*;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.BoiteSardine;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.EtoileDeMer;
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Hippocampe;
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Projectile;
 import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
@@ -8,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -37,7 +40,7 @@ public class Partie {
     private Camera camera;
     private Color backgroundColor;
     private int niveau;
-    private double currentTime, textTimer, deathTimer;
+    private double currentTime, textTimer, deathTimer, isAfficher;
 
     /**
      * Dans le constructeur, on crée les objects final qui ne change pas d'un niveau à l'autre : le canvas, Charlotte
@@ -62,13 +65,16 @@ public class Partie {
     }
 
     private void initialiseMenuDebug() {
-        menuDebug = new VBox();
-        nbDePoisson.setFill(Color.WHITE);
-        nbDeProjectile.setFill(Color.WHITE);
-        positionCharlotte.setFill(Color.WHITE);
-        menuDebug.getChildren().addAll(nbDePoisson, nbDeProjectile, positionCharlotte);
-        menuDebug.setAlignment(Pos.TOP_LEFT);
-        menuDebug.setPadding(new Insets(65, 0, 0, 30));
+
+
+            menuDebug = new VBox();
+            nbDePoisson.setFill(Color.WHITE);
+            nbDeProjectile.setFill(Color.WHITE);
+            positionCharlotte.setFill(Color.WHITE);
+            menuDebug.getChildren().addAll(nbDePoisson, nbDeProjectile, positionCharlotte);
+            menuDebug.setAlignment(Pos.TOP_LEFT);
+            menuDebug.setPadding(new Insets(65, 0, 0, 30));
+
     }
 
     /**
@@ -100,7 +106,32 @@ public class Partie {
      * À chaque intervalle de temps, on remet à jour tous les objets de la partie
      * @param deltaTemps interval de temps compté en nanoseconde
      */
-    public void update(double deltaTemps) {
+    public void update(double deltaTemps)  {
+        boolean debugMode = Input.isKeyPressed(KeyCode.D);
+
+        boolean Q = Input.isKeyPressed(KeyCode.Q);
+        boolean W = Input.isKeyPressed(KeyCode.W);
+        boolean E = Input.isKeyPressed(KeyCode.E);
+        boolean R = Input.isKeyPressed(KeyCode.R);
+        boolean T = Input.isKeyPressed(KeyCode.T);
+
+        if(debugMode){
+            initialiseMenuDebug();
+        }
+
+            if(Q){
+                charlotte.getShooter().setProjectile(new EtoileDeMer(charlotte.getShooter().getX(),charlotte.getShooter().getY()));
+            }if(W){
+                charlotte.getShooter().setProjectile(new Hippocampe(charlotte.getShooter().getX(),charlotte.getShooter().getY()));
+            }if(E){
+                charlotte.getShooter().setProjectile(new BoiteSardine(charlotte.getShooter().getX(),charlotte.getShooter().getY()));
+            }if(R){
+                charlotte.setVie(4);
+            }if(T){
+                newGame(niveau++);
+            }
+
+
 
         textTimer += deltaTemps;
         if (textTimer > 4)
@@ -223,6 +254,7 @@ public class Partie {
             affichageNiveau.setText("FIN DE PARTIE");
             affichageNiveau.setFill(Color.DARKRED);
         }
+
     }
 
     /**

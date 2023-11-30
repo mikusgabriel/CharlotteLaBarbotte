@@ -42,11 +42,6 @@ public class Fenetre extends Application {
                 stage.setScene(scenePrincipale);
                 pageJeu.getTimer().stop();
             }
-            else if (event.getCode() == KeyCode.D) {
-                // debug mode
-                pageJeu.setDebugMode(true);
-                System.out.println("debug mode activated");
-            }
             else {
                 // Détecter lorsqu'une touche est appuyée
                 Input.setKeyPressed(event.getCode(), true);
