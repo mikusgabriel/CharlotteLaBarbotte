@@ -1,4 +1,4 @@
-package ca.qc.bdeb.inf203.tp2.utils;
+package ca.qc.bdeb.inf203.tp2.gameObjects;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.BoiteSardine;
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.EtoileDeMer;

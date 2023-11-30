@@ -113,7 +113,7 @@ public class Partie {
         }
 
         for(Projectile projectile : projectiles){
-            projectile.update(deltaTemps, camera);
+            projectile.update(deltaTemps,camera,poissons );
         }
 
         // Le projectile est enlevé de la liste lorsqu'il disparait de l'écran
@@ -170,6 +170,7 @@ public class Partie {
 
         // Dessiner la barre de vie
         barreVie.draw(context,charlotte.getShooter().getProjectile());
+
     }
 
     /**

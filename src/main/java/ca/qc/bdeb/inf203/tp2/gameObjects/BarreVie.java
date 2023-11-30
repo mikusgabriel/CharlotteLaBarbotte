@@ -14,21 +14,24 @@ public class BarreVie extends GameObject {
             BORDURE_BARRE_DE_VIE = 2,
             DISTANCE_BORD = 30;
     private Color backgroundColor;
-    private final double posXicone;
+    private double viePourcentage, posXicone;
 
-    public BarreVie() {
+    public BarreVie(Color backgroundColor) {
+        x = DISTANCE_BORD + BORDURE_BARRE_DE_VIE + LARGEUR_BARRE_DE_VIE * viePourcentage;
         y = DISTANCE_BORD + BORDURE_BARRE_DE_VIE;
         hauteur = HAUTEUR_BARRE_DE_VIE - BORDURE_BARRE_DE_VIE * 2;
-        largeur = LARGEUR_BARRE_DE_VIE;
+        this.backgroundColor = backgroundColor;
 
         //update l'icône du projectile
         posXicone = DISTANCE_BORD + BORDURE_BARRE_DE_VIE + LARGEUR_BARRE_DE_VIE + 10;
     }
 
     public void update(int nbVie) {
-        double viePourcentage = (double) (nbVie) / 4;
-        largeur =  LARGEUR_BARRE_DE_VIE - LARGEUR_BARRE_DE_VIE * viePourcentage - 2 * BORDURE_BARRE_DE_VIE;
+        viePourcentage = (double) (nbVie) / 4;
         x = DISTANCE_BORD + BORDURE_BARRE_DE_VIE + LARGEUR_BARRE_DE_VIE * viePourcentage;
+        largeur = (LARGEUR_BARRE_DE_VIE - LARGEUR_BARRE_DE_VIE * viePourcentage)-(2* BORDURE_BARRE_DE_VIE);
+
+
     }
 
 
