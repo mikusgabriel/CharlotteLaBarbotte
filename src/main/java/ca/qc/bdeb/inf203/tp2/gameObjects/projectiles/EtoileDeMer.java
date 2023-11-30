@@ -1,4 +1,4 @@
-package ca.qc.bdeb.inf203.tp2.gameObjects;
+package ca.qc.bdeb.inf203.tp2.gameObjects.projectiles;
 
 import ca.qc.bdeb.inf203.tp2.utils.Camera;
 import javafx.scene.canvas.GraphicsContext;

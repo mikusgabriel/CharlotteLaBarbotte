@@ -72,7 +72,7 @@ public class Partie {
     public void update(double deltaTemps)  {
         // Faire apparaitre les groupes d'ennemis
         if(!end() && !charlotte.isDead())
-            spawnEnnemiWave(niveau);
+            spawnEnnemiWave(niveau,deltaTemps);
 
         // Update Charlotte
         charlotte.update(deltaTemps, camera);
@@ -103,7 +103,7 @@ public class Partie {
         }
 
         for(Projectile projectile : projectiles){
-            projectile.update(deltaTemps, camera);
+            projectile.update(deltaTemps,camera,poissons );
         }
 
         // Le projectile est enlevé de la liste lorsqu'il disparait de l'écran
@@ -153,6 +153,7 @@ public class Partie {
 
         // Dessiner la barre de vie
         barreVie.draw(context,charlotte.getShooter().getProjectile());
+
     }
 
     /**
@@ -184,18 +185,18 @@ public class Partie {
      * Fait apparaître un à cinq poissons ennemis à droite de l'écran à interval régulier.
      * @param niveau la difficulté des groupes de poisson augmente avec le niveau
      */
-    private void spawnEnnemiWave(int niveau) {
+    private void spawnEnnemiWave(int niveau,double deltaTemps) {
         // Formule pour temps entre groupe d'ennemis : Nseconde = 0.75 + 1 / (niveau)^1/2
         var spawnTimer = 0.75 + 1 / Math.sqrt(niveau);
 
-        if(currentTime / 1000 > spawnTimer) {
+        if(currentTime > spawnTimer) {
             for(int i = 0; i < (new Random()).nextInt(1,6); i++) {
                 poissons.add(new Ennemi(niveau, charlotte.getX() + Fenetre.LARGEUR));
                 System.out.println("ennemi print");
             }
             currentTime = 0;
         }
-        currentTime ++;
+        currentTime +=deltaTemps;
     }
 
     //--------GETTERS--------
