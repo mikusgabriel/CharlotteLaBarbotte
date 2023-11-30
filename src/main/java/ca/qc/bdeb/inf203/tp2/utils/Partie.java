@@ -25,8 +25,8 @@ public class Partie {
     private final ArrayList<ObjetDecor> decors;
     private final ArrayList<Projectile> projectiles;
     private final ArrayList<Baril> barils;
+    private final Text affichageNiveau;
     private Camera camera;
-    private Text affichageNiveau;
     private Color backgroundColor;
     private int niveau;
     private double currentTime, textTimer;
@@ -38,7 +38,7 @@ public class Partie {
     public Partie() {
         this.canvas = new Canvas(Fenetre.LARGEUR, Fenetre.HAUTEUR);
         this.charlotte = new Charlotte();
-        this.barreVie = new BarreVie();
+        this.barreVie = new BarreVie(backgroundColor);
         this.poissons = new ArrayList<>();
         this.decors = new ArrayList<>();
         this.projectiles = new ArrayList<>();
@@ -135,8 +135,8 @@ public class Partie {
         }
 
         if(charlotte.isDead()) {
-            affichageNiveau.setY(300);
-            affichageNiveau.setX(50);
+            affichageNiveau.setY(400);
+            affichageNiveau.setX(300);
             affichageNiveau.setText("GAME OVER");
         }
     }
@@ -218,9 +218,9 @@ public class Partie {
     private void showText() {
         affichageNiveau.setText("NIVEAU " + niveau);
         affichageNiveau.setY(300);
-        affichageNiveau.setX(150);
+        affichageNiveau.setX(300);
         affichageNiveau.setFill(Color.WHITE);
-        affichageNiveau.setFont(Font.font(150));
+        affichageNiveau.setFont(Font.font(100));
     }
 
     //--------GETTERS--------
