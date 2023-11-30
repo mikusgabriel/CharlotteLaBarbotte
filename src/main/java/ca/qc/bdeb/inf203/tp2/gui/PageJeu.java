@@ -3,9 +3,9 @@ package ca.qc.bdeb.inf203.tp2.gui;
 import ca.qc.bdeb.inf203.tp2.utils.Partie;
 import javafx.animation.AnimationTimer;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -14,13 +14,14 @@ import javafx.scene.text.Text;
 public class PageJeu {
     private final Pane root = new Pane();
     private final AnimationTimer timer;
-    private boolean debugMode = false;
+    private boolean debugMode;
 
     /**
      * Constructeur : lorsqu'on va sur la page jeu, on crée une nouvelle partie et on commence le AnimationTimer
      */
     public PageJeu(){
         var partie = new Partie();
+
 
         this.timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
@@ -31,7 +32,6 @@ public class PageJeu {
 
                     context.clearRect(0, 0, partie.getCanvas().getWidth(), partie.getCanvas().getHeight());
 
-
                     partie.update(deltaTemps);
 
                     partie.draw(context);
@@ -41,8 +41,8 @@ public class PageJeu {
             };
         root.getChildren().add(partie.getCanvas());
         root.getChildren().add(partie.getAffichageNiveau());
+        root.getChildren().add(partie.getMenuDebug());
         timer.start();
-
     }
 
     //--------GETTERS--------

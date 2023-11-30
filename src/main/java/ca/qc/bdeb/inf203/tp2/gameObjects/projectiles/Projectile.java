@@ -18,7 +18,7 @@ public abstract class Projectile extends GameObject {
     public void update(double deltaTemps, Camera camera){
         super.update(deltaTemps,camera);
     }
-    public void update(double deltaTemps, Camera camera, ArrayList<Ennemi> ennemis){
+    public void update(double deltaTemps, ArrayList<Ennemi> ennemis ,Camera camera){
         super.update(deltaTemps,camera);
     }
 

@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCode;
 public class Charlotte extends GameObject {
     private final static int PV_MAX = 4, V_MAX=300;
     private int vie = PV_MAX;
-    private final static double LARGEUR = 102, HAUTEUR =90, SHOOTER_COOLDOWN = 100;
+    private final static double LARGEUR = 102, HAUTEUR =90, SHOOTER_COOLDOWN = 0.5;
     private boolean invulnerable, showImageBool = true;
     private double timeSinceLastShot = 100, counter = 0;
     private static final int INVULNERABILITY_TIMER = 125, FLASH_FRAMES = 15;
@@ -60,9 +60,9 @@ public class Charlotte extends GameObject {
         }
 
         // Tirer un projectile
-        timeSinceLastShot++;
+        timeSinceLastShot += deltaTemps;
         if(tirer && timeSinceLastShot >= SHOOTER_COOLDOWN) {
-            shooter.setEtoileDeMer();
+
             shooter.setShooting(true);
             timeSinceLastShot = 0;
         }

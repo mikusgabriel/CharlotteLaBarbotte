@@ -21,11 +21,17 @@ public class Shooter{
     }
     public void suivreCharlotte(double x, double y){
         this.x=x;
-        this.y=y- projectile.getHauteur()/2;
+        this.y=y - projectile.getHauteur()/2;
     }
 
     public Projectile tirer(){
-        return projectile;
+        if (projectile.getClass().equals(Hippocampe.class)) {
+            return new Hippocampe(x, y);
+        } else if (projectile.getClass().equals(BoiteSardine.class)) {
+            return new BoiteSardine(x, y);
+        } else {
+            return new EtoileDeMer(x, y);
+        }
     }
 
     public boolean isShooting() {
@@ -34,17 +40,6 @@ public class Shooter{
 
     public void setShooting(boolean shooting) {
         isShooting = shooting;
-    }
-
-    //setters de projectiles
-    public void setBoiteSardine(){
-        projectile=new BoiteSardine(x,y);
-    }
-    public void setEtoileDeMer() {
-        projectile = new EtoileDeMer(x, y);
-    }
-    public void setHippocampe(){
-        projectile=new Hippocampe(x,y);
     }
 
     //getters
@@ -59,5 +54,9 @@ public class Shooter{
 
     public double getY() {
         return y;
+    }
+
+    public void setProjectile(Projectile projectileChoisit) {
+        this.projectile = projectileChoisit;
     }
 }

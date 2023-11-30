@@ -13,8 +13,8 @@ public class EtoileDeMer extends Projectile{
         image=new Image("etoile.png");
         this.x=x;
         this.y=y;
-        vx=800;
-        vy= 0;
+        vx = 800;
+        vy = 0;
         hauteur = HAUTEUR;
         largeur= LARGEUR;
         ax = 0;

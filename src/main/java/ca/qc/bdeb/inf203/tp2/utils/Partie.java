@@ -1,10 +1,17 @@
 package ca.qc.bdeb.inf203.tp2.utils;
 
 import ca.qc.bdeb.inf203.tp2.gameObjects.*;
+import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Hippocampe;
 import ca.qc.bdeb.inf203.tp2.gameObjects.projectiles.Projectile;
 import ca.qc.bdeb.inf203.tp2.gui.Fenetre;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -24,12 +31,16 @@ public class Partie {
     private final ArrayList<Ennemi> poissons;
     private final ArrayList<ObjetDecor> decors;
     private final ArrayList<Projectile> projectiles;
-    private final ArrayList<Baril> barils;
     private final Text affichageNiveau;
+    private final Text nbDePoisson;
+    private final Text nbDeProjectile;
+    private final Text positionCharlotte;
+    private Baril baril;
+    private VBox menuDebug;
     private Camera camera;
     private Color backgroundColor;
     private int niveau;
-    private double currentTime, textTimer;
+    private double currentTime, textTimer, deathTimer;
 
     /**
      * Dans le constructeur, on crée les objects final qui ne change pas d'un niveau à l'autre : le canvas, Charlotte
@@ -42,10 +53,25 @@ public class Partie {
         this.poissons = new ArrayList<>();
         this.decors = new ArrayList<>();
         this.projectiles = new ArrayList<>();
-        this.barils = new ArrayList<>();
-        affichageNiveau = new Text();
+        this.affichageNiveau = new Text();
+        this.menuDebug = new VBox();
+        this.nbDePoisson = new Text();
+        this.nbDeProjectile = new Text();
+        this.positionCharlotte = new Text();
 
         newGame(1);
+
+        initialiseMenuDebug();
+    }
+
+    private void initialiseMenuDebug() {
+        menuDebug = new VBox();
+        nbDePoisson.setFill(Color.WHITE);
+        nbDeProjectile.setFill(Color.WHITE);
+        positionCharlotte.setFill(Color.WHITE);
+        menuDebug.getChildren().addAll(nbDePoisson, nbDeProjectile, positionCharlotte);
+        menuDebug.setAlignment(Pos.TOP_LEFT);
+        menuDebug.setPadding(new Insets(65, 0, 0, 30));
     }
 
     /**
@@ -61,8 +87,11 @@ public class Partie {
         charlotte.setX(0);
         canvas.getGraphicsContext2D().setFill(backgroundColor);
         barreVie.setBackgroundColor(backgroundColor);
+        baril = new Baril();
         this.niveau = niveau;
         showText();
+        textTimer = 0;
+        deathTimer = 0;
 
         //generation decor au debut
         for (int filledArea = 0; filledArea < LONGUEUR_MONDE;)
@@ -75,7 +104,7 @@ public class Partie {
      * @param deltaTemps interval de temps compté en nanoseconde
      */
     public void update(double deltaTemps)  {
-        System.out.println(textTimer);
+
         textTimer += deltaTemps;
         if(textTimer > 4)
             affichageNiveau.setY(-1);
@@ -86,7 +115,12 @@ public class Partie {
 
         // Update Charlotte
         charlotte.update(deltaTemps, camera);
-        charlotte.isDead();
+
+        // Update Baril
+        baril.update(deltaTemps, camera);
+        if(baril.isTouching(charlotte)) {
+            baril.isTouch(charlotte.getShooter());
+        }
 
         // Update barre de vie
         barreVie.update(charlotte.getVie());
@@ -109,11 +143,19 @@ public class Partie {
 
         // Update projectiles
         if(charlotte.getShooter().isShooting()) {
-            projectiles.add(charlotte.getShooter().tirer());
+            // Si c'est un hippocampe, ajouter 3 projectiles à la liste
+            if(charlotte.getShooter().getProjectile().getClass() == Hippocampe.class) {
+                projectiles.add(charlotte.getShooter().tirer());
+                projectiles.add(charlotte.getShooter().tirer());
+                projectiles.add(charlotte.getShooter().tirer());
+            }
+            else  {
+                projectiles.add(charlotte.getShooter().tirer());
+            }
         }
 
         for(Projectile projectile : projectiles){
-            projectile.update(deltaTemps,camera,poissons );
+            projectile.update(deltaTemps,poissons, camera);
         }
 
         // Le projectile est enlevé de la liste lorsqu'il disparait de l'écran
@@ -131,14 +173,16 @@ public class Partie {
             projectiles.clear();
             poissons.clear();
             newGame(niveau);
-            textTimer = 0;
         }
 
         if(charlotte.isDead()) {
-            affichageNiveau.setY(400);
-            affichageNiveau.setX(300);
-            affichageNiveau.setText("GAME OVER");
+            deathTimer += deltaTemps;
+            if(deathTimer > 3) {
+                Platform.exit();
+            }
         }
+
+        System.out.println(deathTimer);
     }
 
     /**
@@ -147,6 +191,16 @@ public class Partie {
      */
 
     public void draw(GraphicsContext context) {
+
+        if(textTimer > 4)
+            affichageNiveau.setY(-1);
+        if(end())
+            textTimer = 0;
+
+        nbDePoisson.setText("NB Poissons: " + poissons.size());
+        nbDeProjectile.setText("NB Projectiles: " + projectiles.size());
+        positionCharlotte.setText("Position Charlotte: " + charlotte.getX() / LONGUEUR_MONDE * 100 + "%");
+
         context.setFill(backgroundColor);
         context.fillRect(0 , 0, Fenetre.LARGEUR, Fenetre.HAUTEUR);
 
@@ -154,6 +208,9 @@ public class Partie {
         for (ObjetDecor objetDecor : decors) {
                 objetDecor.draw(context, camera);
         }
+
+        // Dessiner baril
+        baril.draw(context, camera);
 
         // Dessiner Charlotte
         charlotte.draw(context, camera);
@@ -170,6 +227,13 @@ public class Partie {
 
         // Dessiner la barre de vie
         barreVie.draw(context,charlotte.getShooter().getProjectile());
+
+        if(charlotte.isDead()) {
+            affichageNiveau.setY(300);
+            affichageNiveau.setX(100);
+            affichageNiveau.setText("FIN DE PARTIE");
+            affichageNiveau.setFill(Color.DARKRED);
+        }
 
     }
 
@@ -208,7 +272,7 @@ public class Partie {
 
         if(currentTime > spawnTimer) {
             for(int i = 0; i < (new Random()).nextInt(1,6); i++) {
-                poissons.add(new Ennemi(niveau, charlotte.getX() + Fenetre.LARGEUR));
+                poissons.add(new Ennemi(niveau, charlotte.getX() + (double) (4 * Fenetre.LARGEUR) / 5 ));
                 System.out.println("ennemi print");
             }
             currentTime = 0;
@@ -228,4 +292,20 @@ public class Partie {
         return canvas;
     }
     public Text getAffichageNiveau() {return affichageNiveau;}
+
+    public int getPoissons() {
+        return poissons.size();
+    }
+
+    public int getProjectiles() {
+        return projectiles.size();
+    }
+
+    public double getPositionCharlotte() {
+        return charlotte.getX();
+    }
+
+    public VBox getMenuDebug() {
+        return menuDebug;
+    }
 }
